@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: log-admin
+  profiles:
+    active: dev
