@@ -1,4 +1,4 @@
-package vip.hyzt.logcommon.enums;
+package vip.hyzt.common.enums;
 
 /**
  * Data source type

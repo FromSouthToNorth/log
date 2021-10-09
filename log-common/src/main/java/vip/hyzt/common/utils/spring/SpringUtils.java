@@ -1,4 +1,4 @@
-package vip.hyzt.logcommon.utils.spring;
+package vip.hyzt.common.utils.spring;
 
 import org.springframework.aop.framework.AopContext;
 import org.springframework.beans.BeansException;

@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import vip.hyzt.core.config.properties.DruidProperties;
 import vip.hyzt.core.datasoruce.DynamicDataSource;
-import vip.hyzt.logcommon.enums.DataSourceType;
-import vip.hyzt.logcommon.utils.spring.SpringUtils;
+import vip.hyzt.common.enums.DataSourceType;
+import vip.hyzt.common.utils.spring.SpringUtils;
 
 import javax.servlet.*;
 import javax.sql.DataSource;
