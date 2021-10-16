@@ -9,15 +9,66 @@ public class SysRole extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
-    private Long roleId;
+    private String roleId;
 
     private String roleName;
 
+    /** Role status (0 normal, 1 disabled) */
+    private int status;
+
     private String roleKey;
 
-    private String roleSort;
-
-    /** 1=所有数据权限,2=自定义数据权限,3=仅本人数据权限 */
+    /** 1=All data permissions, 2=Custom data permissions, 3=Only personal data permissions */
     private String dataScope;
 
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getRoleKey() {
+        return roleKey;
+    }
+
+    public void setRoleKey(String roleKey) {
+        this.roleKey = roleKey;
+    }
+
+    public String getDataScope() {
+        return dataScope;
+    }
+
+    public void setDataScope(String dataScope) {
+        this.dataScope = dataScope;
+    }
+
+    @Override
+    public String toString() {
+        return "SysRole{" +
+                "roleId='" + roleId + '\'' +
+                ", roleName='" + roleName + '\'' +
+                ", status=" + status +
+                ", roleKey='" + roleKey + '\'' +
+                ", dataScope='" + dataScope + '\'' +
+                '}';
+    }
 }
