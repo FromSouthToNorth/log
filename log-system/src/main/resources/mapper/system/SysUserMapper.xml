@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="vip.hyzt.system.mapper.SysUserMapper">
+
+    <resultMap id="SysUserResult" type="SysUser">
+        <id property="userId"           column="user_id"/>
+        <result property="userName"     column="user_name"/>
+        <result property="realName"     column="real_name"/>
+        <result property="userType"     column="user_type"/>
+        <result property="password"     column="password"/>
+        <result property="avatar"       column="avatar"/>
+        <result property="birthday"     column="birthday"/>
+        <result property="sex"          column="sex"/>
+        <result property="email"        column="email"/>
+        <result property="phone"        column="phone"/>
+        <result property="status"       column="status"/>
+        <result property="delFlag"      column="del_flag" />
+        <result property="createBy"     column="create_by"/>
+        <result property="createTime"   column="create_time"/>
+        <result property="updateBy"     column="update_by"/>
+        <result property="updateTime"   column="update_time"/>
+        <collection property="roles"    javaType="java.util.List" resultMap="roleResult"/>
+    </resultMap>
+
+    <resultMap id="roleResult" type="SysRole">
+        <id property="roleId"           column="role_id"/>
+        <result property="roleName"     column="role_name"/>
+        <result property="roleKey"      column="role_key"/>
+        <result property="dataScope"    column="data_scope"/>
+        <result property="status"       column="status"/>
+    </resultMap>
+
+
+    <sql id="selectSysUser">
+        select
+            user.user_id,
+            user.user_name,
+            user.real_name,
+            user.user_type,
+            user.password,
+            user.avatar,
+            user.birthday,
+            user.sex,
+            user.email,
+            user.phone,
+            user.status,
+            user.del_flag,
+            user.create_by,
+            user.create_time,
+            user.update_by,
+            user.update_time,
+            r.role_id,
+            r.role_name,
+            r.role_key,
+            r.data_scope,
+            r.status as role_status
+        from sys_user user
+        left join sys_user_role role
+        on user.user_id = role.user_id
+        left join sys_role r
+        on r.role_id = role.role_id
+    </sql>
+
+    <select id="selectUserByUserName" parameterType="String" resultMap="SysUserResult">
+        <include refid="selectSysUser" />
+        where user.user_name = #{userName}
+    </select>
+
+</mapper>

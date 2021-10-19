@@ -29,11 +29,6 @@
             <artifactId>log-core</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>vip.hyzt</groupId>
-            <artifactId>log-system</artifactId>
-        </dependency>
-
     </dependencies>
 
     <build>

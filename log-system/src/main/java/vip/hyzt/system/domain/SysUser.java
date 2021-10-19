@@ -1,6 +1,8 @@
 package vip.hyzt.system.domain;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * User object sys_user
@@ -16,6 +18,9 @@ public class SysUser extends BaseEntity {
     private String userName;
 
     private String realName;
+
+    /** User type (0 system users) */
+    private int userType;
     
     private String password;
 
@@ -32,6 +37,18 @@ public class SysUser extends BaseEntity {
 
     /** User status (0 normal 1 disabled) */
     private int status;
+
+    /** Delete flag (0 means existence and 1 means deletion) */
+    private int delFlag;
+
+    /** Role object */
+    private List<SysRole> roles;
+
+    /** Role group */
+    private String[] roleIds;
+
+    /** Role ID */
+    private String roleId;
 
     public String getUserId() {
         return userId;
@@ -55,6 +72,14 @@ public class SysUser extends BaseEntity {
 
     public void setRealName(String realName) {
         this.realName = realName;
+    }
+
+    public int getUserType() {
+        return userType;
+    }
+
+    public void setUserType(int userType) {
+        this.userType = userType;
     }
 
     public String getPassword() {
@@ -113,12 +138,53 @@ public class SysUser extends BaseEntity {
         this.status = status;
     }
 
+    public int getDelFlag() {
+        return delFlag;
+    }
+
+    public void setDelFlag(int delFlag) {
+        this.delFlag = delFlag;
+    }
+
+    public List<SysRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<SysRole> roles) {
+        this.roles = roles;
+    }
+
+    public String[] getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(String[] roleIds) {
+        this.roleIds = roleIds;
+    }
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin(this.userId);
+    }
+
+    public static boolean isAdmin(String userId) {
+        return "1".equals(userId);
+    }
+
     @Override
     public String toString() {
         return "SysUser{" +
                 "userId='" + userId + '\'' +
                 ", userName='" + userName + '\'' +
                 ", realName='" + realName + '\'' +
+                ", userType=" + userType +
                 ", password='" + password + '\'' +
                 ", avatar='" + avatar + '\'' +
                 ", birthday=" + birthday +
@@ -126,6 +192,10 @@ public class SysUser extends BaseEntity {
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", status=" + status +
+                ", delFlag=" + delFlag +
+                ", roles=" + roles +
+                ", roleIds=" + Arrays.toString(roleIds) +
+                ", roleId='" + roleId + '\'' +
                 '}';
     }
 

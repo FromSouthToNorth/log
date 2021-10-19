@@ -30,12 +30,12 @@ public class Constants {
     /**
      * 通用成功标识
      */
-    public static final String SUCCESS = "0";
+    public static final int SUCCESS = 0;
 
     /**
      * 通用失败标识
      */
-    public static final String FAIL = "1";
+    public static final int FAIL = 1;
 
     /**
      * 登录成功
@@ -46,6 +46,11 @@ public class Constants {
      * 注销
      */
     public static final String LOGOUT = "Logout";
+
+    /**
+     * 注册
+     */
+    public static final String REGISTER = "Register";
 
     /**
      * 登录失败
