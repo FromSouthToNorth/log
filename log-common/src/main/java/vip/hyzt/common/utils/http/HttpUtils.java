@@ -1,9 +1,9 @@
 package vip.hyzt.common.utils.http;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import vip.hyzt.common.constant.Constants;
-import vip.hyzt.common.utils.string.StringUtils;
 
 import javax.net.ssl.*;
 import java.io.*;
@@ -16,7 +16,6 @@ import java.security.cert.X509Certificate;
 
 /**
  * General http sending method
- *
  * @author hy
  * @since 2021/10/18
  */
@@ -26,7 +25,6 @@ public abstract class HttpUtils {
 
     /**
      * 向指定 URL 发送GET方法的请求
-     *
      * @param url   发送请求的 URL
      * @param param 请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
      * @return 所代表远程资源的响应结果
@@ -37,7 +35,6 @@ public abstract class HttpUtils {
 
     /**
      * 向指定 URL 发送GET方法的请求
-     *
      * @param url         发送请求的 URL
      * @param param       请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
      * @param contentType 编码类型
@@ -89,7 +86,6 @@ public abstract class HttpUtils {
 
     /**
      * 向指定 URL 发送POST方法的请求
-     *
      * @param url   发送请求的 URL
      * @param param 请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
      * @return 所代表远程资源的响应结果

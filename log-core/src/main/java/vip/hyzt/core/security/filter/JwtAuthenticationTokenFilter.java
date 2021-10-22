@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import vip.hyzt.core.domain.LoginUser;
+import vip.hyzt.core.security.SecurityService;
 import vip.hyzt.core.web.service.TokenService;
 
 import javax.servlet.FilterChain;
@@ -33,7 +34,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         LoginUser loginUser = tokenService.getLoginUser(request);
-        if (ObjectUtils.isEmpty(loginUser) && ObjectUtils.isEmpty(SecurityContextHolder.getContext().getAuthentication())) {
+        if (!ObjectUtils.isEmpty(loginUser) && ObjectUtils.isEmpty(SecurityService.getAuthentication())) {
             tokenService.verifyToken(loginUser);
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
             authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

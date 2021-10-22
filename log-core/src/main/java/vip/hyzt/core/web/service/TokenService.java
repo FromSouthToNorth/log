@@ -8,14 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 import vip.hyzt.common.constant.Constants;
 import vip.hyzt.common.utils.ServletUtils;
 import vip.hyzt.common.utils.ip.AddressUtils;
 import vip.hyzt.common.utils.ip.IpUtils;
 import vip.hyzt.common.utils.uuid.IdUtils;
 import vip.hyzt.core.domain.LoginUser;
-import vip.hyzt.core.redis.RedisCache;
+import vip.hyzt.common.utils.redis.RedisCache;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -46,7 +45,7 @@ public class TokenService {
 
     private static final long MILLIS_MINUTE = 60L * MILLIS_SECOND;
 
-    private static final Long MILLIS_MINUTE_TEN = 20L * 60L * 1000L;
+    private static final long MILLIS_MINUTE_TEN = 20L * 60L * 1000L;
 
     @Autowired
     private RedisCache redisCache;
@@ -56,10 +55,11 @@ public class TokenService {
      */
     public LoginUser getLoginUser(HttpServletRequest request) {
         String token = getToken(request);
-        if (!StringUtils.isEmpty(token)) {
+        if (!ObjectUtils.isEmpty(token)) {
             try {
                 Claims claims = parseToken(token);
-                String userKey = (String) claims.get(Constants.LOGIN_TOKEN_KEY);
+                String uuid = (String) claims.get(Constants.LOGIN_USER_KEY);
+                String userKey = getTokenKey(uuid);
                 return redisCache.getCacheObject(userKey);
             }
             catch (Exception e) {
@@ -73,7 +73,7 @@ public class TokenService {
      * Delete cache token
      */
     public void deleteLoginUser(String token) {
-        if (!StringUtils.isEmpty(token)) {
+        if (!ObjectUtils.isEmpty(token)) {
             String tokenKey = getTokenKey(token);
             redisCache.deleteObject(tokenKey);
         }
@@ -84,7 +84,7 @@ public class TokenService {
      * @param loginUser - login user info
      */
     public void setLoginUser(LoginUser loginUser) {
-        if (!ObjectUtils.isEmpty(loginUser) && !StringUtils.isEmpty(loginUser.getToken())) {
+        if (ObjectUtils.isEmpty(loginUser) && !ObjectUtils.isEmpty(loginUser.getToken())) {
             refreshToken(loginUser);
         }
     }
@@ -100,7 +100,7 @@ public class TokenService {
         refreshToken(loginUser);
 
         Map<String, Object> claims = new HashMap<>();
-        claims.put(Constants.LOGIN_TOKEN_KEY, token);
+        claims.put(Constants.LOGIN_USER_KEY, token);
         return createToken(claims);
     }
 
@@ -111,7 +111,7 @@ public class TokenService {
     public void verifyToken(LoginUser loginUser) {
         Long expireTime = loginUser.getExpireTime();
         long currentTime = System.currentTimeMillis();
-        if (expireTime - currentTime <= MILLIS_MINUTE) {
+        if (expireTime - currentTime <= MILLIS_MINUTE_TEN) {
             refreshToken(loginUser);
         }
     }
@@ -148,7 +148,8 @@ public class TokenService {
         return Jwts
                 .builder()
                 .setClaims(claims)
-                .signWith(SignatureAlgorithm.ES512, secret).compact();
+                .signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
     }
 
     /**
@@ -165,8 +166,8 @@ public class TokenService {
      * Return request token
      */
     private String getToken(HttpServletRequest request) {
-        String token = request.getHeader(this.header);
-        if (StringUtils.isEmpty(token) && token.startsWith(Constants.TOKEN_PREFIX)) {
+        String token = request.getHeader(header);
+        if (!ObjectUtils.isEmpty(token) && token.startsWith(Constants.TOKEN_PREFIX)) {
             token = token.replace(Constants.TOKEN_PREFIX, "");
         }
         return token;

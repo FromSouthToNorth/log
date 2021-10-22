@@ -1,4 +1,4 @@
-package vip.hyzt.core.redis;
+package vip.hyzt.common.utils.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundSetOperations;

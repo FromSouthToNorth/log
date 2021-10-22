@@ -19,7 +19,7 @@ public class SysRole extends BaseEntity {
     private String roleKey;
 
     /** 1=All data permissions, 2=Custom data permissions, 3=Only personal data permissions */
-    private String dataScope;
+    private int dataScope;
 
     public String getRoleId() {
         return roleId;
@@ -53,11 +53,11 @@ public class SysRole extends BaseEntity {
         this.roleKey = roleKey;
     }
 
-    public String getDataScope() {
+    public int getDataScope() {
         return dataScope;
     }
 
-    public void setDataScope(String dataScope) {
+    public void setDataScope(int dataScope) {
         this.dataScope = dataScope;
     }
 

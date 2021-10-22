@@ -1,3 +1,6 @@
+log:
+  captchaType: math
+
 spring:
   # 资源信息
   messages:

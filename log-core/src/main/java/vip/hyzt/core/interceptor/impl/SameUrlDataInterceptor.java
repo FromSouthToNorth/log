@@ -10,7 +10,7 @@ import vip.hyzt.common.constant.Constants;
 import vip.hyzt.common.filter.RepeatedlyRequestWrapper;
 import vip.hyzt.common.utils.http.HttpHelper;
 import vip.hyzt.core.interceptor.RepeatSubmitInterceptor;
-import vip.hyzt.core.redis.RedisCache;
+import vip.hyzt.common.utils.redis.RedisCache;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;

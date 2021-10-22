@@ -1,6 +1,7 @@
 package vip.hyzt.core.manager.factory;
 
 import eu.bitwalker.useragentutils.UserAgent;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import vip.hyzt.common.constant.Constants;
@@ -9,7 +10,7 @@ import vip.hyzt.common.utils.ServletUtils;
 import vip.hyzt.common.utils.ip.AddressUtils;
 import vip.hyzt.common.utils.ip.IpUtils;
 import vip.hyzt.common.utils.spring.SpringUtils;
-import vip.hyzt.common.utils.string.StringUtils;
+import vip.hyzt.common.utils.uuid.IdUtils;
 import vip.hyzt.system.domain.SysLoginInfo;
 import vip.hyzt.system.domain.SysOperLog;
 import vip.hyzt.system.service.ISysLoginInfoService;
@@ -36,8 +37,8 @@ public class AsyncFactory {
      * @param args     列表
      * @return 任务task
      */
-    public static TimerTask recordLogininfor(final String username, final String status, final String message,
-                                             final Object... args) {
+    public static TimerTask recordLoginInfo(final String username, final String status, final String message,
+                                            final Object... args) {
         final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
         final String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
         return new TimerTask() {
@@ -58,6 +59,7 @@ public class AsyncFactory {
                 String browser = userAgent.getBrowser().getName();
                 // 封装对象
                 SysLoginInfo logininfor = new SysLoginInfo();
+                logininfor.setInfoId(IdUtils.fastUUID());
                 logininfor.setUserName(username);
                 logininfor.setIpaddr(ip);
                 logininfor.setLoginLocation(address);

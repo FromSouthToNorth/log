@@ -50,7 +50,7 @@ public class SysPermissionService {
             perms.add("*:*:*");
         }
         else {
-            perms.addAll(permissionMenuService.selectPermissionMenuByUserId(user.getUserId()));
+            perms.addAll(permissionMenuService.selectPermissionMenuPermsByUserId(user.getUserId()));
         }
         return perms;
     }

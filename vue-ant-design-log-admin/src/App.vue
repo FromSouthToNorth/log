@@ -23,7 +23,10 @@
 				return "layout-" + ( this.$route.meta.layout || "default" ).toLowerCase() ;
 			}
 		},
-	})
+    created() {
+      console.log("路由: ",this.$router);
+    }
+  })
 	
 </script>
 

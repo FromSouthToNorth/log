@@ -43,7 +43,7 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
         if (!ObjectUtils.isEmpty(loginUser)) {
             String username = loginUser.getUsername();
             tokenService.deleteLoginUser(loginUser.getToken());
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGOUT, "exit successfully"));
+            AsyncManager.me().execute(AsyncFactory.recordLoginInfo(username, Constants.LOGOUT, "exit successfully"));
         }
         ServletUtils.renderString(response, JSON.toJSONString(Result.error(HttpStatus.SUCCESS, "exit successfully")));
     }

@@ -5,9 +5,8 @@ Vue.use(VueRouter)
 
 let routes = [
 	{
-		// will match everything
-		path: '*',
-		component: () => import('../views/404.vue'),
+		path: '/404',
+		component: () => import('@/views/404'),
 	},
 	{
 		path: '/',
@@ -27,19 +26,19 @@ let routes = [
 		path: '/layout',
 		name: 'Layout',
 		layout: "dashboard",
-		component: () => import('../views/Layout.vue'),
+		component: () => import('@/views/Layout.vue'),
 	},
 	{
 		path: '/tables',
 		name: 'Tables',
 		layout: "dashboard",
-		component: () => import('../views/Tables.vue'),
+		component: () => import('@/views/Tables.vue'),
 	},
 	{
 		path: '/billing',
 		name: 'Billing',
 		layout: "dashboard",
-		component: () => import('../views/Billing.vue'),
+		component: () => import('@/views/Billing.vue'),
 	},
 	{
 		path: '/rtl',
@@ -48,7 +47,7 @@ let routes = [
 		meta: {
 			layoutClass: 'dashboard-rtl',
 		},
-		component: () => import('../views/RTL.vue'),
+		component: () => import('@/views/RTL.vue'),
 	},
 	{
 		path: '/Profile',
@@ -57,12 +56,7 @@ let routes = [
 		meta: {
 			layoutClass: 'layout-profile',
 		},
-		component: () => import('../views/Profile.vue'),
-	},
-	{
-		path: '/sign-in',
-		name: 'Sign-In',
-		component: () => import('../views/Sign-In.vue'),
+		component: () => import('@/views/Profile.vue'),
 	},
 	{
 		path: '/sign-up',
@@ -70,43 +64,24 @@ let routes = [
 		meta: {
 			layoutClass: 'layout-sign-up',
 		},
-		component: () => import('../views/Sign-Up.vue'),
+		component: () => import('@/views/Sign-Up.vue'),
 	},
 ]
 
-// Adding layout property from each route to the meta
-// object so it can be accessed later.
-function addLayoutToRoute( route, parentLayout = "default" )
-{
+function addLayoutToRoute( route, parentLayout = "default" ) {
 	route.meta = route.meta || {} ;
 	route.meta.layout = route.layout || parentLayout ;
-	
-	if( route.children )
-	{
-		route.children = route.children.map( ( childRoute ) => addLayoutToRoute( childRoute, route.meta.layout ) ) ;
+
+	if( route.children ) {
+		route.children = route.children.map( ( childRoute ) => addLayoutToRoute( childRoute, route.meta.layout ) );
 	}
-	return route ;
+	return route;
 }
 
-routes = routes.map( ( route ) => addLayoutToRoute( route ) ) ;
+export const constantRoutes = routes.map((route) => addLayoutToRoute(route));
 
-const router = new VueRouter({
-	mode: 'history',
-	base: process.env.BASE_URL,
-	routes,
-	scrollBehavior (to, from, savedPosition) {
-		if ( to.hash ) {
-			return {
-				selector: to.hash,
-				behavior: 'smooth',
-			}
-		}
-		return {
-			x: 0,
-			y: 0,
-			behavior: 'smooth',
-		}
-	}
+export default new VueRouter({
+	mode: 'history', // 去掉url中的#
+	scrollBehavior: () => ({ y: 0 }),
+	routes: constantRoutes
 })
-
-export default router

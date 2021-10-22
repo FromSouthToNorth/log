@@ -11,20 +11,27 @@ Coded by Creative Tim
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. 
 */
 
-import Vue from 'vue'
+import Vue from 'vue';
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
-import App from './App.vue'
-import DefaultLayout from './layouts/Default.vue'
-import DashboardLayout from './layouts/Dashboard.vue'
-import DashboardRTLLayout from './layouts/DashboardRTL.vue'
-import router from './router'
+import App from '@/App.vue';
+import DefaultLayout from '@/layouts/Default.vue';
+import DashboardLayout from '@/layouts/Dashboard.vue';
+import DashboardRTLLayout from '@/layouts/DashboardRTL.vue';
+import router from '@/router';
+import Storage from "vue-ls";
+import { VueAxios } from "@/util/request";
+import store from '@/store';
 
-import './scss/app.scss';
+import '@/scss/app.scss';
+import '@/permission';
+import config from "@/defaultSettings";
 
 Vue.use(Antd);
+Vue.use(VueAxios, router);
+Vue.use(Storage, config.storageOptions);
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 // Adding template layouts to the vue components.
 Vue.component("layout-default", DefaultLayout);
@@ -33,5 +40,6 @@ Vue.component("layout-dashboard-rtl", DashboardRTLLayout);
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')

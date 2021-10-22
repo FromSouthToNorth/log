@@ -24,8 +24,27 @@
         <result property="updateTime"   column="update_time" />
     </resultMap>
 
+    <sql id="selectPermissionMenu">
+        select
+            menu_id,
+            menu_name,
+            parent_id,
+            order_num,
+            path,
+            component,
+            is_frame,
+            is_cache,
+            menu_type,
+            visible,
+            status,
+            ifnull(perms, '') as parms,
+            icon,
+            create_time
+        from sys_permission_menu
+    </sql>
+
     <select id="selectPermissionMenuByUserId" parameterType="String" resultType="String">
-        select disconnect spm.perms
+        select distinct spm.perms
         from sys_permission_menu spm
                  left join sys_role_permission srp
                            on srp.permission_id = spm.menu_id
@@ -34,6 +53,74 @@
                  left join sys_role r
                            on r.role_id = sur.role_id
         where spm.status = 0 and r.status = 0 and sur.user_id = #{userId}
+    </select>
+    
+    <select id="selectPermissionMenuList" parameterType="SysPermissionMenu" resultMap="SysPermissionMenuResult">
+        <include refid="selectPermissionMenu" />
+        <where>
+            <if test="menuName != null and menuName != ''">
+                and menu_name like concat('%', #{menuName}, '%')
+            </if>
+            <if test="visible != null">
+                and visible = #{visible}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            order by parent_id, order_num
+        </where>
+    </select>
+
+    <select id="selectPermissionMenuTreeAll" resultMap="SysPermissionMenuResult">
+        select
+            distinct
+            spm.menu_id,
+            spm.parent_id,
+            spm.menu_name,
+            spm.path,
+            spm.component,
+            spm.visible,
+            spm.status,
+            ifnull(spm.perms, '') as perms,
+            spm.is_frame,
+            spm.is_cache,
+            spm.menu_type,
+            spm.icon,
+            spm.order_num,
+            spm.create_time
+        from sys_permission_menu spm
+        where spm.menu_type in ('M', 'C') and spm.status = 0
+        order by spm.parent_id, spm.order_num
+    </select>
+
+    <select id="selectPermissionMenuTreeByUserId" resultMap="SysPermissionMenuResult">
+        select
+            distinct
+            spm.menu_id,
+            spm.parent_id,
+            spm.menu_name,
+            spm.path,
+            spm.component,
+            spm.visible,
+            spm.status,
+            ifnull(spm.perms, '') as perms,
+            spm.is_frame,
+            spm.is_cache,
+            spm.menu_type,
+            spm.icon,
+            spm.order_num,
+            spm.create_time
+        from sys_permission_menu spm
+                 left join sys_role_permission srp
+                           on srp.permission_id = spm.menu_id
+                 left join sys_user_role sur
+                           on sur.role_id = srp.role_id
+                 left join sys_role sr
+                           on sr.role_id = sur.role_id
+                 left join sys_user su
+                           on su.user_id = sur.user_id
+        where su.user_id = #{userId} and spm.menu_type in ('M', 'C') and spm.status = 0
+        order by spm.parent_id, spm.order_num
     </select>
 
 </mapper>
