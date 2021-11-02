@@ -6,7 +6,7 @@ package vip.hyzt.common.utils;
  * @author hy
  * @since 2021/10/18
  */
-public class LogUtils {
+public abstract class LogUtils {
 
     public static String getBlock(Object msg) {
         if (msg == null) {

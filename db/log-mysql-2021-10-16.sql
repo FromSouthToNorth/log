@@ -1,5 +1,3 @@
-create
-database `log`;
 use
 `log`;
 -- 角色表
@@ -9,16 +7,16 @@ create table `sys_role`
     `role_id`     varchar(64) character set utf8mb4 collate utf8mb4_general_ci  not null comment '主键',
     `role_name`   varchar(32) character set utf8mb4 collate utf8mb4_general_ci  not null comment '角色名称',
     `role_key`    varchar(100) character set utf8mb4 collate utf8mb4_general_ci not null comment '角色权限字符串',
-    `status`      tinyint(1)                                                    null default null comment '角色状态（0正常 1停用）',
-    `data_scope`  tinyint(1)                                                    null default null comment '数据范围（1：全部数据权限 2: 自定义数据权限 3：仅自己数据权限）',
-    `del_flag`    tinyint(1)                                                    null default null comment '删除标志（0代表存在 1代表删除）',
+    `status`      tinyint(1) null default null comment '角色状态（0正常 1停用）',
+    `data_scope`  tinyint(1) null default null comment '数据范围（1：全部数据权限 2: 自定义数据权限 3：仅自己数据权限）',
+    `del_flag`    tinyint(1) null default null comment '删除标志（0代表存在 1代表删除）',
     `create_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci  not null comment '创建人',
-    `create_time` datetime(0)                                                   null default null comment '创建日期',
+    `create_time` datetime(0) null default null comment '创建日期',
     `update_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci  not null comment '更新人',
-    `update_time` datetime(0)                                                   null default null comment '更新日期',
+    `update_time` datetime(0) null default null comment '更新日期',
     primary key (`role_id`) using btree,
     unique index `uniq_sys_role_role_key` (`role_key`) using btree,
-    index `idx_sr_role_key` (`role_key`) using btree
+    index         `idx_sr_role_key` (`role_key`) using btree
 ) engine = innodb
   character set = utf8
   collate = utf8_general_ci comment = '角色表'
@@ -34,29 +32,29 @@ values ('2', '普通用户', 'common', 0, 3, 0, 'admin', sysdate(), '', null);
 drop table if exists `sys_user`;
 create table `sys_user`
 (
-    `user_id`     varchar(64) character set utf8mb4 collate utf8mb4_general_ci  not null comment '主键',
-    `user_name`   varchar(32) character set utf8mb4 collate utf8mb4_general_ci  not null comment '角色名称',
-    `real_name`   varchar(32) character set utf8mb4 collate utf8mb4_general_ci  null default null comment '真实名称',
-    `user_type`   tinyint(1)                                                    null default 0 comment '用户类型（0系统用户）',
+    `user_id`     varchar(64) character set utf8mb4 collate utf8mb4_general_ci not null comment '主键',
+    `user_name`   varchar(32) character set utf8mb4 collate utf8mb4_general_ci not null comment '角色名称',
+    `real_name`   varchar(32) character set utf8mb4 collate utf8mb4_general_ci null default null comment '真实名称',
+    `user_type`   tinyint(1) null default 0 comment '用户类型（0系统用户）',
     `password`    varchar(255) character set utf8mb4 collate utf8mb4_general_ci null default null comment '密码',
     `avatar`      varchar(255) character set utf8mb4 collate utf8mb4_general_ci null default null comment '头像',
-    `birthday`    datetime(0)                                                   null default null comment '生日',
-    `sex`         tinyint(1)                                                    null default null comment '性别(0-默认未知,1-男,2-女)',
-    `email`       varchar(50) character set utf8mb4 collate utf8mb4_general_ci  null default null comment '用户邮箱',
-    `phone`       varchar(50) character set utf8mb4 collate utf8mb4_general_ci  null default null comment '电话',
-    `status`      tinyint(1)                                                    null default null comment '用户状态（0正常 1停用）',
-    `del_flag`    tinyint(1)                                                    null default null comment '删除标志（0代表存在 1代表删除）',
-    `create_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci  not null comment '创建人',
-    `create_time` datetime(0)                                                   null default null comment '创建日期',
-    `update_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci  not null comment '更新人',
-    `update_time` datetime(0)                                                   null default null comment '更新日期',
+    `birthday`    datetime(0) null default null comment '生日',
+    `sex`         tinyint(1) null default null comment '性别(0-默认未知,1-男,2-女)',
+    `email`       varchar(50) character set utf8mb4 collate utf8mb4_general_ci null default null comment '用户邮箱',
+    `phone`       varchar(50) character set utf8mb4 collate utf8mb4_general_ci null default null comment '电话',
+    `status`      tinyint(1) null default null comment '用户状态（0正常 1停用）',
+    `del_flag`    tinyint(1) null default null comment '删除标志（0代表存在 1代表删除）',
+    `create_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci not null comment '创建人',
+    `create_time` datetime(0) null default null comment '创建日期',
+    `update_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci not null comment '更新人',
+    `update_time` datetime(0) null default null comment '更新日期',
     primary key (`user_id`) using btree,
     unique index `index_user_name` (`user_name`) using btree,
     unique index `uniq_sys_user_phone` (`phone`) using btree,
     unique index `uniq_sys_user_email` (`email`) using btree,
-    index `idx_us_user_name` (`user_name`) using btree,
-    index `idx_su_status` (`status`) using btree,
-    index `idx_su_del_flag` (`del_flag`) using btree
+    index         `idx_us_user_name` (`user_name`) using btree,
+    index         `idx_su_status` (`status`) using btree,
+    index         `idx_su_del_flag` (`del_flag`) using btree
 ) engine = InnoDB
   character set = utf8
   collate = utf8_general_ci comment = '用户表'
@@ -78,12 +76,12 @@ create table `sys_user_role`
     `user_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci null default null comment '用户id',
     `role_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci null default null comment '角色id',
     primary key (`id`) using btree,
-    index `index2_groupuu_user_id` (`user_id`) using btree,
-    index `index2_groupuu_ole_id` (`role_id`) using btree,
-    index `index2_groupuu_useridandroleid` (`user_id`, `role_id`) using btree,
-    index `idx_sur_user_id` (`user_id`) using btree,
-    index `idx_sur_role_id` (`role_id`) using btree,
-    index `idx_sur_user_role_id` (`user_id`, `role_id`) using btree
+    index     `index2_groupuu_user_id` (`user_id`) using btree,
+    index     `index2_groupuu_ole_id` (`role_id`) using btree,
+    index     `index2_groupuu_useridandroleid` (`user_id`, `role_id`) using btree,
+    index     `idx_sur_user_id` (`user_id`) using btree,
+    index     `idx_sur_role_id` (`role_id`) using btree,
+    index     `idx_sur_user_role_id` (`user_id`, `role_id`) using btree
 ) engine = InnoDB
   character set = utf8
   collate = utf8_general_ci comment = '用户角色表'
@@ -101,28 +99,28 @@ create table `sys_permission_menu`
 (
     `menu_id`     varchar(64) character set utf8 collate utf8_general_ci       not null comment '主键',
     `menu_name`   varchar(50) character set utf8 collate utf8_general_ci       not null comment '菜单名称',
-    `parent_id`   varchar(32) character set utf8 collate utf8_general_ci       null default '0' comment '父菜单id',
-    `order_num`   int(4)                                                            default 0 comment '显示顺序',
-    `path`        varchar(200) character set utf8 collate utf8_general_ci      null default null comment '路由地址',
-    `component`   varchar(255) character set utf8 collate utf8_general_ci      null default null comment '组件地址',
-    `is_frame`    tinyint(1)                                                   null default null comment '是否为外链（0是 1否）',
-    `is_cache`    tinyint(1)                                                   null default null comment '是否缓存（0缓存 1不缓存）',
-    `menu_type`   varchar(2) character set utf8 collate utf8_general_ci        null default null comment '菜单类型（M目录 C菜单 F按钮）',
-    `visible`     tinyint(1)                                                   null default null comment '菜单状态（0显示 1隐藏）',
-    `status`      tinyint(1)                                                   null default null comment '菜单状态（0正常 1停用）',
-    `perms`       varchar(100) character set utf8 collate utf8_general_ci      null default null comment '权限标识',
-    `icon`        varchar(100) character set utf8 collate utf8_general_ci      null default null comment '菜单图标',
-    `del_flag`    tinyint(1)                                                   null default null comment '删除标志（0代表存在 1代表删除）',
+    `parent_id`   varchar(32) character set utf8 collate utf8_general_ci null default '0' comment '父菜单id',
+    `order_num`   int(4) default 0 comment '显示顺序',
+    `path`        varchar(200) character set utf8 collate utf8_general_ci null default null comment '路由地址',
+    `component`   varchar(255) character set utf8 collate utf8_general_ci null default null comment '组件地址',
+    `is_frame`    tinyint(1) null default null comment '是否为外链（0是 1否）',
+    `is_cache`    tinyint(1) null default null comment '是否缓存（0缓存 1不缓存）',
+    `menu_type`   varchar(2) character set utf8 collate utf8_general_ci null default null comment '菜单类型（M目录 C菜单 F按钮）',
+    `visible`     tinyint(1) null default null comment '菜单状态（0显示 1隐藏）',
+    `status`      tinyint(1) null default null comment '菜单状态（0正常 1停用）',
+    `perms`       varchar(100) character set utf8 collate utf8_general_ci null default null comment '权限标识',
+    `icon`        varchar(100) character set utf8 collate utf8_general_ci null default null comment '菜单图标',
+    `del_flag`    tinyint(1) null default null comment '删除标志（0代表存在 1代表删除）',
     `create_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci not null comment '创建人',
-    `create_time` datetime(0)                                                  null default null comment '创建日期',
+    `create_time` datetime(0) null default null comment '创建日期',
     `update_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci not null comment '更新人',
-    `update_time` datetime(0)                                                  null default null comment '更新日期',
+    `update_time` datetime(0) null default null comment '更新日期',
     primary key (`menu_id`) using btree,
-    index `index_prem_pid` (`parent_id`) using btree,
-    index `index_prem_del_flag` (`del_flag`) using btree,
-    index `index_menu_type` (`menu_type`) using btree,
-    index `index_menu_visible` (`visible`) using btree,
-    index `index_menu_status` (`status`) using btree
+    index         `index_prem_pid` (`parent_id`) using btree,
+    index         `index_prem_del_flag` (`del_flag`) using btree,
+    index         `index_menu_type` (`menu_type`) using btree,
+    index         `index_menu_visible` (`visible`) using btree,
+    index         `index_menu_status` (`status`) using btree
 ) engine = InnoDB
   character set = utf8
   collate = utf8_general_ci comment = '权限菜单表'
@@ -139,7 +137,7 @@ insert into sys_permission_menu
 values ('100', '博客管理', '1', '1', 'blog', 'system/blog/index', 1, 0, 'C', '0', '0', 'system:blog:list', 'blog', 0,
         'admin', sysdate(), '', null);
 insert into sys_permission_menu
-values ('101', '分类管理', '1', '2', 'type', 'system/blog/index', 1, 0, 'C', '0', '0', 'system:type:list', 'type', 0,
+values ('101', '分类管理', '1', '2', 'type', 'system/type/index', 1, 0, 'C', '0', '0', 'system:type:list', 'type', 0,
         'admin', sysdate(), '', null);
 insert into sys_permission_menu
 values ('102', '标签管理', '1', '3', 'tag', 'system/tag/index', 1, 0, 'C', '0', '0', 'system:tag:list', 'tag', 0,
@@ -154,7 +152,7 @@ insert into sys_permission_menu
 values ('105', '菜单管理', '1', '6', 'menu', 'system/menu/index', 1, 0, 'C', '0', '0', 'system:menu:list', 'tree-table', 0,
         'admin', sysdate(), '', null);
 insert into sys_permission_menu
-values ('106', '字典管理', '1', '7', 'menu', 'system/dict/index', 1, 0, 'C', '0', '0', 'system:dict:list', 'dict', 0,
+values ('106', '字典管理', '1', '7', 'dict', 'system/dict/index', 1, 0, 'C', '0', '0', 'system:dict:list', 'dict', 0,
         'admin', sysdate(), '', null);
 insert into sys_permission_menu
 values ('107', '日志管理', '1', '8', 'log', '', 1, 0, 'M', '0', '0', '', 'log', 0,
@@ -171,16 +169,16 @@ values ('110', '服务监控', '2', '3', 'server', 'monitor/server/index', 1, 0,
         0,
         'admin', sysdate(), '', null);
 insert into sys_permission_menu
-values ('111', '服务监控', '2', '4', 'cache', 'monitor/cache/index', 1, 0, 'C', '0', '0', 'monitor:cache:list', 'cache', 0,
+values ('111', '缓存监控', '2', '4', 'cache', 'monitor/cache/index', 1, 0, 'C', '0', '0', 'monitor:cache:list', 'redis', 0,
         'admin', sysdate(), '', null);
 
 -- 三级菜单
 insert into sys_permission_menu
-values ('500', '操作日志', '108', '1', 'log', 'monitor/operlog/index', 1, 0, 'C', '0', '0', 'monitor:operlog:list', 'form',
+values ('500', '操作日志', '107', '1', 'log', 'monitor/operlog/index', 1, 0, 'C', '0', '0', 'monitor:operlog:list', 'form',
         0,
         'admin', sysdate(), '', null);
 insert into sys_permission_menu
-values ('501', '登录日志', '108', '2', 'logininfor', 'monitor/operlog/index', 1, 0, 'C', '0', '0',
+values ('501', '登录日志', '107', '2', 'logininfor', 'monitor/logininfor/index', 1, 0, 'C', '0', '0',
         'monitor:logininfor:list', 'logininfor', 0,
         'admin', sysdate(), '', null);
 
@@ -317,11 +315,11 @@ create table `sys_role_permission`
     `role_id`       varchar(32) character set utf8 collate utf8_general_ci null default null comment '角色id',
     `permission_id` varchar(32) character set utf8 collate utf8_general_ci null default null comment '权限id',
     primary key (`id`) using btree,
-    index `index_group_role_per_id` (`role_id`, `permission_id`) using btree,
-    index `index_group_role_id` (`role_id`) using btree,
-    index `index_group_per_id` (`permission_id`) using btree,
-    index `idx_srp_role_id` (`role_id`) using btree,
-    index `idx_srp_permission_id` (`permission_id`) using btree
+    index           `index_group_role_per_id` (`role_id`, `permission_id`) using btree,
+    index           `index_group_role_id` (`role_id`) using btree,
+    index           `index_group_per_id` (`permission_id`) using btree,
+    index           `idx_srp_role_id` (`role_id`) using btree,
+    index           `idx_srp_permission_id` (`permission_id`) using btree
 ) engine = InnoDB
   character set = utf8
   collate = utf8_general_ci comment = '角色权限表'
@@ -366,13 +364,13 @@ drop table if exists `sys_login_info`;
 create table sys_login_info
 (
     info_id        varchar(64) character set utf8 collate utf8_general_ci not null comment '访问ID',
-    user_name      varchar(50) character set utf8 collate utf8_general_ci      default null comment '用户账号',
-    ipaddr         varchar(128) character set utf8 collate utf8_general_ci     default null comment '登录IP地址',
-    login_location varchar(255) character set utf8 collate utf8_general_ci     default null comment '登录地点',
-    browser        varchar(50) character set utf8 collate utf8_general_ci      default null comment '浏览器类型',
-    os             varchar(50) character set utf8 collate utf8_general_ci      default null comment '操作系统',
-    status         tinyint(1)                                             null default null comment '登录状态（0成功 1失败）',
-    msg            varchar(255) character set utf8 collate utf8_general_ci     default '' comment '提示消息',
+    user_name      varchar(50) character set utf8 collate utf8_general_ci  default null comment '用户账号',
+    ipaddr         varchar(128) character set utf8 collate utf8_general_ci default null comment '登录IP地址',
+    login_location varchar(255) character set utf8 collate utf8_general_ci default null comment '登录地点',
+    browser        varchar(50) character set utf8 collate utf8_general_ci  default null comment '浏览器类型',
+    os             varchar(50) character set utf8 collate utf8_general_ci  default null comment '操作系统',
+    status         tinyint(1) null default null comment '登录状态（0成功 1失败）',
+    msg            varchar(255) character set utf8 collate utf8_general_ci default '' comment '提示消息',
     login_time     datetime comment '访问时间',
     primary key (info_id) using btree
 ) engine = InnoDB
@@ -384,19 +382,19 @@ create table sys_login_info
 drop table if exists `sys_oper_log`;
 create table `sys_oper_log`
 (
-    `oper_id`        varchar(64) character set utf8 collate utf8_general_ci   not null comment '主键',
-    `title`          varchar(50) character set utf8 collate utf8_general_ci   null default null comment '模块标题',
-    `business_type`  tinyint(1)                                               null default null comment '业务类型（0其它 1新增 2修改 3删除）',
-    `method`         varchar(100) character set utf8 collate utf8_general_ci  null default null comment '方法名称',
-    `request_method` varchar(10) character set utf8 collate utf8_general_ci   null default null comment '请求方式',
-    `operator_type`  tinyint(1)                                               null default null comment '操作类别（0其它 1后台用户 2手机端用户）',
-    `oper_name`      varchar(50) character set utf8 collate utf8_general_ci   null default null comment '操作人员',
-    `oper_url`       varchar(255) character set utf8 collate utf8_general_ci  null default null comment '请求URL',
-    `oper_ip`        varchar(128) character set utf8 collate utf8_general_ci  null default null comment '主机地址',
-    `oper_location`  varchar(255) character set utf8 collate utf8_general_ci  null default null comment '操作地点',
+    `oper_id`        varchar(64) character set utf8 collate utf8_general_ci not null comment '主键',
+    `title`          varchar(50) character set utf8 collate utf8_general_ci null default null comment '模块标题',
+    `business_type`  tinyint(1) null default null comment '业务类型（0其它 1新增 2修改 3删除）',
+    `method`         varchar(100) character set utf8 collate utf8_general_ci null default null comment '方法名称',
+    `request_method` varchar(10) character set utf8 collate utf8_general_ci null default null comment '请求方式',
+    `operator_type`  tinyint(1) null default null comment '操作类别（0其它 1后台用户 2手机端用户）',
+    `oper_name`      varchar(50) character set utf8 collate utf8_general_ci null default null comment '操作人员',
+    `oper_url`       varchar(255) character set utf8 collate utf8_general_ci null default null comment '请求URL',
+    `oper_ip`        varchar(128) character set utf8 collate utf8_general_ci null default null comment '主机地址',
+    `oper_location`  varchar(255) character set utf8 collate utf8_general_ci null default null comment '操作地点',
     `oper_param`     varchar(2000) character set utf8 collate utf8_general_ci null default null comment '请求参数',
-    `json_result`    varchar(2000)                                                 default '' comment '返回参数',
-    `status`         tinyint(1)                                               null default null comment '操作状态（0正常 1异常）',
+    `json_result`    varchar(2000) default '' comment '返回参数',
+    `status`         tinyint(1) null default null comment '操作状态（0正常 1异常）',
     `error_msg`      varchar(2000) character set utf8 collate utf8_general_ci null default null comment '错误消息',
     `oper_time`      datetime comment '操作时间',
     primary key (`oper_id`) using btree
@@ -427,11 +425,15 @@ create table `sys_dict_type`
 
 -- 初始化字典类型表
 insert into sys_dict_type
-values ('1', '用户性别', 'sys_user_sex', '0', 'admin', sysdate(), '', null, '用户性别列表');
+values ('1', '用户性别', 'sys_user_sex', 0, 'admin', sysdate(), '', null, '用户性别列表');
 insert into sys_dict_type
-values ('2', '菜单状态', 'sys_show_hide', '0', 'admin', sysdate(), '', null, '菜单状态列表');
+values ('2', '菜单状态', 'sys_show_hide', 0, 'admin', sysdate(), '', null, '菜单状态列表');
 insert into sys_dict_type
-values ('3', '系统开关', 'sys_normal_disable', '0', 'admin', sysdate(), '', null, '系统开关列表');
+values ('3', '系统开关', 'sys_normal_disable', 0, 'admin', sysdate(), '', null, '系统开关列表');
+insert into sys_dict_type
+values ('4', '操作类型', 'sys_oper_type', 0, 'admin', sysdate(), '', null, '操作类型列表');
+insert into sys_dict_type
+values ('5', '系统状态', 'sys_common_status', 0, 'admin', sysdate(), '', null, '登录状态列表');
 
 -- 字典数据表
 drop table if exists `sys_dict_data`;
@@ -459,19 +461,35 @@ create table `sys_dict_data`
 
 -- 初始化字典数据表
 insert into sys_dict_data
-values ('1', 1, '男', '0', 'sys_user_sex', '', '', 0, '0', 'admin', sysdate(), '', null, '性别男');
+values ('1', 1, '男', '0', 'sys_user_sex', '', '', 0, 0, 'admin', sysdate(), '', null, '性别男');
 insert into sys_dict_data
-values ('2', 2, '女', '1', 'sys_user_sex', '', '', 1, '0', 'admin', sysdate(), '', null, '性别女');
+values ('2', 2, '女', '1', 'sys_user_sex', '', '', 1, 0, 'admin', sysdate(), '', null, '性别女');
 insert into sys_dict_data
-values ('3', 3, '未知', '2', 'sys_user_sex', '', '', 1, '0', 'admin', sysdate(), '', null, '性别未知');
+values ('3', 3, '未知', '2', 'sys_user_sex', '', '', 1, 0, 'admin', sysdate(), '', null, '性别未知');
 insert into sys_dict_data
-values ('4', 1, '显示', '0', 'sys_show_hide', '', 'primary', 0, '0', 'admin', sysdate(), '', null, '显示菜单');
+values ('4', 1, '显示', '0', 'sys_show_hide', '', 'primary', 0, 0, 'admin', sysdate(), '', null, '显示菜单');
 insert into sys_dict_data
-values ('5', 2, '隐藏', '1', 'sys_show_hide', '', 'danger', 1, '0', 'admin', sysdate(), '', null, '隐藏菜单');
+values ('5', 2, '隐藏', '1', 'sys_show_hide', '', 'danger', 1, 0, 'admin', sysdate(), '', null, '隐藏菜单');
 insert into sys_dict_data
-values ('6', 1, '正常', '0', 'sys_normal_disable', '', 'primary', 0, '0', 'admin', sysdate(), '', null, '正常状态');
+values ('6', 1, '正常', '0', 'sys_normal_disable', '', 'primary', 0, 0, 'admin', sysdate(), '', null, '正常状态');
 insert into sys_dict_data
-values ('7', 2, '停用', '1', 'sys_normal_disable', '', 'danger', 1, '0', 'admin', sysdate(), '', null, '停用状态');
+values ('7', 2, '停用', '1', 'sys_normal_disable', '', 'danger', 1, 0, 'admin', sysdate(), '', null, '停用状态');
+insert into sys_dict_data
+values ('8', 1, '成功', '0', 'sys_common_status', '', 'primary', 1, 0, 'admin', sysdate(), '', null, '正常状态');
+insert into sys_dict_data
+values ('9', 2, '失败', '1', 'sys_common_status', '', 'danger', 1, 0, 'admin', sysdate(), '', null, '停用状态');
+insert into sys_dict_data
+values ('10', 1, '新增', '1', 'sys_oper_type', '', 'info', 1, 0, 'admin', sysdate(), '', null, '新增操作');
+insert into sys_dict_data
+values ('11', 2, '修改', '2', 'sys_oper_type', '', 'info', 1, 0, 'admin', sysdate(), '', null, '修改操作');
+insert into sys_dict_data
+values ('12', 3, '删除', '3', 'sys_oper_type', '', 'danger', 1, 0, 'admin', sysdate(), '', null, '删除操作');
+insert into sys_dict_data
+values ('13', 4, '授权', '4', 'sys_oper_type', '', 'primary', 1, 0, 'admin', sysdate(), '', null, '授权操作');
+insert into sys_dict_data
+values ('14', 5, '强退', '5', 'sys_oper_type', '', 'danger', 1, 0, 'admin', sysdate(), '', null, '强退操作');
+insert into sys_dict_data
+values ('15', 6, '清空数据', '6', 'sys_oper_type', '', 'danger', 1, 0, 'admin', sysdate(), '', null, '清空操作');
 
 -- 系统配置
 drop table if exists sys_config;
@@ -481,7 +499,7 @@ create table sys_config
     config_name  varchar(100) character set utf8 collate utf8_general_ci default '' comment '参数名称',
     config_key   varchar(100) character set utf8 collate utf8_general_ci default '' comment '参数键名',
     config_value varchar(500) character set utf8 collate utf8_general_ci default '' comment '参数键值',
-    config_type  tinyint(1)                                              default 0 comment '系统内置（0是 1否）',
+    config_type  tinyint(1) default 0 comment '系统内置（0是 1否）',
     create_by    varchar(64) character set utf8 collate utf8_general_ci  default '' comment '创建者',
     create_time  datetime comment '创建时间',
     update_by    varchar(64) character set utf8 collate utf8_general_ci  default '' comment '更新者',

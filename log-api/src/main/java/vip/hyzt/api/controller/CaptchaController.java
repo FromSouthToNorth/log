@@ -50,7 +50,6 @@ public class CaptchaController {
     public Result getCode(HttpServletResponse response) throws IOException {
         Result result = Result.success();
         boolean captchaOnOff = configService.selectCaptchaOnOff();
-        System.out.println("captchaOnOff = " + captchaOnOff);
         result.put("captchaOnOff", captchaOnOff);
         if (!captchaOnOff) {
             return result;

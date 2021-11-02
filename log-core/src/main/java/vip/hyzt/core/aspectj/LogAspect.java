@@ -18,6 +18,7 @@ import vip.hyzt.common.annotation.Log;
 import vip.hyzt.common.enums.BusinessStatus;
 import vip.hyzt.common.utils.ServletUtils;
 import vip.hyzt.common.utils.ip.IpUtils;
+import vip.hyzt.common.utils.uuid.IdUtils;
 import vip.hyzt.core.domain.LoginUser;
 import vip.hyzt.core.manager.AsyncManager;
 import vip.hyzt.core.manager.factory.AsyncFactory;
@@ -75,6 +76,7 @@ public class LogAspect {
 
             String className = joinPoint.getTarget().getClass().getName();
             String methodName = joinPoint.getSignature().getName();
+            operLog.setOperId(IdUtils.simpleUUID());
             operLog.setMethod(className + "." + methodName + "()");
             operLog.setRequestMethod(ServletUtils.getRequest().getMethod());
             getControllerMethodDescription(joinPoint, controllerLog, operLog, jsonResult);

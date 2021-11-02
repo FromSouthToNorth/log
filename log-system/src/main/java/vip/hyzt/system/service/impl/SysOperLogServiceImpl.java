@@ -32,7 +32,7 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
      */
     @Override
     public List<SysOperLog> selectOperLog(SysOperLog operLog) {
-        return null;
+        return operLogMapper.selectOperLog(operLog);
     }
 
     /**

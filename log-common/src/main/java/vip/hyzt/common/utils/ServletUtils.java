@@ -5,6 +5,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import vip.hyzt.common.constant.HttpStatus;
+import vip.hyzt.common.core.text.Convert;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,7 +38,7 @@ public abstract class ServletUtils {
      * @return parameter
      */
     @Nullable
-    private static Integer getParameterToInt(String name) {
+    public static Integer getParameterToInt(String name) {
         String parameter = getRequest().getParameter(name);
         try {
             return Integer.parseInt(parameter);
@@ -91,6 +92,14 @@ public abstract class ServletUtils {
         catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 获取Boolean参数
+     */
+    public static Boolean getParameterToBool(String name)
+    {
+        return Convert.toBool(getRequest().getParameter(name));
     }
 
 }

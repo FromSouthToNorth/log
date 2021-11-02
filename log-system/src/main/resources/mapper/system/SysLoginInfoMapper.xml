@@ -27,7 +27,7 @@
            status,
            msg,
            login_time
-        from sys_login_info;
+        from sys_login_info
     </sql>
 
     <insert id="insertLoginInfo" parameterType="SysLoginInfo">
@@ -58,14 +58,14 @@
     </select>
 
     <delete id="deleteLoginInfoIds" parameterType="String">
-        delete from sys_logininfor where info_id in
+        delete from sys_login_info where info_id in
         <foreach collection="array" item="infoId" open="(" separator="," close=")">
             #{infoId}
         </foreach>
     </delete>
 
     <update id="cleanLoginInfo">
-        truncate table sys_logininfor
+        truncate table sys_login_info
     </update>
 
 </mapper>
