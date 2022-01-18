@@ -6,14 +6,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import vip.hyzt.common.constant.Constants;
 import vip.hyzt.common.constant.UserConstants;
-import vip.hyzt.system.domain.MetaVo;
-import vip.hyzt.system.domain.RouterVo;
-import vip.hyzt.system.domain.SysPermissionMenu;
-import vip.hyzt.system.domain.SysUser;
+import vip.hyzt.system.domain.*;
 import vip.hyzt.system.mapper.SysPermissionMenuMapper;
+import vip.hyzt.system.mapper.SysRoleMapper;
+import vip.hyzt.system.mapper.SysRolePermissionMapper;
 import vip.hyzt.system.service.ISysPermissionMenuService;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Permission menu business processing
@@ -25,6 +25,12 @@ public class SysPermissionMenuServiceImpl implements ISysPermissionMenuService {
 
     @Autowired
     private SysPermissionMenuMapper permissionMenuMapper;
+
+    @Autowired
+    private SysRoleMapper roleMapper;
+
+    @Autowired
+    private SysRolePermissionMapper rolePermissionMapper;
 
     /**
      * Query permissions based on user ID
@@ -73,9 +79,20 @@ public class SysPermissionMenuServiceImpl implements ISysPermissionMenuService {
         }
         else {
             permissionMenu.getParams().put("userId", userId);
-            menuList = permissionMenuMapper.selectPermissionMenuList(permissionMenu);
+            menuList = permissionMenuMapper.selectPermissionMenuListByUserId(permissionMenu);
         }
         return menuList;
+    }
+
+    /**
+     * 根据角色ID查询菜单树信息
+     * @param roleId 角色ID
+     * @return 选中菜单列表
+     */
+    @Override
+    public List<String> selectMenuListByRoleId(String roleId) {
+        SysRole role = roleMapper.selectRoleById(roleId);
+        return permissionMenuMapper.selectMenuListByRoleId(roleId, role.isMenuCheckStrictly());
     }
 
     /**
@@ -127,6 +144,119 @@ public class SysPermissionMenuServiceImpl implements ISysPermissionMenuService {
             routers.add(router);
         }
         return routers;
+    }
+
+    /**
+     * 构建前端所需要树结构
+     * @param menus 菜单列表
+     * @return 树结构列表
+     */
+    @Override
+    public List<SysPermissionMenu> buildMenuTree(List<SysPermissionMenu> menus) {
+        List<SysPermissionMenu> menuArrayList = new ArrayList<>();
+        List<String> tempList = new ArrayList<>();
+        for (SysPermissionMenu sysPermissionMenu : menus) {
+            tempList.add(sysPermissionMenu.getMenuId());
+        }
+        for (Iterator<SysPermissionMenu> iterator = menus.iterator(); iterator.hasNext();) {
+            SysPermissionMenu menu = iterator.next();
+            if (!tempList.contains(menu.getParentId())) {
+                recursionFn(menus, menu);
+                menuArrayList.add(menu);
+            }
+        }
+        if (menuArrayList.isEmpty()) {
+            menuArrayList = menus;
+        }
+        return menuArrayList;
+    }
+
+    /**
+     * 构建前端所需要下拉树结构
+     * @param menus 菜单列表
+     * @return 下拉树结构列表
+     */
+    @Override
+    public List<TreeSelect> buildMenuTreeSelect(List<SysPermissionMenu> menus) {
+        List<SysPermissionMenu> menuList = buildMenuTree(menus);
+        return menuList.stream().map(TreeSelect::new).collect(Collectors.toList());
+    }
+
+    /**
+     * 根据菜单ID查询信息
+     * @param menuId 菜单ID
+     * @return 菜单信息
+     */
+    @Override
+    public SysPermissionMenu selectMenuById(String menuId) {
+        return permissionMenuMapper.selectMenuById(menuId);
+    }
+
+    /**
+     * 是否存在菜单子节点
+     * @param menuId 菜单ID
+     * @return 结果
+     */
+    @Override
+    public boolean hasChildByMenuId(String menuId) {
+        int result = permissionMenuMapper.hasChildByMenuId(menuId);
+        return result > 0;
+    }
+
+    /**
+     * 查询菜单使用数量
+     * @param menuId 菜单ID
+     * @return 结果
+     */
+    @Override
+    public boolean checkMenuExistRole(String menuId) {
+        int result = rolePermissionMapper.checkMenuExistRole(menuId);
+        return result > 0;
+    }
+
+    /**
+     * 新增保存菜单信息
+     * @param menu 菜单信息
+     * @return 结果
+     */
+    @Override
+    public int insertMenu(SysPermissionMenu menu) {
+        return permissionMenuMapper.insertMenu(menu);
+    }
+
+    /**
+     * 修改保存菜单信息
+     * @param menu 菜单信息
+     * @return 结果
+     */
+    @Override
+    public int updateMenu(SysPermissionMenu menu) {
+        return permissionMenuMapper.updateMenu(menu);
+    }
+
+    /**
+     * 删除菜单管理信息
+     * @param menuId 菜单ID
+     * @return 结果
+     */
+    @Override
+    public int deleteMenuById(String menuId) {
+        return permissionMenuMapper.deleteMenuById(menuId);
+    }
+
+    /**
+     * 校验菜单名称是否唯一
+     * @param menu 菜单信息
+     * @return 结果
+     */
+    @Override
+    public String checkMenuNameUnique(SysPermissionMenu menu) {
+        String menuId = ObjectUtils.isEmpty(menu.getMenuId()) ? "-1" : menu.getMenuId();
+        SysPermissionMenu info = permissionMenuMapper.checkMenuNameUnique(menu.getMenuName(), menu.getParentId());
+        if (!ObjectUtils.isEmpty(info) && info.getMenuId().equals(menuId)) {
+            return UserConstants.NOT_UNIQUE;
+        }
+        return UserConstants.UNIQUE;
     }
 
     /**

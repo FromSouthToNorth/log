@@ -50,6 +50,14 @@ public class SysUser extends BaseEntity {
     /** Role ID */
     private String roleId;
 
+    public SysUser() {
+
+    }
+
+    public SysUser(String userId) {
+        this.userId = userId;
+    }
+
     public String getUserId() {
         return userId;
     }

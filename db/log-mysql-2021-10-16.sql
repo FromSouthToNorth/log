@@ -4,19 +4,22 @@ use
 drop table if exists `sys_role`;
 create table `sys_role`
 (
-    `role_id`     varchar(64) character set utf8mb4 collate utf8mb4_general_ci  not null comment '主键',
-    `role_name`   varchar(32) character set utf8mb4 collate utf8mb4_general_ci  not null comment '角色名称',
-    `role_key`    varchar(100) character set utf8mb4 collate utf8mb4_general_ci not null comment '角色权限字符串',
-    `status`      tinyint(1) null default null comment '角色状态（0正常 1停用）',
-    `data_scope`  tinyint(1) null default null comment '数据范围（1：全部数据权限 2: 自定义数据权限 3：仅自己数据权限）',
-    `del_flag`    tinyint(1) null default null comment '删除标志（0代表存在 1代表删除）',
-    `create_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci  not null comment '创建人',
-    `create_time` datetime(0) null default null comment '创建日期',
-    `update_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci  not null comment '更新人',
-    `update_time` datetime(0) null default null comment '更新日期',
+    `role_id`             varchar(64) character set utf8mb4 collate utf8mb4_general_ci  not null comment '主键',
+    `role_name`           varchar(32) character set utf8mb4 collate utf8mb4_general_ci  not null comment '角色名称',
+    `role_key`            varchar(100) character set utf8mb4 collate utf8mb4_general_ci not null comment '角色权限字符串',
+    `role_sort`           int(4)                                                        not null comment '显示顺序',
+    `status`              tinyint(1)                                                    null default null comment '角色状态（0正常 1停用）',
+    `data_scope`          tinyint(1)                                                    null default null comment '数据范围（1：全部数据权限 2: 自定义数据权限 3：仅自己数据权限）',
+    `menu_check_strictly` tinyint(1)                                                         default 1 comment '菜单树选择项是否关联显示',
+    `dept_check_strictly` tinyint(1)                                                         default 1 comment '部门树选择项是否关联显示',
+    `del_flag`            tinyint(1)                                                    null default null comment '删除标志（0代表存在 1代表删除）',
+    `create_by`           varchar(50) character set utf8mb4 collate utf8mb4_general_ci  not null comment '创建人',
+    `create_time`         datetime(0)                                                   null default null comment '创建日期',
+    `update_by`           varchar(50) character set utf8mb4 collate utf8mb4_general_ci  not null comment '更新人',
+    `update_time`         datetime(0)                                                   null default null comment '更新日期',
     primary key (`role_id`) using btree,
     unique index `uniq_sys_role_role_key` (`role_key`) using btree,
-    index         `idx_sr_role_key` (`role_key`) using btree
+    index `idx_sr_role_key` (`role_key`) using btree
 ) engine = innodb
   character set = utf8
   collate = utf8_general_ci comment = '角色表'
@@ -24,9 +27,9 @@ create table `sys_role`
 
 -- 初始化角色信息
 insert into sys_role
-values ('1', '超级管理员', 'admin', 0, 1, 0, 'admin', sysdate(), '', null);
+values ('1', '超级管理员', 'admin', 1, 0, 1, 1, 1, 0, 'admin', sysdate(), '', null);
 insert into sys_role
-values ('2', '普通用户', 'common', 0, 3, 0, 'admin', sysdate(), '', null);
+values ('2', '普通用户', 'common', 2, 0, 3, 1, 1, 0, 'admin', sysdate(), '', null);
 
 -- 用户表
 drop table if exists `sys_user`;
@@ -155,30 +158,34 @@ insert into sys_permission_menu
 values ('106', '字典管理', '1', '7', 'dict', 'system/dict/index', 1, 0, 'C', '0', '0', 'system:dict:list', 'dict', 0,
         'admin', sysdate(), '', null);
 insert into sys_permission_menu
-values ('107', '日志管理', '1', '8', 'log', '', 1, 0, 'M', '0', '0', '', 'log', 0,
+values ('107', '参数设置', '1', '8', 'config', 'system/config/index', 1, 0, 'C', '0', '0', 'system:config:list', 'edit', 0,
+        'admin', sysdate(), '', null);
+
+insert into sys_permission_menu
+values ('108', '日志管理', '1', '8', 'log', '', 1, 0, 'M', '0', '0', '', 'log', 0,
         'admin', sysdate(), '', null);
 insert into sys_permission_menu
-values ('108', '在线用户', '2', '1', 'online', 'monitor/online/index', 1, 0, 'C', '0', '0', 'monitor:online:list', 'online',
+values ('109', '在线用户', '2', '1', 'online', 'monitor/online/index', 1, 0, 'C', '0', '0', 'monitor:online:list', 'online',
         0,
         'admin', sysdate(), '', null);
 insert into sys_permission_menu
-values ('109', '数据监控', '2', '2', 'druid', 'monitor/druid/index', 1, 0, 'C', '0', '0', 'monitor:druid:list', 'druid', 0,
+values ('110', '数据监控', '2', '2', 'druid', 'monitor/druid/index', 1, 0, 'C', '0', '0', 'monitor:druid:list', 'druid', 0,
         'admin', sysdate(), '', null);
 insert into sys_permission_menu
-values ('110', '服务监控', '2', '3', 'server', 'monitor/server/index', 1, 0, 'C', '0', '0', 'monitor:server:list', 'server',
+values ('111', '服务监控', '2', '3', 'server', 'monitor/server/index', 1, 0, 'C', '0', '0', 'monitor:server:list', 'server',
         0,
         'admin', sysdate(), '', null);
 insert into sys_permission_menu
-values ('111', '缓存监控', '2', '4', 'cache', 'monitor/cache/index', 1, 0, 'C', '0', '0', 'monitor:cache:list', 'redis', 0,
+values ('112', '缓存监控', '2', '4', 'cache', 'monitor/cache/index', 1, 0, 'C', '0', '0', 'monitor:cache:list', 'redis', 0,
         'admin', sysdate(), '', null);
 
 -- 三级菜单
 insert into sys_permission_menu
-values ('500', '操作日志', '107', '1', 'log', 'monitor/operlog/index', 1, 0, 'C', '0', '0', 'monitor:operlog:list', 'form',
+values ('500', '操作日志', '108', '1', 'log', 'monitor/operlog/index', 1, 0, 'C', '0', '0', 'monitor:operlog:list', 'form',
         0,
         'admin', sysdate(), '', null);
 insert into sys_permission_menu
-values ('501', '登录日志', '107', '2', 'logininfor', 'monitor/logininfor/index', 1, 0, 'C', '0', '0',
+values ('501', '登录日志', '108', '2', 'logininfor', 'monitor/logininfor/index', 1, 0, 'C', '0', '0',
         'monitor:logininfor:list', 'logininfor', 0,
         'admin', sysdate(), '', null);
 
@@ -254,31 +261,46 @@ values ('1020', '角色删除', '104', '4', '', '', 1, 0, 'F', '0', '0', 'system
 
 -- 菜单管理按钮
 insert into sys_permission_menu
-values ('1021', '菜单查询', '106', '1', '', '', 1, 0, 'F', '0', '0', 'system:menu:query', '#', 0, 'admin', sysdate(), '',
+values ('1021', '菜单查询', '105', '1', '', '', 1, 0, 'F', '0', '0', 'system:menu:query', '#', 0, 'admin', sysdate(), '',
         null);
 insert into sys_permission_menu
-values ('1022', '菜单新增', '106', '2', '', '', 1, 0, 'F', '0', '0', 'system:menu:add', '#', 0, 'admin', sysdate(), '',
+values ('1022', '菜单新增', '105', '2', '', '', 1, 0, 'F', '0', '0', 'system:menu:add', '#', 0, 'admin', sysdate(), '',
         null);
 insert into sys_permission_menu
-values ('1023', '菜单修改', '106', '3', '', '', 1, 0, 'F', '0', '0', 'system:menu:edit', '#', 0, 'admin', sysdate(), '',
+values ('1023', '菜单修改', '105', '3', '', '', 1, 0, 'F', '0', '0', 'system:menu:edit', '#', 0, 'admin', sysdate(), '',
         null);
 insert into sys_permission_menu
-values ('1024', '菜单删除', '106', '4', '', '', 1, 0, 'F', '0', '0', 'system:menu:remove', '#', 0, 'admin', sysdate(), '',
+values ('1024', '菜单删除', '105', '4', '', '', 1, 0, 'F', '0', '0', 'system:menu:remove', '#', 0, 'admin', sysdate(), '',
         null);
 
 -- 字典管理按钮
 insert into sys_permission_menu
-values ('1025', '菜单查询', '107', '1', '', '', 1, 0, 'F', '0', '0', 'system:dict:query', '#', 0, 'admin', sysdate(), '',
+values ('1025', '字典查询', '106', '1', '', '', 1, 0, 'F', '0', '0', 'system:dict:query', '#', 0, 'admin', sysdate(), '',
         null);
 insert into sys_permission_menu
-values ('1026', '菜单新增', '107', '2', '', '', 1, 0, 'F', '0', '0', 'system:dict:add', '#', 0, 'admin', sysdate(), '',
+values ('1026', '字典新增', '106', '2', '', '', 1, 0, 'F', '0', '0', 'system:dict:add', '#', 0, 'admin', sysdate(), '',
         null);
 insert into sys_permission_menu
-values ('1027', '菜单修改', '107', '3', '', '', 1, 0, 'F', '0', '0', 'system:dict:edit', '#', 0, 'admin', sysdate(), '',
+values ('1027', '字典修改', '106', '3', '', '', 1, 0, 'F', '0', '0', 'system:dict:edit', '#', 0, 'admin', sysdate(), '',
         null);
 insert into sys_permission_menu
-values ('1028', '菜单删除', '107', '4', '', '', 1, 0, 'F', '0', '0', 'system:dict:remove', '#', 0, 'admin', sysdate(), '',
+values ('1028', '字典删除', '106', '4', '', '', 1, 0, 'F', '0', '0', 'system:dict:remove', '#', 0, 'admin', sysdate(), '',
         null);
+
+
+-- 参数设置按钮
+insert into sys_permission_menu
+values ('1036', '参数查询', '107', '1', '', '', 1, 0, 'F', '0', '0', 'system:config:query', '#', 0, 'admin', sysdate(),
+        '', null);
+insert into sys_permission_menu
+values ('1037', '参数新增', '107', '2', '', '', 1, 0, 'F', '0', '0', 'system:config:add', '#', 0, 'admin', sysdate(), '',
+        null);
+insert into sys_permission_menu
+values ('1038', '参数修改', '107', '3', '', '', 1, 0, 'F', '0', '0', 'system:config:edit', '#', 0, 'admin', sysdate(), '',
+        null);
+insert into sys_permission_menu
+values ('1039', '参数删除', '107', '4', '', '', 1, 0, 'F', '0', '0', 'system:config:remove', '#', 0, 'admin', sysdate(),
+        '', null);
 
 -- 操作日志按钮
 insert into sys_permission_menu
@@ -410,12 +432,12 @@ create table `sys_dict_type`
     `dict_id`     varchar(64) character set utf8 collate utf8_general_ci not null comment '字典主键',
     `dict_name`   varchar(100) character set utf8 collate utf8_general_ci comment '字典名称',
     `dict_type`   varchar(100) character set utf8 collate utf8_general_ci comment '字典类型',
-    `status`      tinyint(1)                                             null default null comment '状态（0正常 1停用）',
+    `status`      tinyint(1) null default null comment '状态（0正常 1停用）',
     `create_by`   varchar(64) character set utf8 collate utf8_general_ci comment '创建者',
     `create_time` datetime(0) comment '创建时间',
     `update_by`   varchar(64) character set utf8 collate utf8_general_ci comment '更新者',
     `update_time` datetime(0) comment '更新时间',
-    `remark`      varchar(500)                                           null default null comment '备注',
+    `remark`      varchar(500) null default null comment '备注',
     primary key (`dict_id`) using btree,
     unique index `uniq_dict_type` (`dict_type`) using btree
 ) engine = InnoDB
@@ -439,18 +461,18 @@ values ('5', '系统状态', 'sys_common_status', 0, 'admin', sysdate(), '', nul
 drop table if exists `sys_dict_data`;
 create table `sys_dict_data`
 (
-    dict_code   varchar(64) character set utf8 collate utf8_general_ci  not null comment '字典编码',
-    dict_sort   int(4)                                                       default 0 comment '字典排序',
+    dict_code   varchar(64) character set utf8 collate utf8_general_ci not null comment '字典编码',
+    dict_sort   int(4) default 0 comment '字典排序',
     dict_label  varchar(100) character set utf8 collate utf8_general_ci null default null comment '字典标签',
     dict_value  varchar(100) character set utf8 collate utf8_general_ci null default null comment '字典键值',
     dict_type   varchar(100) character set utf8 collate utf8_general_ci null default null comment '字典类型',
     css_class   varchar(100) character set utf8 collate utf8_general_ci null default null comment '样式属性（其他样式扩展）',
     list_class  varchar(100) character set utf8 collate utf8_general_ci null default null comment '表格回显样式',
-    is_default  tinyint(1)                                              null default null comment '是否默认（0是 1否）',
-    status      tinyint(1)                                              null default null comment '状态（0正常 1停用）',
-    create_by   varchar(64) character set utf8 collate utf8_general_ci  null default null comment '创建者',
+    is_default  tinyint(1) null default null comment '是否默认（0是 1否）',
+    status      tinyint(1) null default null comment '状态（0正常 1停用）',
+    create_by   varchar(64) character set utf8 collate utf8_general_ci null default null comment '创建者',
     create_time datetime comment '创建时间',
-    update_by   varchar(64) character set utf8 collate utf8_general_ci  null default null comment '更新者',
+    update_by   varchar(64) character set utf8 collate utf8_general_ci null default null comment '更新者',
     update_time datetime comment '更新时间',
     remark      varchar(500) character set utf8 collate utf8_general_ci null default null comment '备注',
     primary key (dict_code) using btree

@@ -44,7 +44,7 @@
 
     <insert id="insertOperLog" parameterType="SysOperLog">
         insert into sys_oper_log (oper_id, title, business_type, method, request_method, operator_type, oper_name, oper_url, oper_ip, oper_location, oper_param, json_result, status, error_msg, oper_time)
-        values (#{operId}, #{title}, #{businessType}, #{method}, #{requestMethod}, #{operatorType}, #{operParam}, #{operUrl}, #{operIp}, #{operLocation}, #{operParam}, #{jsonResult}, #{status}, #{errorMsg}, sysdate())
+        values (#{operId}, #{title}, #{businessType}, #{method}, #{requestMethod}, #{operatorType}, #{operName}, #{operUrl}, #{operIp}, #{operLocation}, #{operParam}, #{jsonResult}, #{status}, #{errorMsg}, sysdate())
     </insert>
 
     <select id="selectOperLog" parameterType="SysOperLog" resultMap="SysOperLogResult">

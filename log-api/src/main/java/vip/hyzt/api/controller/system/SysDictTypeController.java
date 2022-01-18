@@ -4,6 +4,7 @@ import vip.hyzt.common.annotation.Log;
 import vip.hyzt.common.constant.UserConstants;
 import vip.hyzt.common.core.page.TableDataInfo;
 import vip.hyzt.common.enums.BusinessType;
+import vip.hyzt.common.utils.uuid.IdUtils;
 import vip.hyzt.core.domain.Result;
 import vip.hyzt.core.web.controller.BaseController;
 import vip.hyzt.system.domain.SysDictType;
@@ -54,6 +55,7 @@ public class SysDictTypeController extends BaseController {
         if (UserConstants.NOT_UNIQUE.equals(dictTypeService.checkDictTypeUnique(dict))) {
             return Result.error("新增字典'" + dict.getDictName() + "'失败，字典类型已存在");
         }
+        dict.setDictId(IdUtils.simpleUUID());
         dict.setCreateBy(getUsername());
         return toAjax(dictTypeService.insertDictType(dict));
     }

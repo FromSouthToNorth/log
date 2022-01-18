@@ -4,12 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import vip.hyzt.common.constant.Constants;
+import vip.hyzt.common.constant.UserConstants;
+import vip.hyzt.common.core.text.Convert;
+import vip.hyzt.common.exception.ServiceException;
+import vip.hyzt.common.utils.StringUtils;
 import vip.hyzt.common.utils.redis.RedisCache;
 import vip.hyzt.system.domain.SysConfig;
 import vip.hyzt.system.mapper.SysConfigMapper;
 import vip.hyzt.system.service.ISysConfigService;
 
 import javax.annotation.PostConstruct;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -45,6 +50,29 @@ public class SysConfigServiceImpl implements ISysConfigService {
         }
     }
 
+    @Override
+    public void clearConfigCache() {
+        Collection<String> keys = redisCache.keys(Constants.SYS_CONFIG_KEY + "*");
+        redisCache.deleteObject(keys);
+    }
+
+    @Override
+    public void resetConfigCache() {
+        clearConfigCache();
+        loadingConfigCache();
+    }
+
+    @Override
+    public String checkConfigKeyUnique(SysConfig config) {
+        String configId = ObjectUtils.isEmpty(config.getConfigId()) ? "-1" : config.getConfigId();
+        SysConfig info = configMapper.checkConfigKeyUnique(config.getConfigKey());
+        if (!ObjectUtils.isEmpty(info) && info.getConfigId().equals(configId))
+        {
+            return UserConstants.NOT_UNIQUE;
+        }
+        return UserConstants.UNIQUE;
+    }
+
     /**
      * 获取系统配置的验证码开关
      */
@@ -57,6 +85,51 @@ public class SysConfigServiceImpl implements ISysConfigService {
         return "0".equals(captchaOnOff);
     }
 
+    @Override
+    public List<SysConfig> selectConfigList(SysConfig config) {
+        return configMapper.selectConfigList(config);
+    }
+
+    @Override
+    public int insertConfig(SysConfig config) {
+        int row = configMapper.insertConfig(config);
+        if (row > 0) {
+            redisCache.setCacheObject(getCacheKey(config.getConfigKey()), config.getConfigValue());
+        }
+        return row;
+    }
+
+    @Override
+    public int updateConfig(SysConfig config) {
+        int row = configMapper.updateConfig(config);
+        if (row > 0)
+        {
+            redisCache.setCacheObject(getCacheKey(config.getConfigKey()), config.getConfigValue());
+        }
+        return row;
+    }
+
+    @Override
+    public void deleteConfigByIds(String[] configIds) {
+        for (String configId : configIds)
+        {
+            SysConfig config = selectConfigById(configId);
+            if (UserConstants.YES == config.getConfigType())
+            {
+                throw new ServiceException(String.format("内置参数【%1$s】不能删除 ", config.getConfigKey()));
+            }
+            configMapper.deleteConfigById(configId);
+            redisCache.deleteObject(getCacheKey(config.getConfigKey()));
+        }
+    }
+
+    @Override
+    public SysConfig selectConfigById(String configId) {
+        SysConfig config = new SysConfig();
+        config.setConfigId(configId);
+        return configMapper.selectConfig(config);
+    }
+
     /**
      * 根据键名查询参数配置信息
      * @param configKey 参数键名
@@ -64,14 +137,19 @@ public class SysConfigServiceImpl implements ISysConfigService {
      */
     @Override
     public String selectConfigByKey(String configKey) {
-        Object cacheObject = redisCache.getCacheObject(getCacheKey(configKey));
-        if (ObjectUtils.isEmpty(cacheObject)) {
-            return null;
+        String cacheObject = Convert.toStr(redisCache.getCacheObject(getCacheKey(configKey)));
+        if (!ObjectUtils.isEmpty(cacheObject)) {
+            return cacheObject;
         }
-        if (cacheObject instanceof String) {
-            return (String) cacheObject;
+        SysConfig config = new SysConfig();
+        config.setConfigKey(configKey);
+        SysConfig retConfig = configMapper.selectConfig(config);
+        if (!ObjectUtils.isEmpty(retConfig))
+        {
+            redisCache.setCacheObject(getCacheKey(configKey), retConfig.getConfigValue());
+            return retConfig.getConfigValue();
         }
-        return configKey;
+        return StringUtils.EMPTY;
     }
 
     /**

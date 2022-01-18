@@ -60,6 +60,7 @@ public class LogAspect {
     private void handleLog(final  JoinPoint joinPoint, Log controllerLog, final Exception e, Object jsonResult) {
         try {
             LoginUser loginUser = SecurityService.getLoginUser();
+            System.out.println("loginUser = " + loginUser);
             SysOperLog operLog = new SysOperLog();
             operLog.setStatus(BusinessStatus.SUCCESS.ordinal());
             String ip = IpUtils.getIpAddr(ServletUtils.getRequest());

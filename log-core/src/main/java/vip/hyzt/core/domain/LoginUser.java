@@ -214,4 +214,19 @@ public class LoginUser implements UserDetails {
         return null;
     }
 
+    @Override
+    public String toString() {
+        return "LoginUser{" +
+                "userId='" + userId + '\'' +
+                ", token='" + token + '\'' +
+                ", loginTime=" + loginTime +
+                ", expireTime=" + expireTime +
+                ", loginIpAddress='" + loginIpAddress + '\'' +
+                ", loginLocation='" + loginLocation + '\'' +
+                ", browserType='" + browserType + '\'' +
+                ", operatingSystem='" + operatingSystem + '\'' +
+                ", permissionsList=" + permissionsList +
+                ", userInfo=" + userInfo +
+                '}';
+    }
 }
