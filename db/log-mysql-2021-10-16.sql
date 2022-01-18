@@ -137,7 +137,7 @@ values ('2', '系统监控', '0', '2', 'monitor', null, 1, 0, 'M', 0, 0, '', 'mo
 
 -- 二级菜单
 insert into sys_permission_menu
-values ('100', '博客管理', '1', '1', 'blog', 'system/blog/index', 1, 0, 'C', '0', '0', 'system:blog:list', 'blog', 0,
+values ('100', '博客管理', '1', '1', 'article', 'system/article/index', 1, 0, 'C', '0', '0', 'system:article:list', 'joblog', 0,
         'admin', sysdate(), '', null);
 insert into sys_permission_menu
 values ('101', '分类管理', '1', '2', 'type', 'system/type/index', 1, 0, 'C', '0', '0', 'system:type:list', 'type', 0,
@@ -191,16 +191,16 @@ values ('501', '登录日志', '108', '2', 'logininfor', 'monitor/logininfor/ind
 
 -- 博客管理按钮
 insert into sys_permission_menu
-values ('1001', '博客查询', '100', '1', '', '', 1, 0, 'F', '0', '0', 'system:blog:query', '#', 0, 'admin', sysdate(), '',
+values ('1001', '博客查询', '100', '1', '', '', 1, 0, 'F', '0', '0', 'system:article:query', '#', 0, 'admin', sysdate(), '',
         null);
 insert into sys_permission_menu
-values ('1002', '博客新增', '100', '2', '', '', 1, 0, 'F', '0', '0', 'system:blog:add', '#', 0, 'admin', sysdate(), '',
+values ('1002', '博客新增', '100', '2', '', '', 1, 0, 'F', '0', '0', 'system:article:add', '#', 0, 'admin', sysdate(), '',
         null);
 insert into sys_permission_menu
-values ('1003', '博客修改', '100', '3', '', '', 1, 0, 'F', '0', '0', 'system:blog:edit', '#', 0, 'admin', sysdate(), '',
+values ('1003', '博客修改', '100', '3', '', '', 1, 0, 'F', '0', '0', 'system:article:edit', '#', 0, 'admin', sysdate(), '',
         null);
 insert into sys_permission_menu
-values ('1004', '博客删除', '100', '4', '', '', 1, 0, 'F', '0', '0', 'system:blog:remove', '#', 0, 'admin', sysdate(), '',
+values ('1004', '博客删除', '100', '4', '', '', 1, 0, 'F', '0', '0', 'system:article:remove', '#', 0, 'admin', sysdate(), '',
         null);
 
 -- 分类管理按钮
@@ -456,6 +456,12 @@ insert into sys_dict_type
 values ('4', '操作类型', 'sys_oper_type', 0, 'admin', sysdate(), '', null, '操作类型列表');
 insert into sys_dict_type
 values ('5', '系统状态', 'sys_common_status', 0, 'admin', sysdate(), '', null, '登录状态列表');
+insert into sys_dict_type
+values ('6', '文章是否置顶', 'sys_article_is_top', 0, 'admin', sysdate(), '', null, '文章否置顶状态 0否 1是');
+insert into sys_dict_type
+values ('7', '文章类型', 'sys_article_type', 0, 'admin', sysdate(), '', null, '文章类型 1原创 2转载');
+insert into sys_dict_type
+values ('8', '文章状态', 'sys_article_status', 0, 'admin', sysdate(), '', null, '文章状态 1公开 2私密');
 
 -- 字典数据表
 drop table if exists `sys_dict_data`;
@@ -512,6 +518,18 @@ insert into sys_dict_data
 values ('14', 5, '强退', '5', 'sys_oper_type', '', 'danger', 1, 0, 'admin', sysdate(), '', null, '强退操作');
 insert into sys_dict_data
 values ('15', 6, '清空数据', '6', 'sys_oper_type', '', 'danger', 1, 0, 'admin', sysdate(), '', null, '清空操作');
+insert into sys_dict_data
+values ('16', 1, '是', 1, 'sys_article_is_top', '', '', 1, 0, 'admin', sysdate(), '', null, '文章否置顶状态');
+insert into sys_dict_data
+values ('17', 2, '否', 0, 'sys_article_is_top', '', '', 1, 0, 'admin', sysdate(), '', null, '文章否置顶状态');
+insert into sys_dict_data
+values ('18', 1, '原创', 1, 'sys_article_type', '', '', 1, 0, 'admin', sysdate(), '', null, '文章原创');
+insert into sys_dict_data
+values ('19', 2, '转载', 2, 'sys_article_type', '', '', 1, 0, 'admin', sysdate(), '', null, '文章转载');
+insert into sys_dict_data
+values ('20', 1, '公开', 1, 'sys_article_status', '', '', 1, 0, 'admin', sysdate(), '', null, '文章公开');
+insert into sys_dict_data
+values ('21', 2, '私密', 2, 'sys_article_status', '', '', 1, 0, 'admin', sysdate(), '', null, '文章私密');
 
 -- 系统配置
 drop table if exists sys_config;
@@ -546,3 +564,176 @@ values ('4', '账号自助-验证码开关', 'sys.account.captchaOnOff', '0', 0,
 insert into sys_config
 values ('5', '账号自助-是否开启用户注册功能', 'sys.account.registerUser', 'false', 0, 'admin', sysdate(), '', null,
         '是否开启注册用户功能（true开启，false关闭）');
+
+drop table if exists `sys_article`;
+create table `sys_article`
+(
+    `article_id`      varchar(64) character set utf8mb4 collate utf8mb4_general_ci   not null comment '主键',
+    `article_title`   varchar(64) character set utf8mb4 collate utf8mb4_general_ci   not null comment '文章标题',
+    `user_id`         varchar(100) character set utf8mb4 collate utf8mb4_general_ci  not null comment '作者id',
+    `article_content` longtext character set utf8mb4 collate utf8mb4_general_ci      not null comment '内容',
+    `article_cover`   varchar(1024) character set utf8mb4 collate utf8mb4_general_ci null comment '文章封面图',
+    `type_id`         varchar(64) character set utf8mb4 collate utf8mb4_general_ci   not null comment '文章分类',
+    `is_top`          tinyint(1)                                                     not null default 0 comment '是否置顶 0否 1是',
+    `type`            tinyint(1)                                                     not null default 1 comment '文章类型 1原创 2转载',
+    `status`          tinyint(1)                                                     null     default 1 comment '状态值 1公开 2私密',
+    `data_scope`      tinyint(1)                                                     null     default null comment '数据范围（1：全部数据权限 2: 自定义数据权限 3：仅自己数据权限）',
+    `del_flag`        tinyint(1)                                                     null     default 0 comment '删除标志（0代表存在 1代表删除）',
+    `create_by`       varchar(50) character set utf8mb4 collate utf8mb4_general_ci   not null comment '创建人',
+    `create_time`     datetime(0)                                                    null     default null comment '创建日期',
+    `update_by`       varchar(50) character set utf8mb4 collate utf8mb4_general_ci   not null comment '更新人',
+    `update_time`     datetime(0)                                                    null     default null comment '更新日期',
+    primary key (`article_id`) using btree,
+    index `uniq_sys_user_id` (`user_id`) using btree,
+    index `uniq_sys_type_id` (`type_id`) using btree
+) engine = innodb
+  character set = utf8
+  collate = utf8_general_ci comment = '文章表'
+  row_format = Dynamic;
+
+insert into sys_article
+values ('1', '二分查找', '1', '## 二分查找\n'' +
+          ''\n'' +
+          ''### 整体思路示例\n'' +
+          ''\n'' +
+          ''- 使用到二分查找的数组中的元素前提是升序排列\n'' +
+          ''- 声明一个名为 **size** 的变量，用来存储需要查找的数组长度\n'' +
+          ''- **start** 变量为二分查找的起始位置，默认起始位置为 0\n'' +
+          ''- **end** 变量为二分查找的终止位置，默认为查询数组长度减一\n'' +
+          ''- `while` 条件当 `start <= end` 为 false 迭代查找 target\n'' +
+          ''  - **middle** 为 数组中的中位下标，(end - start) 这样处理是为了防止 int 值溢出\n'' +
+          ''  - 当 target 目标数等于中位数则返回该下标\n'' +
+          ''  - 当 target 目标数小于中位数则更新二分查找的起始位置 end 为当前中位数减一\n'' +
+          ''  - 否则更新二分查找的起始下标为当前中位数加一\n'' +
+          ''  - 可自行脑补画面\n'' +
+          ''\n'' +
+          ''- 当需要查找的目标数 target 为 3 时\n'' +
+          ''- start 为 0，end 为 nums 数组长度减一 8 - 1 = 7;\n'' +
+          ''\n'' +
+          ''#### 第一次 while迭代\n'' +
+          ''- start(0) <= end(7) 为 false 进入 `while` 迭代;\n'' +
+          ''- 中位下标为 start(0) + (7 - 0) / 2。**向下取整 middle 为 3**;\n'' +
+          ''~~~\n'' +
+          ''此时 middle(3) 指向数组元素当中的 6。 因此 middleNum = 6\n'' +
+          '' [1, 3, 4, 6, 7, 8, 10, 23]\n'' +
+          ''  ↑        ↑             ↑\n'' +
+          ''start(0) middle(3)     end(7)\n'' +
+          ''\n'' +
+          ''target(3) 小于 middleNum(6)\n'' +
+          ''\n'' +
+          ''end(2) = middle(3) - 1\n'' +
+          ''~~~\n'' +
+          ''\n'' +
+          ''#### 第二次 while 迭代\n'' +
+          ''- start(0) <= end(2) 为 false 进入 `while` 迭代;\n'' +
+          ''- 中位数下标为 start(0) + (2 - 0) / 2。**middle 为 1**;\n'' +
+          ''~~~\n'' +
+          ''[1,        3,        4]\n'' +
+          '' ↑         ↑         ↑\n'' +
+          ''start(0) middle(1)  end(2)\n'' +
+          ''\n'' +
+          ''target(3) == middleNum(3)\n'' +
+          ''\n'' +
+          ''返回 middle(1)\n'' +
+          ''\n'' +
+          ''结束 while 迭代\n'' +
+          ''~~~\n'' +
+          ''### 代码示例\n'' +
+          ''~~~java\n'' +
+          ''int target = 3;\n'' +
+          ''int[] nums = new int[] {1, 3, 4, 6, 7, 8, 10, 23};\n'' +
+          ''\n'' +
+          ''public static int bibarySearch(int[] nums, int target) {\n'' +
+          ''    int size = nums.length - 1;\n'' +
+          ''    int start = 0;\n'' +
+          ''    int end = size;\n'' +
+          ''    while(start <= end) {\n'' +
+          ''        int middle = start + (end - start) / 2;\n'' +
+          ''        int middleNum = nums[middle];\n'' +
+          ''        if (target == middleNum) {\n'' +
+          ''            return middle;\n'' +
+          ''        }\n'' +
+          ''        else if (target < middleNum) {\n'' +
+          ''            end = middle - 1;\n'' +
+          ''        }\n'' +
+          ''        else {\n'' +
+          ''            start = middle + 1;\n'' +
+          ''        }\n'' +
+          ''    }\n'' +
+          ''    return -1;\n'' +
+          ''}\n'' +
+          ''~~~\n'' +
+          ''## img 1\n'' +
+          ''![img 1](https://images.unsplash.com/photo-1642201375226-79a36e4b21ae?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60)\n'' +
+          ''## img 2\n'' +
+          ''![img 2](https://images.unsplash.com/photo-1642185611844-d66846033977?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzNnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60)\n'' +
+          ''## img 3\n'' +
+          ''![img 3](https://images.unsplash.com/photo-1642169457812-c4b606c149bc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzOXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60)',
+        'https://images.unsplash.com/photo-1642425149717-c9b583cfa08c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60',
+        '1',
+        0,
+        1,
+        1,
+        3,
+        0,
+        'admin',
+        sysdate(),
+        '',
+        sysdate());
+
+drop table if exists `sys_tag`;
+create table `sys_tag`
+(
+    `tag_id`      varchar(64) character set utf8mb4 collate utf8mb4_general_ci not null comment '主键',
+    `tag_name`    varchar(64) character set utf8mb4 collate utf8mb4_general_ci not null comment '文章标签名称',
+    `del_flag`    tinyint(1)                                                   null default 0 comment '删除标志（0代表存在 1代表删除）',
+    `create_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci not null comment '创建人',
+    `create_time` datetime(0)                                                  null default null comment '创建日期',
+    `update_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci not null comment '更新人',
+    `update_time` datetime(0)                                                  null default null comment '更新日期',
+    primary key (`tag_id`) using btree
+) engine = innodb
+  character set = utf8
+  collate = utf8_general_ci comment = '文章标签表'
+  row_format = Dynamic;
+insert into sys_tag
+values ('1', '算法', 0, 'admin', sysdate(), '', sysdate());
+
+drop table if exists `sys_article_tag`;
+create table `sys_article_tag`
+(
+    `id`         varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci       not null comment '主键id',
+    `tag_id`     varchar(64) character set utf8mb4 collate utf8mb4_general_ci not null comment '标签主键',
+    `article_id` varchar(64) character set utf8mb4 collate utf8mb4_general_ci not null comment '文章主键',
+    primary key (`id`) using btree,
+    index `index2_groupuu_tag_id` (`tag_id`) using btree,
+    index `index2_groupuu_article_id` (`article_id`) using btree,
+    index `index2_groupuu_tagidandarticleid` (`tag_id`, `article_id`) using btree,
+    index `idx_sur_tag_id` (`tag_id`) using btree,
+    index `idx_sur_article_id` (`article_id`) using btree,
+    index `idx_sur_article_tag_id` (`tag_id`, `article_id`) using btree
+) engine = innodb
+  character set = utf8
+  collate = utf8_general_ci comment = '文章标签关联表'
+  row_format = Dynamic;
+
+insert into sys_article_tag
+values ('1', '1', '1');
+
+drop table if exists `sys_type`;
+create table `sys_type`
+(
+    `type_id`     varchar(64) character set utf8mb4 collate utf8mb4_general_ci not null comment '主键',
+    `type_name`   varchar(64) character set utf8mb4 collate utf8mb4_general_ci not null comment '文章标签名称',
+    `del_flag`    tinyint(1)                                                   null default 0 comment '删除标志（0代表存在 1代表删除）',
+    `create_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci not null comment '创建人',
+    `create_time` datetime(0)                                                  null default null comment '创建日期',
+    `update_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci not null comment '更新人',
+    `update_time` datetime(0)                                                  null default null comment '更新日期',
+    primary key (`type_id`) using btree
+) engine = innodb
+  character set = utf8
+  collate = utf8_general_ci comment = '文章类型表'
+  row_format = Dynamic;
+insert into sys_type
+values ('1', '题解', 0, 'admin', sysdate(), '', sysdate());

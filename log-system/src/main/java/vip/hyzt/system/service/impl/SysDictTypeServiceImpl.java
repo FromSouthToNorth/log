@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import vip.hyzt.common.constant.UserConstants;
 import vip.hyzt.common.exception.ServiceException;
 import vip.hyzt.common.utils.StringUtils;
+import vip.hyzt.common.utils.uuid.IdUtils;
 import vip.hyzt.system.domain.SysDictData;
 import vip.hyzt.system.domain.SysDictType;
 import vip.hyzt.system.mapper.SysDictDataMapper;
@@ -135,6 +136,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
      */
     @Override
     public int insertDictType(SysDictType dictType) {
+        dictType.setDictId(IdUtils.simpleUUID());
         int row = dictTypeMapper.insertDictType(dictType);
         if (row > 0) {
             DictUtils.setDictCache(dictType.getDictType(), null);
@@ -169,7 +171,7 @@ public class SysDictTypeServiceImpl implements ISysDictTypeService {
     public String checkDictTypeUnique(SysDictType dictType) {
         String dictId = StringUtils.isNull(dictType.getDictId()) ? "" : dictType.getDictId();
         SysDictType dict = dictTypeMapper.checkDictTypeUnique(dictType.getDictType());
-        if (dict.getDictId().equals(dictId))
+        if (StringUtils.isNotNull(dict) && dict.getDictId().equals(dictId))
         {
             return UserConstants.NOT_UNIQUE;
         }

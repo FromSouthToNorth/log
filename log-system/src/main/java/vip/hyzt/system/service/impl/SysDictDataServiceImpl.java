@@ -2,6 +2,7 @@ package vip.hyzt.system.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import vip.hyzt.common.utils.uuid.IdUtils;
 import vip.hyzt.system.domain.SysDictData;
 import vip.hyzt.system.mapper.SysDictDataMapper;
 import vip.hyzt.system.service.ISysDictDataService;
@@ -73,6 +74,7 @@ public class SysDictDataServiceImpl implements ISysDictDataService {
      */
     @Override
     public int insertDictData(SysDictData dictData) {
+        dictData.setDictCode(IdUtils.simpleUUID());
         int row = dictDataMapper.insertDictData(dictData);
         if (row > 0) {
             List<SysDictData> dictDatas = dictDataMapper.selectDictDataByType(dictData.getDictType());
