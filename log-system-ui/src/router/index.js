@@ -113,6 +113,19 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/system/article-edit',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'index/:articleId(\\d+)',
+        component: (resolve) => require(['@/views/system/article/Article'], resolve),
+        name: 'Data',
+        meta: { title: '文章编辑', activeMenu: '/system/article'}
+      }
+    ]
+  },
+  {
     path: '/system/dict-data',
     component: Layout,
     hidden: true,

@@ -1,7 +1,6 @@
 package vip.hyzt.system.mapper;
 
 import org.apache.ibatis.annotations.Param;
-import org.springframework.security.core.parameters.P;
 import vip.hyzt.system.domain.SysUser;
 
 import java.util.List;

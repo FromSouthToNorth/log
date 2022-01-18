@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="vip.hyzt.system.mapper.SysArticleMapper">
+
+    <resultMap id="SysArticleResult"        type="SysArticle">
+        <id property="articleId"            column="article_id"/>
+        <result property="articleTitle"     column="article_title"/>
+        <result property="userId"           column="user_id"/>
+        <result property="articleContent"   column="article_content"/>
+        <result property="articleCover"     column="article_cover"/>
+        <result property="typeId"           column="type_id"/>
+        <result property="isTop"            column="is_top"/>
+        <result property="type"             column="type"/>
+        <result property="status"           column="status"/>
+        <result property="createBy"         column="create_by"/>
+        <result property="createTime"       column="create_time"/>
+        <result property="updateBy"         column="update_by"/>
+        <result property="updateTime"       column="update_time"/>
+        <association property="articleType" resultMap="SysTypeResult" />
+    </resultMap>
+
+    <resultMap id="SysTypeResult" type="SysType">
+        <id     property="typeId"   column="type_id" />
+        <result property="typeName" column="type_name" />
+    </resultMap>
+
+    <select id="selectArticle" parameterType="SysArticle" resultMap="SysArticleResult">
+        select
+            sa.article_id,
+            sa.article_title,
+            sa.user_id,
+            sa.article_content,
+            sa.article_cover,
+            sa.type_id,
+            sa.is_top,
+            sa.type,
+            sa.status,
+            st.type_id,
+            st.type_name,
+            sa.create_by,
+            sa.create_time,
+            sa.update_by,
+            sa.update_time
+        from sys_article sa
+        left join sys_type st on st.type_id = sa.type_id
+        where sa.del_flag = 0
+        <if test="articleTitle != null and articleTitle != ''">
+            and sa.article_title like concat('%', #{articleTitle}, '%')
+        </if>
+        <if test="status != null and status != ''">
+            and sa.status = #{status}
+        </if>
+        <if test="type != null and type != ''">
+            and sa.status = #{type}
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+            and date_format(sa.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+            and date_format(sa.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+        </if>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+    </select>
+
+</mapper>
