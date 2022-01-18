@@ -29,4 +29,9 @@ public class SysArticleServiceImpl implements ISysArticleService {
     public List<SysArticle> selectArticle(SysArticle article) {
         return articleMapper.selectArticle(article);
     }
+
+    @Override
+    public SysArticle selectArticleByArticleId(String articleId) {
+        return null;
+    }
 }

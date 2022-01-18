@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="vip.hyzt.system.mapper.SysArticleMapper">
 
-    <resultMap id="SysArticleResult"        type="SysArticle">
-        <id property="articleId"            column="article_id"/>
+    <resultMap  id="SysArticleResult"       type="SysArticle">
+        <id     property="articleId"        column="article_id"/>
         <result property="articleTitle"     column="article_title"/>
         <result property="userId"           column="user_id"/>
         <result property="articleContent"   column="article_content"/>
@@ -63,6 +63,28 @@
         </if>
         <!-- 数据范围过滤 -->
         ${params.dataScope}
+    </select>
+
+    <select id="selectArticleByArticleId" resultMap="SysTypeResult" parameterType="String">
+        select
+            sa.article_id,
+            sa.article_title,
+            sa.user_id,
+            sa.article_content,
+            sa.article_cover,
+            sa.type_id,
+            sa.is_top,
+            sa.type,
+            sa.status,
+            st.type_id,
+            st.type_name,
+            sa.create_by,
+            sa.create_time,
+            sa.update_by,
+            sa.update_time
+        from sys_article sa
+        left join sys_type st on st.type_id = sa.type_id
+        where sa.article_id = #{articleId}
     </select>
 
 </mapper>

@@ -18,4 +18,10 @@ public interface SysArticleMapper {
      */
     List<SysArticle> selectArticle(SysArticle article);
 
+    /**
+     * 根据文章 id 查询文章
+     * @param articleId 文章 id
+     * @return id 对应的文章
+     */
+    SysArticle selectArticleByArticleId(String articleId);
 }

@@ -14,9 +14,9 @@
               @keyup.enter.native=""
             />
           </el-form-item>
-          <el-form-item label="状态" prop="articleStatus">
+          <el-form-item label="状态" prop="status">
             <el-select
-              v-model="queryParams.articleStatus"
+              v-model="queryParams.status"
               placeholder="文章状态"
               clearable
               size="small"
@@ -31,7 +31,7 @@
           </el-form-item>
           <el-form-item label="类型" prop="articleStatus">
             <el-select
-              v-model="queryParams.articleStatus"
+              v-model="queryParams.type"
               placeholder="文章类型"
               clearable
               size="small"
@@ -130,9 +130,9 @@
           <el-table-column label="是否置顶" align="center" prop="isTop" v-if="columns[5].visible">
             <template slot-scope="scope">
               <el-switch
-                v-model="scope.row.isTop + ''"
-                active-value="0"
-                inactive-value="1"
+                v-model="scope.row.isTop"
+                active-value="1"
+                inactive-value="0"
                 @change="handleStatusChange(scope.row)"
               ></el-switch>
             </template>
@@ -185,8 +185,7 @@ export default {
         pageNum: 1,
         pageSize: 10,
         articleTitle: undefined,
-        articleStatus: undefined,
-        articleType: undefined,
+        status: undefined,
         type: undefined,
         tags: []
       },
