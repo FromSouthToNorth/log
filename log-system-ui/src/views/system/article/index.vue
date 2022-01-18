@@ -245,12 +245,6 @@ export default {
     handleStatusChange() {
 
     },
-    // 编辑文章
-    handleUpdate(row) {
-      this.$router.push({
-        path: '/system/articleId/index/' + row.articleId,
-      })
-    },
     // 删除文章
     handleDelete() {
 
