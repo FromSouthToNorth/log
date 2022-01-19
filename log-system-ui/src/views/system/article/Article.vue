@@ -122,6 +122,26 @@
           ></el-switch>
         </el-form-item>
       </el-form>
+      <div slot="footer">
+        <el-button
+          type="success"
+          plain
+          icon="el-icon-position"
+          size="small"
+          @click="pushArticle"
+          v-hasPermi="['system:article:add']"
+        >
+          发表文章
+        </el-button>
+        <el-button
+          plain
+          icon="el-icon-close"
+          type="warning"
+          size="small"
+        >
+          取消发表
+        </el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
