@@ -32,3 +32,15 @@ pagehelper:
   helperDialect: mysql
   supportMethodsArguments: true
   params: count=countSql
+
+upload:
+  mode: local
+  local:
+    url: https://
+    path: /usr/local/upload/
+  oss:
+    url: https://
+    endpoint: OSS配置endpoint
+    accessKeyId: OSS配置accessKeyId
+    accessKeySecret: OSS配置accessKeySecret
+    bucketName: OSS配置bucketName

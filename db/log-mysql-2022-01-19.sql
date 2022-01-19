@@ -1,5 +1,5 @@
 use
-`log`;
+    `log`;
 -- 角色表
 drop table if exists `sys_role`;
 create table `sys_role`
@@ -35,29 +35,29 @@ values ('2', '普通用户', 'common', 2, 0, 3, 1, 1, 0, 'admin', sysdate(), '',
 drop table if exists `sys_user`;
 create table `sys_user`
 (
-    `user_id`     varchar(64) character set utf8mb4 collate utf8mb4_general_ci not null comment '主键',
-    `user_name`   varchar(32) character set utf8mb4 collate utf8mb4_general_ci not null comment '角色名称',
-    `real_name`   varchar(32) character set utf8mb4 collate utf8mb4_general_ci null default null comment '真实名称',
-    `user_type`   tinyint(1) null default 0 comment '用户类型（0系统用户）',
+    `user_id`     varchar(64) character set utf8mb4 collate utf8mb4_general_ci  not null comment '主键',
+    `user_name`   varchar(32) character set utf8mb4 collate utf8mb4_general_ci  not null comment '角色名称',
+    `real_name`   varchar(32) character set utf8mb4 collate utf8mb4_general_ci  null default null comment '真实名称',
+    `user_type`   tinyint(1)                                                    null default 0 comment '用户类型（0系统用户）',
     `password`    varchar(255) character set utf8mb4 collate utf8mb4_general_ci null default null comment '密码',
     `avatar`      varchar(255) character set utf8mb4 collate utf8mb4_general_ci null default null comment '头像',
-    `birthday`    datetime(0) null default null comment '生日',
-    `sex`         tinyint(1) null default null comment '性别(0-默认未知,1-男,2-女)',
-    `email`       varchar(50) character set utf8mb4 collate utf8mb4_general_ci null default null comment '用户邮箱',
-    `phone`       varchar(50) character set utf8mb4 collate utf8mb4_general_ci null default null comment '电话',
-    `status`      tinyint(1) null default null comment '用户状态（0正常 1停用）',
-    `del_flag`    tinyint(1) null default null comment '删除标志（0代表存在 1代表删除）',
-    `create_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci not null comment '创建人',
-    `create_time` datetime(0) null default null comment '创建日期',
-    `update_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci not null comment '更新人',
-    `update_time` datetime(0) null default null comment '更新日期',
+    `birthday`    datetime(0)                                                   null default null comment '生日',
+    `sex`         tinyint(1)                                                    null default null comment '性别(0-默认未知,1-男,2-女)',
+    `email`       varchar(50) character set utf8mb4 collate utf8mb4_general_ci  null default null comment '用户邮箱',
+    `phone`       varchar(50) character set utf8mb4 collate utf8mb4_general_ci  null default null comment '电话',
+    `status`      tinyint(1)                                                    null default null comment '用户状态（0正常 1停用）',
+    `del_flag`    tinyint(1)                                                    null default null comment '删除标志（0代表存在 1代表删除）',
+    `create_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci  not null comment '创建人',
+    `create_time` datetime(0)                                                   null default null comment '创建日期',
+    `update_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci  not null comment '更新人',
+    `update_time` datetime(0)                                                   null default null comment '更新日期',
     primary key (`user_id`) using btree,
     unique index `index_user_name` (`user_name`) using btree,
     unique index `uniq_sys_user_phone` (`phone`) using btree,
     unique index `uniq_sys_user_email` (`email`) using btree,
-    index         `idx_us_user_name` (`user_name`) using btree,
-    index         `idx_su_status` (`status`) using btree,
-    index         `idx_su_del_flag` (`del_flag`) using btree
+    index `idx_us_user_name` (`user_name`) using btree,
+    index `idx_su_status` (`status`) using btree,
+    index `idx_su_del_flag` (`del_flag`) using btree
 ) engine = InnoDB
   character set = utf8
   collate = utf8_general_ci comment = '用户表'
@@ -79,12 +79,12 @@ create table `sys_user_role`
     `user_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci null default null comment '用户id',
     `role_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci null default null comment '角色id',
     primary key (`id`) using btree,
-    index     `index2_groupuu_user_id` (`user_id`) using btree,
-    index     `index2_groupuu_ole_id` (`role_id`) using btree,
-    index     `index2_groupuu_useridandroleid` (`user_id`, `role_id`) using btree,
-    index     `idx_sur_user_id` (`user_id`) using btree,
-    index     `idx_sur_role_id` (`role_id`) using btree,
-    index     `idx_sur_user_role_id` (`user_id`, `role_id`) using btree
+    index `index2_groupuu_user_id` (`user_id`) using btree,
+    index `index2_groupuu_ole_id` (`role_id`) using btree,
+    index `index2_groupuu_useridandroleid` (`user_id`, `role_id`) using btree,
+    index `idx_sur_user_id` (`user_id`) using btree,
+    index `idx_sur_role_id` (`role_id`) using btree,
+    index `idx_sur_user_role_id` (`user_id`, `role_id`) using btree
 ) engine = InnoDB
   character set = utf8
   collate = utf8_general_ci comment = '用户角色表'
@@ -102,28 +102,28 @@ create table `sys_permission_menu`
 (
     `menu_id`     varchar(64) character set utf8 collate utf8_general_ci       not null comment '主键',
     `menu_name`   varchar(50) character set utf8 collate utf8_general_ci       not null comment '菜单名称',
-    `parent_id`   varchar(32) character set utf8 collate utf8_general_ci null default '0' comment '父菜单id',
-    `order_num`   int(4) default 0 comment '显示顺序',
-    `path`        varchar(200) character set utf8 collate utf8_general_ci null default null comment '路由地址',
-    `component`   varchar(255) character set utf8 collate utf8_general_ci null default null comment '组件地址',
-    `is_frame`    tinyint(1) null default null comment '是否为外链（0是 1否）',
-    `is_cache`    tinyint(1) null default null comment '是否缓存（0缓存 1不缓存）',
-    `menu_type`   varchar(2) character set utf8 collate utf8_general_ci null default null comment '菜单类型（M目录 C菜单 F按钮）',
-    `visible`     tinyint(1) null default null comment '菜单状态（0显示 1隐藏）',
-    `status`      tinyint(1) null default null comment '菜单状态（0正常 1停用）',
-    `perms`       varchar(100) character set utf8 collate utf8_general_ci null default null comment '权限标识',
-    `icon`        varchar(100) character set utf8 collate utf8_general_ci null default null comment '菜单图标',
-    `del_flag`    tinyint(1) null default null comment '删除标志（0代表存在 1代表删除）',
+    `parent_id`   varchar(32) character set utf8 collate utf8_general_ci       null default '0' comment '父菜单id',
+    `order_num`   int(4)                                                            default 0 comment '显示顺序',
+    `path`        varchar(200) character set utf8 collate utf8_general_ci      null default null comment '路由地址',
+    `component`   varchar(255) character set utf8 collate utf8_general_ci      null default null comment '组件地址',
+    `is_frame`    tinyint(1)                                                   null default null comment '是否为外链（0是 1否）',
+    `is_cache`    tinyint(1)                                                   null default null comment '是否缓存（0缓存 1不缓存）',
+    `menu_type`   varchar(2) character set utf8 collate utf8_general_ci        null default null comment '菜单类型（M目录 C菜单 F按钮）',
+    `visible`     tinyint(1)                                                   null default null comment '菜单状态（0显示 1隐藏）',
+    `status`      tinyint(1)                                                   null default null comment '菜单状态（0正常 1停用）',
+    `perms`       varchar(100) character set utf8 collate utf8_general_ci      null default null comment '权限标识',
+    `icon`        varchar(100) character set utf8 collate utf8_general_ci      null default null comment '菜单图标',
+    `del_flag`    tinyint(1)                                                   null default null comment '删除标志（0代表存在 1代表删除）',
     `create_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci not null comment '创建人',
-    `create_time` datetime(0) null default null comment '创建日期',
+    `create_time` datetime(0)                                                  null default null comment '创建日期',
     `update_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci not null comment '更新人',
-    `update_time` datetime(0) null default null comment '更新日期',
+    `update_time` datetime(0)                                                  null default null comment '更新日期',
     primary key (`menu_id`) using btree,
-    index         `index_prem_pid` (`parent_id`) using btree,
-    index         `index_prem_del_flag` (`del_flag`) using btree,
-    index         `index_menu_type` (`menu_type`) using btree,
-    index         `index_menu_visible` (`visible`) using btree,
-    index         `index_menu_status` (`status`) using btree
+    index `index_prem_pid` (`parent_id`) using btree,
+    index `index_prem_del_flag` (`del_flag`) using btree,
+    index `index_menu_type` (`menu_type`) using btree,
+    index `index_menu_visible` (`visible`) using btree,
+    index `index_menu_status` (`status`) using btree
 ) engine = InnoDB
   character set = utf8
   collate = utf8_general_ci comment = '权限菜单表'
@@ -137,7 +137,8 @@ values ('2', '系统监控', '0', '2', 'monitor', null, 1, 0, 'M', 0, 0, '', 'mo
 
 -- 二级菜单
 insert into sys_permission_menu
-values ('100', '博客管理', '1', '1', 'article', 'system/article/index', 1, 0, 'C', '0', '0', 'system:article:list', 'joblog', 0,
+values ('100', '博客管理', '1', '1', 'article', 'system/article/index', 1, 0, 'C', '0', '0', 'system:article:list',
+        'joblog', 0,
         'admin', sysdate(), '', null);
 insert into sys_permission_menu
 values ('101', '分类管理', '1', '2', 'type', 'system/type/index', 1, 0, 'C', '0', '0', 'system:type:list', 'type', 0,
@@ -200,7 +201,8 @@ insert into sys_permission_menu
 values ('1003', '博客修改', '100', '3', '', '', 1, 0, 'F', '0', '0', 'system:article:edit', '#', 0, 'admin', sysdate(), '',
         null);
 insert into sys_permission_menu
-values ('1004', '博客删除', '100', '4', '', '', 1, 0, 'F', '0', '0', 'system:article:remove', '#', 0, 'admin', sysdate(), '',
+values ('1004', '博客删除', '100', '4', '', '', 1, 0, 'F', '0', '0', 'system:article:remove', '#', 0, 'admin', sysdate(),
+        '',
         null);
 
 -- 分类管理按钮
@@ -337,11 +339,11 @@ create table `sys_role_permission`
     `role_id`       varchar(32) character set utf8 collate utf8_general_ci null default null comment '角色id',
     `permission_id` varchar(32) character set utf8 collate utf8_general_ci null default null comment '权限id',
     primary key (`id`) using btree,
-    index           `index_group_role_per_id` (`role_id`, `permission_id`) using btree,
-    index           `index_group_role_id` (`role_id`) using btree,
-    index           `index_group_per_id` (`permission_id`) using btree,
-    index           `idx_srp_role_id` (`role_id`) using btree,
-    index           `idx_srp_permission_id` (`permission_id`) using btree
+    index `index_group_role_per_id` (`role_id`, `permission_id`) using btree,
+    index `index_group_role_id` (`role_id`) using btree,
+    index `index_group_per_id` (`permission_id`) using btree,
+    index `idx_srp_role_id` (`role_id`) using btree,
+    index `idx_srp_permission_id` (`permission_id`) using btree
 ) engine = InnoDB
   character set = utf8
   collate = utf8_general_ci comment = '角色权限表'
@@ -386,13 +388,13 @@ drop table if exists `sys_login_info`;
 create table sys_login_info
 (
     info_id        varchar(64) character set utf8 collate utf8_general_ci not null comment '访问ID',
-    user_name      varchar(50) character set utf8 collate utf8_general_ci  default null comment '用户账号',
-    ipaddr         varchar(128) character set utf8 collate utf8_general_ci default null comment '登录IP地址',
-    login_location varchar(255) character set utf8 collate utf8_general_ci default null comment '登录地点',
-    browser        varchar(50) character set utf8 collate utf8_general_ci  default null comment '浏览器类型',
-    os             varchar(50) character set utf8 collate utf8_general_ci  default null comment '操作系统',
-    status         tinyint(1) null default null comment '登录状态（0成功 1失败）',
-    msg            varchar(255) character set utf8 collate utf8_general_ci default '' comment '提示消息',
+    user_name      varchar(50) character set utf8 collate utf8_general_ci      default null comment '用户账号',
+    ipaddr         varchar(128) character set utf8 collate utf8_general_ci     default null comment '登录IP地址',
+    login_location varchar(255) character set utf8 collate utf8_general_ci     default null comment '登录地点',
+    browser        varchar(50) character set utf8 collate utf8_general_ci      default null comment '浏览器类型',
+    os             varchar(50) character set utf8 collate utf8_general_ci      default null comment '操作系统',
+    status         tinyint(1)                                             null default null comment '登录状态（0成功 1失败）',
+    msg            varchar(255) character set utf8 collate utf8_general_ci     default '' comment '提示消息',
     login_time     datetime comment '访问时间',
     primary key (info_id) using btree
 ) engine = InnoDB
@@ -404,19 +406,19 @@ create table sys_login_info
 drop table if exists `sys_oper_log`;
 create table `sys_oper_log`
 (
-    `oper_id`        varchar(64) character set utf8 collate utf8_general_ci not null comment '主键',
-    `title`          varchar(50) character set utf8 collate utf8_general_ci null default null comment '模块标题',
-    `business_type`  tinyint(1) null default null comment '业务类型（0其它 1新增 2修改 3删除）',
-    `method`         varchar(100) character set utf8 collate utf8_general_ci null default null comment '方法名称',
-    `request_method` varchar(10) character set utf8 collate utf8_general_ci null default null comment '请求方式',
-    `operator_type`  tinyint(1) null default null comment '操作类别（0其它 1后台用户 2手机端用户）',
-    `oper_name`      varchar(50) character set utf8 collate utf8_general_ci null default null comment '操作人员',
-    `oper_url`       varchar(255) character set utf8 collate utf8_general_ci null default null comment '请求URL',
-    `oper_ip`        varchar(128) character set utf8 collate utf8_general_ci null default null comment '主机地址',
-    `oper_location`  varchar(255) character set utf8 collate utf8_general_ci null default null comment '操作地点',
+    `oper_id`        varchar(64) character set utf8 collate utf8_general_ci   not null comment '主键',
+    `title`          varchar(50) character set utf8 collate utf8_general_ci   null default null comment '模块标题',
+    `business_type`  tinyint(1)                                               null default null comment '业务类型（0其它 1新增 2修改 3删除）',
+    `method`         varchar(100) character set utf8 collate utf8_general_ci  null default null comment '方法名称',
+    `request_method` varchar(10) character set utf8 collate utf8_general_ci   null default null comment '请求方式',
+    `operator_type`  tinyint(1)                                               null default null comment '操作类别（0其它 1后台用户 2手机端用户）',
+    `oper_name`      varchar(50) character set utf8 collate utf8_general_ci   null default null comment '操作人员',
+    `oper_url`       varchar(255) character set utf8 collate utf8_general_ci  null default null comment '请求URL',
+    `oper_ip`        varchar(128) character set utf8 collate utf8_general_ci  null default null comment '主机地址',
+    `oper_location`  varchar(255) character set utf8 collate utf8_general_ci  null default null comment '操作地点',
     `oper_param`     varchar(2000) character set utf8 collate utf8_general_ci null default null comment '请求参数',
-    `json_result`    varchar(2000) default '' comment '返回参数',
-    `status`         tinyint(1) null default null comment '操作状态（0正常 1异常）',
+    `json_result`    varchar(2000)                                                 default '' comment '返回参数',
+    `status`         tinyint(1)                                               null default null comment '操作状态（0正常 1异常）',
     `error_msg`      varchar(2000) character set utf8 collate utf8_general_ci null default null comment '错误消息',
     `oper_time`      datetime comment '操作时间',
     primary key (`oper_id`) using btree
@@ -432,12 +434,12 @@ create table `sys_dict_type`
     `dict_id`     varchar(64) character set utf8 collate utf8_general_ci not null comment '字典主键',
     `dict_name`   varchar(100) character set utf8 collate utf8_general_ci comment '字典名称',
     `dict_type`   varchar(100) character set utf8 collate utf8_general_ci comment '字典类型',
-    `status`      tinyint(1) null default null comment '状态（0正常 1停用）',
+    `status`      tinyint(1)                                             null default null comment '状态（0正常 1停用）',
     `create_by`   varchar(64) character set utf8 collate utf8_general_ci comment '创建者',
     `create_time` datetime(0) comment '创建时间',
     `update_by`   varchar(64) character set utf8 collate utf8_general_ci comment '更新者',
     `update_time` datetime(0) comment '更新时间',
-    `remark`      varchar(500) null default null comment '备注',
+    `remark`      varchar(500)                                           null default null comment '备注',
     primary key (`dict_id`) using btree,
     unique index `uniq_dict_type` (`dict_type`) using btree
 ) engine = InnoDB
@@ -467,18 +469,18 @@ values ('8', '文章状态', 'sys_article_status', 0, 'admin', sysdate(), '', nu
 drop table if exists `sys_dict_data`;
 create table `sys_dict_data`
 (
-    dict_code   varchar(64) character set utf8 collate utf8_general_ci not null comment '字典编码',
-    dict_sort   int(4) default 0 comment '字典排序',
+    dict_code   varchar(64) character set utf8 collate utf8_general_ci  not null comment '字典编码',
+    dict_sort   int(4)                                                       default 0 comment '字典排序',
     dict_label  varchar(100) character set utf8 collate utf8_general_ci null default null comment '字典标签',
     dict_value  varchar(100) character set utf8 collate utf8_general_ci null default null comment '字典键值',
     dict_type   varchar(100) character set utf8 collate utf8_general_ci null default null comment '字典类型',
     css_class   varchar(100) character set utf8 collate utf8_general_ci null default null comment '样式属性（其他样式扩展）',
     list_class  varchar(100) character set utf8 collate utf8_general_ci null default null comment '表格回显样式',
-    is_default  tinyint(1) null default null comment '是否默认（0是 1否）',
-    status      tinyint(1) null default null comment '状态（0正常 1停用）',
-    create_by   varchar(64) character set utf8 collate utf8_general_ci null default null comment '创建者',
+    is_default  tinyint(1)                                              null default null comment '是否默认（0是 1否）',
+    status      tinyint(1)                                              null default null comment '状态（0正常 1停用）',
+    create_by   varchar(64) character set utf8 collate utf8_general_ci  null default null comment '创建者',
     create_time datetime comment '创建时间',
-    update_by   varchar(64) character set utf8 collate utf8_general_ci null default null comment '更新者',
+    update_by   varchar(64) character set utf8 collate utf8_general_ci  null default null comment '更新者',
     update_time datetime comment '更新时间',
     remark      varchar(500) character set utf8 collate utf8_general_ci null default null comment '备注',
     primary key (dict_code) using btree
@@ -539,7 +541,7 @@ create table sys_config
     config_name  varchar(100) character set utf8 collate utf8_general_ci default '' comment '参数名称',
     config_key   varchar(100) character set utf8 collate utf8_general_ci default '' comment '参数键名',
     config_value varchar(500) character set utf8 collate utf8_general_ci default '' comment '参数键值',
-    config_type  tinyint(1) default 0 comment '系统内置（0是 1否）',
+    config_type  tinyint(1)                                              default 0 comment '系统内置（0是 1否）',
     create_by    varchar(64) character set utf8 collate utf8_general_ci  default '' comment '创建者',
     create_time  datetime comment '创建时间',
     update_by    varchar(64) character set utf8 collate utf8_general_ci  default '' comment '更新者',
@@ -591,93 +593,79 @@ create table `sys_article`
   row_format = Dynamic;
 
 insert into sys_article
-values ('1', '二分查找', '1', '## 二分查找\n'' +
-          ''\n'' +
-          ''### 整体思路示例\n'' +
-          ''\n'' +
-          ''- 使用到二分查找的数组中的元素前提是升序排列\n'' +
-          ''- 声明一个名为 **size** 的变量，用来存储需要查找的数组长度\n'' +
-          ''- **start** 变量为二分查找的起始位置，默认起始位置为 0\n'' +
-          ''- **end** 变量为二分查找的终止位置，默认为查询数组长度减一\n'' +
-          ''- `while` 条件当 `start <= end` 为 false 迭代查找 target\n'' +
-          ''  - **middle** 为 数组中的中位下标，(end - start) 这样处理是为了防止 int 值溢出\n'' +
-          ''  - 当 target 目标数等于中位数则返回该下标\n'' +
-          ''  - 当 target 目标数小于中位数则更新二分查找的起始位置 end 为当前中位数减一\n'' +
-          ''  - 否则更新二分查找的起始下标为当前中位数加一\n'' +
-          ''  - 可自行脑补画面\n'' +
-          ''\n'' +
-          ''- 当需要查找的目标数 target 为 3 时\n'' +
-          ''- start 为 0，end 为 nums 数组长度减一 8 - 1 = 7;\n'' +
-          ''\n'' +
-          ''#### 第一次 while迭代\n'' +
-          ''- start(0) <= end(7) 为 false 进入 `while` 迭代;\n'' +
-          ''- 中位下标为 start(0) + (7 - 0) / 2。**向下取整 middle 为 3**;\n'' +
-          ''~~~\n'' +
-          ''此时 middle(3) 指向数组元素当中的 6。 因此 middleNum = 6\n'' +
-          '' [1, 3, 4, 6, 7, 8, 10, 23]\n'' +
-          ''  ↑        ↑             ↑\n'' +
-          ''start(0) middle(3)     end(7)\n'' +
-          ''\n'' +
-          ''target(3) 小于 middleNum(6)\n'' +
-          ''\n'' +
-          ''end(2) = middle(3) - 1\n'' +
-          ''~~~\n'' +
-          ''\n'' +
-          ''#### 第二次 while 迭代\n'' +
-          ''- start(0) <= end(2) 为 false 进入 `while` 迭代;\n'' +
-          ''- 中位数下标为 start(0) + (2 - 0) / 2。**middle 为 1**;\n'' +
-          ''~~~\n'' +
-          ''[1,        3,        4]\n'' +
-          '' ↑         ↑         ↑\n'' +
-          ''start(0) middle(1)  end(2)\n'' +
-          ''\n'' +
-          ''target(3) == middleNum(3)\n'' +
-          ''\n'' +
-          ''返回 middle(1)\n'' +
-          ''\n'' +
-          ''结束 while 迭代\n'' +
-          ''~~~\n'' +
-          ''### 代码示例\n'' +
-          ''~~~java\n'' +
-          ''int target = 3;\n'' +
-          ''int[] nums = new int[] {1, 3, 4, 6, 7, 8, 10, 23};\n'' +
-          ''\n'' +
-          ''public static int bibarySearch(int[] nums, int target) {\n'' +
-          ''    int size = nums.length - 1;\n'' +
-          ''    int start = 0;\n'' +
-          ''    int end = size;\n'' +
-          ''    while(start <= end) {\n'' +
-          ''        int middle = start + (end - start) / 2;\n'' +
-          ''        int middleNum = nums[middle];\n'' +
-          ''        if (target == middleNum) {\n'' +
-          ''            return middle;\n'' +
-          ''        }\n'' +
-          ''        else if (target < middleNum) {\n'' +
-          ''            end = middle - 1;\n'' +
-          ''        }\n'' +
-          ''        else {\n'' +
-          ''            start = middle + 1;\n'' +
-          ''        }\n'' +
-          ''    }\n'' +
-          ''    return -1;\n'' +
-          ''}\n'' +
-          ''~~~\n'' +
-          ''## img 1\n'' +
-          ''![img 1](https://images.unsplash.com/photo-1642201375226-79a36e4b21ae?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60)\n'' +
-          ''## img 2\n'' +
-          ''![img 2](https://images.unsplash.com/photo-1642185611844-d66846033977?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzNnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60)\n'' +
-          ''## img 3\n'' +
-          ''![img 3](https://images.unsplash.com/photo-1642169457812-c4b606c149bc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzOXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60)',
-        'https://images.unsplash.com/photo-1642425149717-c9b583cfa08c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60',
-        '1',
-        0,
-        1,
-        1,
-        0,
-        'admin',
-        sysdate(),
-        '',
-        sysdate());
+values ('1', '二分查找', '1', '## 二分查找
+
+### 整体思路示例
+
+- 使用到二分查找的数组中的元素前提是升序排列
+- 声明一个名为 **size** 的变量，用来存储需要查找的数组长度
+- **start** 变量为二分查找的起始位置，默认起始位置为 0
+- **end** 变量为二分查找的终止位置，默认为查询数组长度减一
+- `while` 条件当 `start <= end` 为 false 迭代查找 target
+  - **middle** 为 数组中的中位下标，(end - start) 这样处理是为了防止 int 值溢出
+  - 当 target 目标数等于中位数则返回该下标
+  - 当 target 目标数小于中位数则更新二分查找的起始位置 end 为当前中位数减一
+  - 否则更新二分查找的起始下标为当前中位数加一
+  - 可自行脑补画面
+
+- 当需要查找的目标数 target 为 3 时
+- start 为 0，end 为 nums 数组长度减一 8 - 1 = 7;
+
+#### 第一次 while迭代
+- start(0) <= end(7) 为 false 进入 `while` 迭代;
+- 中位下标为 start(0) + (7 - 0) / 2。**向下取整 middle 为 3**;
+~~~markdown
+此时 middle(3) 指向数组元素当中的 6。 因此 middleNum = 6
+ [1, 3, 4, 6, 7, 8, 10, 23]
+  ↑        ↑             ↑
+start(0) middle(3)     end(7)
+
+target(3) 小于 middleNum(6)
+
+end(2) = middle(3) - 1
+~~~
+
+#### 第二次 while 迭代
+- start(0) <= end(2) 为 false 进入 `while` 迭代;
+- 中位数下标为 start(0) + (2 - 0) / 2。**middle 为 1**;
+~~~markdown
+[1,        3,        4]
+ ↑         ↑         ↑
+start(0) middle(1)  end(2)
+
+target(3) == middleNum(3)
+
+返回 middle(1)
+
+结束 while 迭代
+~~~
+### 代码示例
+~~~java
+int target = 3;
+int[] nums = new int[] {1, 3, 4, 6, 7, 8, 10, 23};
+
+public static int bibarySearch(int[] nums, int target) {
+    int size = nums.length - 1;
+    int start = 0;
+    int end = size;
+    while(start <= end) {
+        int middle = start + (end - start) / 2;
+        int middleNum = nums[middle];
+        if (target == middleNum) {
+            return middle;
+        }
+        else if (target < middleNum) {
+            end = middle - 1;
+        }
+        else {
+            start = middle + 1;
+        }
+    }
+    return -1;
+}
+~~~',
+        'https://images.unsplash.com/photo-1642420804129-a7f80c504a40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60',
+        1, 1, 1, 1, 0, 'admin', sysdate(), '', sysdate());
 
 drop table if exists `sys_tag`;
 create table `sys_tag`

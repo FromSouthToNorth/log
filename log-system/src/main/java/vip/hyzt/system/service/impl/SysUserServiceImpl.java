@@ -250,6 +250,7 @@ public class SysUserServiceImpl implements ISysUserService {
             List<SysUserRole> userRoles = new ArrayList<>();
             for (String roleId : roleIds) {
                 SysUserRole userRole = new SysUserRole();
+                userRole.setId(IdUtils.simpleUUID());
                 userRole.setUserId(userId);
                 userRole.setRoleId(roleId);
                 userRoles.add(userRole);

@@ -27,4 +27,13 @@ public class SysTypeServiceImpl implements ISysTypeService {
     public List<SysType> selectTypeList(SysType type) {
         return typeMapper.selectTypeList(type);
     }
+
+    /**
+     * 查询所以文章分类
+     * @return 文章分类结果集
+     */
+    @Override
+    public List<SysType> selectTypeAll() {
+        return typeMapper.selectTypeAll();
+    }
 }

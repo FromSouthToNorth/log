@@ -17,4 +17,9 @@ public interface ISysTypeService {
      */
     List<SysType> selectTypeList(SysType type);
 
+    /**
+     * 查询所以文章分类
+     * @return 文章分类结果集
+     */
+    List<SysType> selectTypeAll();
 }

@@ -17,4 +17,16 @@ public interface ISysTagService {
      */
     List<SysTag> selectTagList(SysTag tag);
 
+    /**
+     * 查询所有文章标签
+     * @return 文章标签列表
+     */
+    List<SysTag> selectTagAll();
+
+    /**
+     * 根据文章 ID 获取标签选择框列表
+     * @param articleId 文章 ID
+     * @return 选中的标签 ID 列表
+     */
+    List<String> selectTagListByArticleId(String articleId);
 }

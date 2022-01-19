@@ -32,6 +32,6 @@ public class SysArticleServiceImpl implements ISysArticleService {
 
     @Override
     public SysArticle selectArticleByArticleId(String articleId) {
-        return null;
+        return articleMapper.selectArticleByArticleId(articleId);
     }
 }

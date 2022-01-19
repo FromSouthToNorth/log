@@ -13,29 +13,36 @@
         <result property="updateTime"       column="update_time"/>
     </resultMap>
 
-    <select id="selectTypeList" parameterType="SysType" resultMap="SysTypeResult">
+    <sql id="selectType">
         select
-            type_id,
-            type_name,
-            create_by,
-            create_time,
-            update_by,
-            update_time
+            st.type_id,
+            st.type_name,
+            st.create_by,
+            st.create_time,
+            st.update_by,
+            st.update_time
         from sys_type st
-        <where>
-            <if test="typeId != null and typeId != ''">
-                and st.type_id = #{typeId}
-            </if>
-            <if test="tagName != null and tagName != ''">
-                and st.type_name like concat('%', #{typeName}, '%')
-            </if>
-            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-                and date_format(st.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
-            </if>
-            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-                and date_format(st.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
-            </if>
-        </where>
+    </sql>
+
+    <select id="selectTypeList" parameterType="SysType" resultMap="SysTypeResult">
+        <include refid="selectType" />
+        where st.del_flag = 0
+        <if test="typeId != null and typeId != ''">
+            and st.type_id = #{typeId}
+        </if>
+        <if test="tagName != null and tagName != ''">
+            and st.type_name like concat('%', #{typeName}, '%')
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+            and date_format(st.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+            and date_format(st.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+        </if>
+    </select>
+
+    <select id="selectTypeAll" resultMap="SysTypeResult">
+        <include refid="selectType" />
     </select>
 
 </mapper>

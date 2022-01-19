@@ -8,3 +8,10 @@ export function adminListArticle(query) {
     params: query
   })
 }
+
+export function adminGetArticleInfo(articleId) {
+  return request({
+    url: '/system/article/' + articleId,
+    method: 'get'
+  })
+}

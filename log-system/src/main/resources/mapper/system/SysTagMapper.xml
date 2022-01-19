@@ -13,29 +13,44 @@
         <result property="updateTime"   column="update_time"/>
     </resultMap>
 
-    <select id="selectTagList" parameterType="SysTag" resultMap="SysTagResult">
+    <sql id="selectTag">
         select
-            tag_id,
-            tag_name,
-            create_by,
-            create_time,
-            update_by,
-            update_time
+            st.tag_id,
+            st.tag_name,
+            st.create_by,
+            st.create_time,
+            st.update_by,
+            st.update_time
         from sys_tag st
-        <where>
-            <if test="tagId != null and tagId != ''">
-                and st.tag_id = #{tagId}
-            </if>
-            <if test="tagName != null and tagName != ''">
-                and st.tag_name like concat('%', #{tagName}, '%')
-            </if>
-            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
-                and date_format(st.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
-            </if>
-            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
-                and date_format(st.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
-            </if>
-        </where>
+    </sql>
+
+    <select id="selectTagList" parameterType="SysTag" resultMap="SysTagResult">
+        <include refid="selectTag" />
+        where st.del_flag = 0
+        <if test="tagId != null and tagId != ''">
+            and st.tag_id = #{tagId}
+        </if>
+        <if test="tagName != null and tagName != ''">
+            and st.tag_name like concat('%', #{tagName}, '%')
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+            and date_format(st.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+            and date_format(st.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+        </if>
+    </select>
+
+    <select id="selectTagAll" resultMap="SysTagResult">
+        <include refid="selectTag" />
+    </select>
+
+    <select id="selectTagListByArticleId" parameterType="String" resultType="String">
+        select t.tag_id
+        from sys_tag t
+                 left join sys_article_tag sat on t.tag_id = sat.tag_id
+                 left join sys_article sa on sat.article_id = sa.article_id
+        where sa.article_id = #{articleId}
     </select>
 
 </mapper>

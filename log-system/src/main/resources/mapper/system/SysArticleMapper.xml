@@ -65,7 +65,7 @@
         ${params.dataScope}
     </select>
 
-    <select id="selectArticleByArticleId" resultMap="SysTypeResult" parameterType="String">
+    <select id="selectArticleByArticleId" resultMap="SysArticleResult" parameterType="String">
         select
             sa.article_id,
             sa.article_title,

@@ -27,4 +27,23 @@ public class SysTagServiceImpl implements ISysTagService {
     public List<SysTag> selectTagList(SysTag tag) {
         return tagMapper.selectTagList(tag);
     }
+
+    /**
+     * 查询所有文章标签
+     * @return 文章标签列表
+     */
+    @Override
+    public List<SysTag> selectTagAll() {
+        return tagMapper.selectTagAll();
+    }
+
+    /**
+     * 根据文章 ID 获取标签选择框列表
+     * @param articleId 文章 ID
+     * @return 选中的标签 ID 列表
+     */
+    @Override
+    public List<String> selectTagListByArticleId(String articleId) {
+        return tagMapper.selectTagListByArticleId(articleId);
+    }
 }
