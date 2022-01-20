@@ -39,8 +39,8 @@ upload:
     url: https://
     path: /usr/local/upload/
   oss:
-    url: https://202007002.oss-cn-chengdu.aliyuncs.com/
+    url: https://
     endpoint: oss-cn-chengdu.aliyuncs.com
-    accessKeyId: LTAI4GFYV6Uxx6w4pAf59hVK
-    accessKeySecret: v1ALyYMbuZ6zZS3dozVwMTkITQESHv
-    bucketName: 202007002
+    accessKeyId:
+    accessKeySecret:
+    bucketName:
