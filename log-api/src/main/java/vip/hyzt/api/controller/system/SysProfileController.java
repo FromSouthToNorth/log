@@ -94,4 +94,18 @@ public class SysProfileController extends BaseController {
         }
         return Result.error("修改密码异常，请联系管理员");
     }
+
+    /**
+     * 头像上传
+     */
+    @Log(title = "用户头像", businessType = BusinessType.UPDATE)
+    @PostMapping("/avatar")
+    public Result avatar(@RequestParam("avatarfile") MultipartFile file) {
+        if (!file.isEmpty()) {
+            LoginUser loginUser = getLoginUser();
+
+        }
+        return Result.error("上传图片异常，请联系管理员");
+    }
+
 }

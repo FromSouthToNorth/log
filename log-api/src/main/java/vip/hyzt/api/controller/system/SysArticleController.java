@@ -73,10 +73,12 @@ public class SysArticleController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:article:upload')")
     @PostMapping("/system/article/image")
     public Result uploadArticleImage(MultipartFile file) {
-        System.out.println("file --> " + file);
-        String url = uploadService.executeUpload(file, FilePathEnum.ARTICLE.getPath());
-        Result ajax = Result.success();
-        ajax.put(Result.DATA_TAG, url);
-        return ajax;
+        if (!file.isEmpty()) {
+            String url = uploadService.executeUpload(file, FilePathEnum.ARTICLE.getPath());
+            Result ajax = Result.success();
+            ajax.put(Result.DATA_TAG, url);
+            return ajax;
+        }
+        return Result.error("上传图片异常，请联系管理员");
     }
 }
