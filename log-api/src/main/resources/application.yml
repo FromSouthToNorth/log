@@ -34,7 +34,7 @@ pagehelper:
   params: count=countSql
 
 upload:
-  mode: local
+  mode: oss
   local:
     url: https://
     path: /usr/local/upload/

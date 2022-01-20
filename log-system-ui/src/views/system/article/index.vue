@@ -64,7 +64,7 @@
 
         <el-row :gutter="10" class="mb8">
           <el-col :span="1.5">
-            <router-link :to="'/system/article-edit/index/' + 0">
+            <router-link :to="'/system/article-edit/index/' + 'add'">
               <el-button
                 type="primary"
                 plain

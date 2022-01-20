@@ -18,7 +18,7 @@ public class OssConfigProperties {
     private String endpoint;
 
     /** 访问密钥id */
-    private String accessKyeId;
+    private String accessKeyId;
 
     /** 访问密钥密码 */
     private String accessKeySecret;
@@ -42,12 +42,12 @@ public class OssConfigProperties {
         this.endpoint = endpoint;
     }
 
-    public String getAccessKyeId() {
-        return accessKyeId;
+    public String getAccessKeyId() {
+        return accessKeyId;
     }
 
-    public void setAccessKyeId(String accessKyeId) {
-        this.accessKyeId = accessKyeId;
+    public void setAccessKeyId(String accessKeyId) {
+        this.accessKeyId = accessKeyId;
     }
 
     public String getAccessKeySecret() {
@@ -64,5 +64,16 @@ public class OssConfigProperties {
 
     public void setBucketName(String bucketName) {
         this.bucketName = bucketName;
+    }
+
+    @Override
+    public String toString() {
+        return "OssConfigProperties{" +
+                "url='" + url + '\'' +
+                ", endpoint='" + endpoint + '\'' +
+                ", accessKyeId='" + accessKeyId + '\'' +
+                ", accessKeySecret='" + accessKeySecret + '\'' +
+                ", bucketName='" + bucketName + '\'' +
+                '}';
     }
 }

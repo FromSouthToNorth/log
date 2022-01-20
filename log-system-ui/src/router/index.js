@@ -118,7 +118,7 @@ export const constantRoutes = [
     hidden: true,
     children: [
       {
-        path: 'index/:articleId(\\d+)',
+        path: 'index/:articleId(\\w+)',
         component: (resolve) => require(['@/views/system/article/Article'], resolve),
         name: 'Data',
         meta: { title: '文章编辑', activeMenu: '/system/article'}

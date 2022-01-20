@@ -192,16 +192,19 @@ values ('501', '登录日志', '108', '2', 'logininfor', 'monitor/logininfor/ind
 
 -- 博客管理按钮
 insert into sys_permission_menu
-values ('1001', '博客查询', '100', '1', '', '', 1, 0, 'F', '0', '0', 'system:article:query', '#', 0, 'admin', sysdate(), '',
+values ('1000', '博客图片上传', '100', '1', '', '', 1, 0, 'F', '0', '0', 'system:article:upload', '#', 0, 'admin', sysdate(), '',
         null);
 insert into sys_permission_menu
-values ('1002', '博客新增', '100', '2', '', '', 1, 0, 'F', '0', '0', 'system:article:add', '#', 0, 'admin', sysdate(), '',
+values ('1001', '博客查询', '100', '2', '', '', 1, 0, 'F', '0', '0', 'system:article:query', '#', 0, 'admin', sysdate(), '',
         null);
 insert into sys_permission_menu
-values ('1003', '博客修改', '100', '3', '', '', 1, 0, 'F', '0', '0', 'system:article:edit', '#', 0, 'admin', sysdate(), '',
+values ('1002', '博客新增', '100', '3', '', '', 1, 0, 'F', '0', '0', 'system:article:add', '#', 0, 'admin', sysdate(), '',
         null);
 insert into sys_permission_menu
-values ('1004', '博客删除', '100', '4', '', '', 1, 0, 'F', '0', '0', 'system:article:remove', '#', 0, 'admin', sysdate(),
+values ('1003', '博客修改', '100', '4', '', '', 1, 0, 'F', '0', '0', 'system:article:edit', '#', 0, 'admin', sysdate(), '',
+        null);
+insert into sys_permission_menu
+values ('1004', '博客删除', '100', '5', '', '', 1, 0, 'F', '0', '0', 'system:article:remove', '#', 0, 'admin', sysdate(),
         '',
         null);
 

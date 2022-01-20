@@ -16,6 +16,7 @@
     </el-row>
     <mavon-editor
       ref="md"
+      @imgAdd="uploadImg"
       v-model="articleParams.articleContent"
       :style="{ height: 'calc(100vh - 160px)' }"
     />
@@ -35,9 +36,10 @@
           <el-upload
             drag
             multiple
+            :headers="header"
             :before-upload="beforeUpload"
             :on-success="onSuccess"
-            action="">
+            action="/dev-api/system/article/image">
             <i class="el-icon-upload" v-if="articleParams.articleCover === ''"></i>
             <div class="el-upload__text" v-if="articleParams.articleCover === ''">
               将文件拖到此处，或<em>点击上传</em>
@@ -128,7 +130,7 @@
           plain
           icon="el-icon-position"
           size="small"
-          @click="pushArticle"
+          @click="submitArticle"
           v-hasPermi="['system:article:add']"
         >
           发表文章
@@ -147,8 +149,10 @@
 </template>
 
 <script>
-import {adminGetArticleInfo} from "@/api/system/article";
-
+import {adminArticleUploadImg, adminGetArticleInfo} from "@/api/system/article";
+import * as imageConversion from "image-conversion";
+import { getToken } from '@/utils/auth'
+import errorCode from "@/utils/errorCode";
 export default {
   name: "Article",
   dicts: ['sys_article_status', 'sys_article_type'],
@@ -166,7 +170,10 @@ export default {
       },
       types: [],
       tags: [],
-      visibleArticleEdit: false
+      visibleArticleEdit: false,
+      header: {
+        Authorization: 'Bearer ' + getToken()
+      }
     }
   },
   created() {
@@ -192,6 +199,10 @@ export default {
         })
       }
     },
+    /** 提交文章 */
+    submitArticle() {
+      console.log(this.articleParams);
+    },
     /** 文章编辑界面发布按钮 */
     pushArticle() {
       if (this.articleParams.articleContent && this.articleParams.articleContent !== '') {
@@ -202,12 +213,48 @@ export default {
       }
     },
     /** 上传文章封面 */
-    beforeUpload() {
-      console.log('beforeUpload');
+    beforeUpload(file) {
+      return new Promise(resolve => {
+        if (file.size / 1024 < 200) {
+          resolve(file);
+        }
+        imageConversion.compressAccurately(file, 200)
+        .then(res => {
+          resolve(res)
+        })
+      })
     },
     /** 上传文章封面返回结果 */
-    onSuccess() {
-
+    onSuccess(result) {
+      let { code, data, msg } = result;
+      console.log(data);
+      code = code || 200;
+      msg =  msg || errorCode[code] || errorCode['default']
+      if (code === 200) {
+        this.articleParams.articleCover = data
+        this.$message.success(msg);
+      }
+      else {
+        this.$message.error(msg);
+      }
+    },
+    /** 文章内容图片上传 */
+    uploadImg(pos, file) {
+      var formData = new FormData();
+      if (file.size / 1024 < 200) {
+        formData.append("file", file)
+        adminArticleUploadImg(formData).then(result => {
+          this.$refs.md.$img2Url(pos, result.data);
+        })
+      }
+      else {
+        imageConversion.compressAccurately(file, 200).then(result => {
+          formData.append("file", new window.File([result], file.name, { type: file.type }))
+          adminArticleUploadImg(formData).then(result => {
+            this.$refs.md.$img2Url(pos, result.data);
+          })
+        })
+      }
     }
   }
 }
