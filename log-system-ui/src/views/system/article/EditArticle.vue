@@ -40,12 +40,10 @@
             :before-upload="beforeUpload"
             :on-success="onSuccess"
             action="/dev-api/system/article/image">
-            <i class="el-icon-upload" v-if="articleParams.articleCover === ''"></i>
-            <div class="el-upload__text" v-if="articleParams.articleCover === ''">
-              将文件拖到此处，或<em>点击上传</em>
-            </div>
+            <i class="el-icon-upload" v-show="articleParams.articleCover === ''"></i>
+            <div class="el-upload__text" v-show="articleParams.articleCover === ''">将文件拖到此处，或<em>点击上传</em></div>
             <img
-              v-else
+              v-show="articleParams.articleCover !== ''"
               :src="articleParams.articleCover"
               width="360px"
               height="180px"
@@ -88,7 +86,7 @@
         </el-form-item>
         <el-form-item label="状态" prop="status">
           <el-select
-            v-model="articleParams.status + ''"
+            v-model="articleParams.status"
             placeholder="文章状态"
             clearable
             size="small"
@@ -103,7 +101,7 @@
         </el-form-item>
         <el-form-item label="类型" prop="type">
           <el-select
-            v-model="articleParams.type + ''"
+            v-model="articleParams.type"
             placeholder="文章类型"
             clearable
             size="small"
@@ -151,8 +149,9 @@
 <script>
 import {adminArticleUploadImg, adminGetArticleInfo} from "@/api/system/article";
 import * as imageConversion from "image-conversion";
-import { getToken } from '@/utils/auth'
+import {getToken} from '@/utils/auth'
 import errorCode from "@/utils/errorCode";
+
 export default {
   name: "Article",
   dicts: ['sys_article_status', 'sys_article_type'],
@@ -162,11 +161,11 @@ export default {
         articleTitle: undefined,
         typeId: undefined,
         tagIds: [],
-        type: undefined,
-        status: undefined,
+        type: '',
+        status: '',
         isTop: 0,
         articleContent: undefined,
-        articleCover: undefined
+        articleCover: ''
       },
       types: [],
       tags: [],
@@ -183,32 +182,28 @@ export default {
   methods: {
     /** 获取文章 */
     getArticle(articleId) {
-      if (articleId !== 0) {
-        adminGetArticleInfo(articleId).then(result => {
-          this.tags = result.tags
-          this.types = result.types
-          let article = result.data
-          this.articleParams.tagIds = result.tagIds
-          this.articleParams.articleTitle = article.articleTitle
-          this.articleParams.typeId = article.typeId
-          this.articleParams.type = article.type
-          this.articleParams.status = article.status
-          this.articleParams.isTop = article.isTop
-          this.articleParams.articleContent = article.articleContent
-          this.articleParams.articleCover = article.articleCover
-        })
-      }
+      adminGetArticleInfo(articleId).then(result => {
+        this.tags = result.tags
+        this.types = result.types
+        let article = result.data
+        this.articleParams.tagIds = result.tagIds
+        this.articleParams.articleTitle = article.articleTitle
+        this.articleParams.typeId = article.typeId
+        this.articleParams.type = article.type
+        this.articleParams.status = article.status
+        this.articleParams.isTop = article.isTop
+        this.articleParams.articleContent = article.articleContent
+        this.articleParams.articleCover = article.articleCover
+      })
     },
     /** 提交文章 */
     submitArticle() {
-      console.log(this.articleParams);
     },
     /** 文章编辑界面发布按钮 */
     pushArticle() {
       if (this.articleParams.articleContent && this.articleParams.articleContent !== '') {
         this.visibleArticleEdit = true
-      }
-      else {
+      } else {
         this.$message.error(" 文章内容不能为空! ")
       }
     },
@@ -219,22 +214,21 @@ export default {
           resolve(file);
         }
         imageConversion.compressAccurately(file, 200)
-        .then(res => {
-          resolve(res)
-        })
+          .then(res => {
+            resolve(res)
+          })
       })
     },
     /** 上传文章封面返回结果 */
     onSuccess(result) {
-      let { code, data, msg } = result;
+      let {code, data, msg} = result;
       console.log(data);
       code = code || 200;
-      msg =  msg || errorCode[code] || errorCode['default']
+      msg = msg || errorCode[code] || errorCode['default']
       if (code === 200) {
         this.articleParams.articleCover = data
         this.$message.success(msg);
-      }
-      else {
+      } else {
         this.$message.error(msg);
       }
     },
@@ -246,10 +240,9 @@ export default {
         adminArticleUploadImg(formData).then(result => {
           this.$refs.md.$img2Url(pos, result.data);
         })
-      }
-      else {
+      } else {
         imageConversion.compressAccurately(file, 200).then(result => {
-          formData.append("file", new window.File([result], file.name, { type: file.type }))
+          formData.append("file", new window.File([result], file.name, {type: file.type}))
           adminArticleUploadImg(formData).then(result => {
             this.$refs.md.$img2Url(pos, result.data);
           })

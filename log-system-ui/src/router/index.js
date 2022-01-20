@@ -119,9 +119,22 @@ export const constantRoutes = [
     children: [
       {
         path: 'index/:articleId(\\w+)',
-        component: (resolve) => require(['@/views/system/article/Article'], resolve),
+        component: (resolve) => require(['@/views/system/article/EditArticle'], resolve),
         name: 'Data',
-        meta: { title: '文章编辑', activeMenu: '/system/article'}
+        meta: { title: '编辑文章', activeMenu: '/system/article'}
+      }
+    ]
+  },
+  {
+    path: '/system/article-add',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'index',
+        component: (resolve) => require(['@/views/system/article/AddArticle'], resolve),
+        name: 'Data',
+        meta: { title: '添加编辑', activeMenu: '/system/article'}
       }
     ]
   },

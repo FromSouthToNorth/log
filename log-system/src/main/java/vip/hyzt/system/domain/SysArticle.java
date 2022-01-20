@@ -29,19 +29,19 @@ public class SysArticle extends BaseEntity {
     private String typeId;
 
     /** 是否置顶 0否 1是 */
-    private int isTop;
+    private String isTop;
 
     /** 文章类型 1原创 2转载 */
-    private int type;
+    private String type;
 
     /** 状态值 1公开 2私密 */
-    private int status;
+    private String status;
 
     /** 数据范围（1：全部数据权限 2: 自定义数据权限 3：仅自己数据权限） */
     private int dataScope;
 
     /** 删除标志（0 代表存在 1 代表删除） */
-    private int delFlag;
+    private String delFlag;
 
     /** 用户 (文章作者) */
     private SysUser user;
@@ -100,27 +100,27 @@ public class SysArticle extends BaseEntity {
         this.typeId = typeId;
     }
 
-    public int getIsTop() {
+    public String getIsTop() {
         return isTop;
     }
 
-    public void setIsTop(int isTop) {
+    public void setIsTop(String isTop) {
         this.isTop = isTop;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -132,11 +132,11 @@ public class SysArticle extends BaseEntity {
         this.dataScope = dataScope;
     }
 
-    public int getDelFlag() {
+    public String getDelFlag() {
         return delFlag;
     }
 
-    public void setDelFlag(int delFlag) {
+    public void setDelFlag(String delFlag) {
         this.delFlag = delFlag;
     }
 

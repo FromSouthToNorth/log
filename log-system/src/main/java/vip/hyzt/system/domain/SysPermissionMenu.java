@@ -36,10 +36,10 @@ public class SysPermissionMenu extends BaseEntity {
     private String menuType;
 
     /** Menu status (0 display 1 hide) */
-    private int visible;
+    private String visible;
 
     /** Menu status (0 normal and 1 disabled) */
-    private int status;
+    private String status;
 
     private String perms;
 
@@ -120,19 +120,19 @@ public class SysPermissionMenu extends BaseEntity {
         this.menuType = menuType;
     }
 
-    public int getVisible() {
+    public String getVisible() {
         return visible;
     }
 
-    public void setVisible(int visible) {
+    public void setVisible(String visible) {
         this.visible = visible;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 

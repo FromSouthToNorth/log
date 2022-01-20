@@ -18,7 +18,7 @@ public class UserConstants {
     public static final String  PARENT_ID = "0";
 
     /** 正常状态 */
-    public static final int NORMAL = 0;
+    public static final String NORMAL = "";
 
     /** 异常状态 */
     public static final int EXCEPTION = 1;
@@ -33,7 +33,7 @@ public class UserConstants {
     public static final int DICT_NORMAL = 0;
 
     /** 是否为系统默认（是） */
-    public static final int YES = 0;
+    public static final String YES = "Y";
 
     /** 是否菜单外链（是） */
     public static final int YES_FRAME = 0;

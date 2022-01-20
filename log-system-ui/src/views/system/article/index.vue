@@ -64,7 +64,7 @@
 
         <el-row :gutter="10" class="mb8">
           <el-col :span="1.5">
-            <router-link :to="'/system/article-edit/index/' + 'add'">
+            <router-link to="/system/article-add/index">
               <el-button
                 type="primary"
                 plain
@@ -82,7 +82,7 @@
               icon="el-icon-edit"
               size="mini"
               :disabled="multiple"
-              @click=""
+              @click="handleUpdate"
               v-hasPermi="['system:article:edit']"
             >编辑
             </el-button>
@@ -108,10 +108,10 @@
             <template slot-scope="scope">
               <el-image
                 :style="{ width: '80px', height: '50px' }"
-                :src="scope.row.articleCover" />
+                :src="scope.row.articleCover"/>
             </template>
           </el-table-column>
-          <el-table-column label="标题" align="center" key="articleTitle" prop="articleTitle" v-if="columns[1].visible" />
+          <el-table-column label="标题" align="center" key="articleTitle" prop="articleTitle" v-if="columns[1].visible"/>
           <el-table-column label="分类" align="center" prop="articleType" v-if="columns[2].visible">
             <template slot-scope="scope">
               <el-tag type="success">{{ scope.row.articleType.typeName }}</el-tag>
@@ -119,12 +119,12 @@
           </el-table-column>
           <el-table-column label="类型" align="center" prop="type" key="type" v-if="columns[3].visible">
             <template slot-scope="scope">
-              <dict-tag :options="dict.type.sys_article_type" :value="scope.row.type" />
+              <dict-tag :options="dict.type.sys_article_type" :value="scope.row.type"/>
             </template>
           </el-table-column>
           <el-table-column label="状态" align="center" prop="status" key="status" v-if="columns[4].visible">
             <template slot-scope="scope">
-              <dict-tag :options="dict.type.sys_article_status" :value="scope.row.status" />
+              <dict-tag :options="dict.type.sys_article_status" :value="scope.row.status"/>
             </template>
           </el-table-column>
           <el-table-column label="是否置顶" align="center" prop="isTop" v-if="columns[5].visible">
@@ -144,21 +144,22 @@
           </el-table-column>
           <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
             <template slot-scope="scope">
-              <router-link :to="'/system/article-edit/index/' + scope.row.articleId" class="link-type" >
-                <el-button
-                  size="mini"
-                  type="text"
-                  icon="el-icon-edit"
-                  v-hasPermi="['system:user:edit']"
-                >编辑</el-button>
-              </router-link>
+              <el-button
+                size="mini"
+                type="text"
+                icon="el-icon-edit"
+                @click="handleUpdate(scope.row)"
+                v-hasPermi="['system:user:edit']"
+              >编辑
+              </el-button>
               <el-button
                 size="mini"
                 type="text"
                 icon="el-icon-delete"
                 @click="handleDelete(scope.row)"
                 v-hasPermi="['system:user:remove']"
-              >删除</el-button>
+              >删除
+              </el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -236,9 +237,16 @@ export default {
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.userId);
-      this.single = selection.length != 1;
+      this.ids = selection.map(item => item.articleId);
+      this.single = selection.length !== 1;
       this.multiple = !selection.length;
+    },
+    /** 修改文章操作 */
+    handleUpdate(row) {
+      const articleId = row.articleId || this.ids
+      this.$router.push({
+        path: '/system/article-edit/index/' + articleId
+      })
     },
     // 修改文章置顶
     handleStatusChange() {

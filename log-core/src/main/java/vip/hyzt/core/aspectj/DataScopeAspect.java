@@ -25,17 +25,17 @@ public class DataScopeAspect {
     /**
      * 全部数据权限
      */
-    public static final int DATA_SCOPE_ALL = 1;
+    public static final String DATA_SCOPE_ALL = "1";
 
     /**
      * 自定数据权限
      */
-    public static final int DATA_SCOPE_CUSTOM = 2;
+    public static final String DATA_SCOPE_CUSTOM = "2";
 
     /**
      * 仅本人数据权限
      */
-    public static final int DATA_SCOPE_SELF = 3;
+    public static final String DATA_SCOPE_SELF = "3";
 
     /**
      * 数据权限过滤关键字
@@ -70,7 +70,7 @@ public class DataScopeAspect {
     private static void dataScopeFilter(JoinPoint joinPoint, SysUser user, String userAlias) {
         StringBuilder builder = new StringBuilder();
         for (SysRole role : user.getRoles()) {
-            int dataScope = role.getDataScope();
+            String dataScope = role.getDataScope();
             if (DATA_SCOPE_ALL == dataScope) {
                 builder = new StringBuilder();
                 break;

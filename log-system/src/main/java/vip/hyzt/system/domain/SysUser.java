@@ -20,7 +20,7 @@ public class SysUser extends BaseEntity {
     private String realName;
 
     /** User type (0 system users) */
-    private int userType;
+    private String userType;
     
     private String password;
 
@@ -29,17 +29,17 @@ public class SysUser extends BaseEntity {
     private Date birthday;
 
     /** Gender (0-default unknown, 1-male, 2-female) */
-    private int sex;
+    private String sex;
 
     private String email;
 
     private String phone;
 
     /** User status (0 normal 1 disabled) */
-    private int status;
+    private String status;
 
     /** Delete flag (0 means existence and 1 means deletion) */
-    private int delFlag;
+    private String delFlag;
 
     /** Role object */
     private List<SysRole> roles;
@@ -82,11 +82,11 @@ public class SysUser extends BaseEntity {
         this.realName = realName;
     }
 
-    public int getUserType() {
+    public String getUserType() {
         return userType;
     }
 
-    public void setUserType(int userType) {
+    public void setUserType(String userType) {
         this.userType = userType;
     }
 
@@ -114,11 +114,11 @@ public class SysUser extends BaseEntity {
         this.birthday = birthday;
     }
 
-    public int getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(int sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 
@@ -138,19 +138,19 @@ public class SysUser extends BaseEntity {
         this.phone = phone;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public int getDelFlag() {
+    public String getDelFlag() {
         return delFlag;
     }
 
-    public void setDelFlag(int delFlag) {
+    public void setDelFlag(String delFlag) {
         this.delFlag = delFlag;
     }
 

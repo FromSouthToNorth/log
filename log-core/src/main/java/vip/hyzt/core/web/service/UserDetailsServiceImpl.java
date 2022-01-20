@@ -14,6 +14,8 @@ import vip.hyzt.core.domain.LoginUser;
 import vip.hyzt.system.domain.SysUser;
 import vip.hyzt.system.service.ISysUserService;
 
+import java.util.Objects;
+
 /**
  * User authentication processing
  * @author hy
@@ -37,11 +39,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             logger.info("登录用户：{} 不存在.", username);
             throw new ServiceException("登录用户：" + username + " 不存在");
         }
-        else if (UserStatus.DELETED.getCode() == user.getDelFlag()) {
+        else if (Objects.equals(UserStatus.DELETED.getCode(), user.getDelFlag())) {
             logger.info("登录用户：{} 已被删除.", username);
             throw new ServiceException("对不起，您的账号：" + username + " 已被删除");
         }
-        else if (UserStatus.DISABLE.getCode() == user.getStatus()) {
+        else if (Objects.equals(UserStatus.DISABLE.getCode(), user.getStatus())) {
             logger.info("登录用户：{} 已被停用.", username);
             throw new ServiceException("对不起，您的账号：" + username + " 已停用");
         }

@@ -16,12 +16,12 @@ public class SysRole extends BaseEntity {
     private int roleSort;
 
     /** Role status (0 normal, 1 disabled) */
-    private int status;
+    private String status;
 
     private String roleKey;
 
     /** 1=All data permissions, 2=Custom data permissions, 3=Only personal data permissions */
-    private int dataScope;
+    private String dataScope;
 
     /** 菜单树选择项是否关联显示（ 0：父子不互相关联显示 1：父子互相关联显示） */
     private boolean menuCheckStrictly;
@@ -66,11 +66,11 @@ public class SysRole extends BaseEntity {
         this.roleSort = roleSort;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -82,11 +82,11 @@ public class SysRole extends BaseEntity {
         this.roleKey = roleKey;
     }
 
-    public int getDataScope() {
+    public String getDataScope() {
         return dataScope;
     }
 
-    public void setDataScope(int dataScope) {
+    public void setDataScope(String dataScope) {
         this.dataScope = dataScope;
     }
 

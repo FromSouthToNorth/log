@@ -25,7 +25,7 @@ public class SysConfig extends BaseEntity {
     private String configValue;
 
     /** 系统内置（0是 1否） */
-    private int configType;
+    private String configType;
 
     public String getConfigId()
     {
@@ -68,11 +68,11 @@ public class SysConfig extends BaseEntity {
         this.configValue = configValue;
     }
 
-    public int getConfigType() {
+    public String getConfigType() {
         return configType;
     }
 
-    public void setConfigType(int configType) {
+    public void setConfigType(String configType) {
         this.configType = configType;
     }
 

@@ -67,8 +67,8 @@
             <if test="status != null">
                 and status = #{status}
             </if>
-            order by parent_id, order_num
         </where>
+        order by parent_id, order_num
     </select>
 
     <select id="selectPermissionMenuListByUserId" parameterType="SysPermissionMenu" resultMap="SysPermissionMenuResult">

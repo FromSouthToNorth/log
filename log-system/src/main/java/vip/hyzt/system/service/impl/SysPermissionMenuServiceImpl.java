@@ -106,7 +106,7 @@ public class SysPermissionMenuServiceImpl implements ISysPermissionMenuService {
         List<RouterVo> routers = new LinkedList<>();
         for (SysPermissionMenu menu : menuList) {
             RouterVo router = new RouterVo();
-            router.setHidden(1 == menu.getVisible());
+            router.setHidden("1".equals(menu.getVisible()));
             router.setName(getRouteName(menu));
             router.setPath(getRouterPath(menu));
             router.setComponent(getComponent(menu));
