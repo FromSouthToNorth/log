@@ -65,10 +65,12 @@ create table `sys_user`
 
 -- 初始化用户
 insert into sys_user
-values (1, 'admin', 'hy', '00', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', 'https://202007002.oss-cn-chengdu.aliyuncs.com/articles/微信图片_20220120165107.jpg', null, 1,
+values ('1', 'admin', 'hy', '00', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2',
+        'https://202007002.oss-cn-chengdu.aliyuncs.com/articles/微信图片_20220120165107.jpg', null, 1,
         '598050554@qq.com', '18181795450', '0', '0', 'admin', sysdate(), '', null);
 insert into sys_user
-values (2, 'outsider', 'lqr', '00', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', 'https://202007002.oss-cn-chengdu.aliyuncs.com/articles/微信图片_20220120165119.jpg', null, 1,
+values ('2', 'outsider', 'lqr', '00', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2',
+        'https://202007002.oss-cn-chengdu.aliyuncs.com/articles/微信图片_20220120165119.jpg', null, 1,
         '1172484612@qq.com', '15982620714', '0', '0', 'admin', sysdate(), '', null);
 
 -- 用户角色表
@@ -76,8 +78,8 @@ drop table if exists `sys_user_role`;
 create table `sys_user_role`
 (
     `id`      varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci not null comment '主键id',
-    `user_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci null default null comment '用户id',
-    `role_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci null default null comment '角色id',
+    `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci null default null comment '用户id',
+    `role_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci null default null comment '角色id',
     primary key (`id`) using btree,
     index `index2_groupuu_user_id` (`user_id`) using btree,
     index `index2_groupuu_ole_id` (`role_id`) using btree,
@@ -102,7 +104,7 @@ create table `sys_permission_menu`
 (
     `menu_id`     varchar(64) character set utf8 collate utf8_general_ci       not null comment '主键',
     `menu_name`   varchar(50) character set utf8 collate utf8_general_ci       not null comment '菜单名称',
-    `parent_id`   varchar(32) character set utf8 collate utf8_general_ci       null default '0' comment '父菜单id',
+    `parent_id`   varchar(64) character set utf8 collate utf8_general_ci            default '0' comment '父菜单id',
     `order_num`   int(4)                                                            default 0 comment '显示顺序',
     `path`        varchar(200) character set utf8 collate utf8_general_ci      null default null comment '路由地址',
     `component`   varchar(255) character set utf8 collate utf8_general_ci      null default null comment '组件地址',
@@ -186,7 +188,8 @@ values ('112', '缓存监控', '2', '4', 'cache', 'monitor/cache/index', 1, 0, '
 
 -- 三级菜单
 insert into sys_permission_menu
-values ('500', '操作日志', '108', '1', 'operlog', 'monitor/operlog/index', 1, 0, 'C', '0', '0', 'monitor:operlog:list', 'form',
+values ('500', '操作日志', '108', '1', 'operlog', 'monitor/operlog/index', 1, 0, 'C', '0', '0', 'monitor:operlog:list',
+        'form',
         '0',
         'admin', sysdate(), '', null);
 insert into sys_permission_menu

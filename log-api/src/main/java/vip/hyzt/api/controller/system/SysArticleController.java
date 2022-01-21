@@ -2,10 +2,7 @@ package vip.hyzt.api.controller.system;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import vip.hyzt.common.core.page.TableDataInfo;
 import vip.hyzt.common.enums.FilePathEnum;
@@ -72,11 +69,11 @@ public class SysArticleController extends BaseController {
      */
     @PreAuthorize("@ss.hasPermi('system:article:upload')")
     @PostMapping("/system/article/image")
-    public Result uploadArticleImage(MultipartFile file) {
+    public Result uploadArticleImage(@RequestParam("articlefile") MultipartFile file) {
         if (!file.isEmpty()) {
             String url = uploadService.executeUpload(file, FilePathEnum.ARTICLE.getPath());
             Result ajax = Result.success();
-            ajax.put(Result.DATA_TAG, url);
+            ajax.put("imgUrl", url);
             return ajax;
         }
         return Result.error("上传图片异常，请联系管理员");

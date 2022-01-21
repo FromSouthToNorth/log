@@ -5,6 +5,9 @@ import org.springframework.web.multipart.MultipartFile;
 import vip.hyzt.common.exception.ServiceException;
 import vip.hyzt.common.utils.file.FileUtils;
 
+import static vip.hyzt.common.utils.file.FileUtils.extractFilename;
+import static vip.hyzt.common.utils.file.FileUtils.getExtension;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -18,9 +21,7 @@ public abstract class AbstractUploadService implements IUploadService {
     @Override
     public String uploadFile(MultipartFile file, String path) {
         try {
-            String md5 = FileUtils.getMd5(file.getInputStream());
-            String extName = FileUtils.getExtName(file.getOriginalFilename());
-            String fileName = md5 + extName;
+            String fileName = extractFilename(file);
             if (!exists(path + fileName)) {
                 upload(path, fileName, file.getInputStream());
             }

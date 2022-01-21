@@ -77,7 +77,6 @@ export default {
   methods: {
     getUser() {
       getUserProfile().then(response => {
-        console.log(response);
         this.user = response.data;
         this.roleGroup = response.roleGroup;
         this.postGroup = response.postGroup;

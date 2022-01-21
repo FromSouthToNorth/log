@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import vip.hyzt.common.annotation.Log;
 import vip.hyzt.common.constant.UserConstants;
 import vip.hyzt.common.enums.BusinessType;
+import vip.hyzt.common.enums.FilePathEnum;
 import vip.hyzt.common.utils.StringUtils;
 import vip.hyzt.core.domain.LoginUser;
 import vip.hyzt.core.domain.Result;
@@ -14,6 +15,7 @@ import vip.hyzt.core.web.controller.BaseController;
 import vip.hyzt.core.web.service.TokenService;
 import vip.hyzt.system.domain.SysUser;
 import vip.hyzt.system.service.ISysUserService;
+import vip.hyzt.system.service.impl.SysUploadService;
 
 /**
  * 个人信息 业务处理
@@ -28,6 +30,9 @@ public class SysProfileController extends BaseController {
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    private SysUploadService uploadService;
 
     /**
      * 个人信息
@@ -103,7 +108,14 @@ public class SysProfileController extends BaseController {
     public Result avatar(@RequestParam("avatarfile") MultipartFile file) {
         if (!file.isEmpty()) {
             LoginUser loginUser = getLoginUser();
-
+            String avatar = uploadService.executeUpload(file, FilePathEnum.AVATAR.getPath());
+            if (userService.updateUserAvatar(loginUser.getUsername(), avatar)) {
+                Result result = Result.success();
+                result.put("imgUrl", avatar);
+                loginUser.getUserInfo().setAvatar(avatar);
+                tokenService.setLoginUser(loginUser);
+                return result;
+            }
         }
         return Result.error("上传图片异常，请联系管理员");
     }

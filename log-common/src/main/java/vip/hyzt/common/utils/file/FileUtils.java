@@ -1,5 +1,11 @@
 package vip.hyzt.common.utils.file;
 
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.web.multipart.MultipartFile;
+import vip.hyzt.common.utils.DateUtils;
+import vip.hyzt.common.utils.string.StringUtils;
+import vip.hyzt.common.utils.uuid.IdUtils;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
@@ -10,11 +16,11 @@ import java.security.MessageDigest;
  */
 public abstract class FileUtils {
 
-    private static final char[] DIGITS_LOWER = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',
-            'e', 'f' };
+    private static final char[] DIGITS_LOWER = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',
+            'e', 'f'};
 
-    private static final char[] DIGITS_UPPER = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D',
-            'E', 'F' };
+    private static final char[] DIGITS_UPPER = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D',
+            'E', 'F'};
 
     /**
      * 获取文件md5值
@@ -40,23 +46,34 @@ public abstract class FileUtils {
                 if (inputStream != null) {
                     inputStream.close();
                 }
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
     /**
-     * 得到文件扩展名
-     * @param fileName 文件名称
-     * @return {@link String} 文件后缀
+     * 编码文件名
      */
-    public static String getExtName(String fileName) {
-        if (isBlank(fileName)) {
-            return "";
+    public static String extractFilename(MultipartFile file) {
+        String fileName = file.getOriginalFilename();
+        String extension = getExtension(file);
+        fileName = DateUtils.datePath() + "/" + IdUtils.fastUUID() + "." + extension;
+        return fileName;
+    }
+
+    /**
+     * 获取文件名的后缀
+     * @param file 表单文件
+     * @return 后缀名
+     */
+    public static String getExtension(MultipartFile file) {
+        System.out.println(file.getContentType());
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        if (StringUtils.isEmpty(extension)) {
+            extension = MimeTypeUtils.getExtension(file.getContentType());
         }
-        return fileName.substring(fileName.lastIndexOf("."));
+        return extension;
     }
 
     /**
@@ -94,7 +111,7 @@ public abstract class FileUtils {
     private static void encodeHex(byte[] data, int dataOffset, int dataLen, char[] toDigits, char[] out, int outOffset) {
         int i = dataOffset;
 
-        for(int var7 = outOffset; i < dataOffset + dataLen; ++i) {
+        for (int var7 = outOffset; i < dataOffset + dataLen; ++i) {
             out[var7++] = toDigits[(240 & data[i]) >>> 4];
             out[var7++] = toDigits[15 & data[i]];
         }

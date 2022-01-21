@@ -36,6 +36,7 @@
           <el-upload
             drag
             multiple
+            name="articlefile"
             :headers="header"
             :before-upload="beforeUpload"
             :on-success="onSuccess"
@@ -207,12 +208,11 @@ export default {
     },
     /** 上传文章封面返回结果 */
     onSuccess(result) {
-      let { code, data, msg } = result;
-      console.log(data);
+      let { code, imgUrl, msg } = result;
       code = code || 200;
       msg =  msg || errorCode[code] || errorCode['default']
       if (code === 200) {
-        this.articleParams.articleCover = data
+        this.articleParams.articleCover = imgUrl
         this.$message.success(msg);
       }
       else {
@@ -223,16 +223,16 @@ export default {
     uploadImg(pos, file) {
       var formData = new FormData();
       if (file.size / 1024 < 200) {
-        formData.append("file", file)
+        formData.append("articlefile", file)
         adminArticleUploadImg(formData).then(result => {
-          this.$refs.md.$img2Url(pos, result.data);
+          this.$refs.md.$img2Url(pos, result.imgUrl);
         })
       }
       else {
         imageConversion.compressAccurately(file, 200).then(result => {
-          formData.append("file", new window.File([result], file.name, { type: file.type }))
+          formData.append("articlefile", new window.File([result], file.name, { type: file.type }))
           adminArticleUploadImg(formData).then(result => {
-            this.$refs.md.$img2Url(pos, result.data);
+            this.$refs.md.$img2Url(pos, result.imgUrl);
           })
         })
       }
