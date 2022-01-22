@@ -6,10 +6,6 @@ server:
     uri-encoding: UTF-8
     max-threads: 800
     min-spare-threads: 30
-#  ssl:
-#    key-store: classpath:ssl/5960383_www.hyzt.vip.jks
-#    key-store-password: yW7344dX
-#    key-store-type: JKS
 
 spring:
   datasource:
