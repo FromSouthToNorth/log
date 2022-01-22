@@ -2,9 +2,12 @@ package vip.hyzt.api.controller.system;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import vip.hyzt.common.annotation.Log;
 import vip.hyzt.common.core.page.TableDataInfo;
+import vip.hyzt.common.enums.BusinessType;
 import vip.hyzt.common.enums.FilePathEnum;
 import vip.hyzt.core.domain.Result;
 import vip.hyzt.core.web.controller.BaseController;
@@ -77,5 +80,49 @@ public class SysArticleController extends BaseController {
             return ajax;
         }
         return Result.error("上传图片异常，请联系管理员");
+    }
+
+    /**
+     * 新增文章
+     */
+    @PreAuthorize("@ss.hasPermi('system:article:add')")
+    @Log(title = "文章管理", businessType = BusinessType.INSERT)
+    @PostMapping("/system/article")
+    public Result add(@Validated @RequestBody SysArticle article) {
+        article.setUserId(getUserId());
+        article.setCreateBy(getUsername());
+        return toAjax(articleService.insertArticle(article));
+    }
+
+    /**
+     * 新增文章
+     */
+    @PreAuthorize("@ss.hasPermi('system:article:edit')")
+    @Log(title = "文章管理", businessType = BusinessType.UPDATE)
+    @PutMapping("/system/article")
+    public Result edit(@Validated @RequestBody SysArticle article) {
+        article.setUpdateBy(getUsername());
+        return toAjax(articleService.updateArticle(article));
+    }
+
+    /**
+     * 修改文章置顶
+     */
+    @PreAuthorize("@ss.hasPermi('system:article:edit')")
+    @Log(title = "文章管理", businessType = BusinessType.UPDATE)
+    @PutMapping("/system/article/changeTop")
+    public Result changeTop(@RequestBody SysArticle article) {
+        article.setUpdateBy(getUsername());
+        return toAjax(articleService.changeTop(article));
+    }
+
+    /**
+     * 删除文章
+     */
+    @PreAuthorize("@ss.hasPermi('system:article:remove')")
+    @Log(title = "文章管理", businessType = BusinessType.DELETE)
+    @DeleteMapping("/system/article/{articleIds}")
+    public Result remove(@PathVariable String[] articleIds) {
+        return toAjax(articleService.deleteArticleByIds(articleIds));
     }
 }

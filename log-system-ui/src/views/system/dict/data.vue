@@ -69,17 +69,6 @@
           v-hasPermi="['system:dict:remove']"
         >删除</el-button>
       </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          :loading="exportLoading"
-          @click="handleExport"
-          v-hasPermi="['system:dict:export']"
-        >导出</el-button>
-      </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -376,17 +365,6 @@ export default {
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
-    },
-    /** 导出按钮操作 */
-    handleExport() {
-      const queryParams = this.queryParams;
-      this.$modal.confirm('是否确认导出所有数据项？').then(() => {
-        this.exportLoading = true;
-        return exportData(queryParams);
-      }).then(response => {
-        this.$download.name(response.msg);
-        this.exportLoading = false;
       }).catch(() => {});
     }
   }

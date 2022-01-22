@@ -41,10 +41,10 @@
             :before-upload="beforeUpload"
             :on-success="onSuccess"
             action="/dev-api/system/article/image">
-            <i class="el-icon-upload" v-show="articleParams.articleCover === ''"></i>
-            <div class="el-upload__text" v-show="articleParams.articleCover === ''">将文件拖到此处，或<em>点击上传</em></div>
+            <i class="el-icon-upload" v-show="articleParams.articleCover == ''" />
+            <div class="el-upload__text" v-show="articleParams.articleCover == ''">将文件拖到此处，或<em>点击上传</em></div>
             <img
-              v-show="articleParams.articleCover !== ''"
+              v-show="articleParams.articleCover !== '' && articleParams.articleCover"
               :src="articleParams.articleCover"
               width="360px"
               height="180px"
@@ -148,7 +148,7 @@
 </template>
 
 <script>
-import {adminArticleUploadImg, adminGetArticleInfo} from "@/api/system/article";
+import {addArticle, adminArticleUploadImg, adminGetArticleInfo} from "@/api/system/article";
 import * as imageConversion from "image-conversion";
 import { getToken } from '@/utils/auth'
 import errorCode from "@/utils/errorCode";
@@ -181,9 +181,27 @@ export default {
   methods: {
     /** 获取文章 */
     getTypeAndTag() {
+      adminGetArticleInfo("-1").then(result => {
+        this.tags = result.tags
+        this.types = result.types
+      })
     },
     /** 提交文章 */
     submitArticle() {
+      if (!this.articleParams.articleTitle && this.articleParams.articleTitle === '') {
+        this.$message.error("文章标题不能为空!")
+      }
+      if (!this.articleParams.articleContent && this.articleParams.articleContent === '') {
+        this.$message.error("文章内容不能为空!")
+      }
+      addArticle(this.articleParams).then(result => {
+        console.log(result);
+        this.$modal.msgSuccess("新增成功")
+        this.visibleArticleEdit = false
+        this.$router.push({
+          path: '/system/article'
+        })
+      })
     },
     /** 文章编辑界面发布按钮 */
     pushArticle() {

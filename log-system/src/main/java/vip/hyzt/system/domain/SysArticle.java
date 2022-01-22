@@ -1,5 +1,6 @@
 package vip.hyzt.system.domain;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -51,6 +52,8 @@ public class SysArticle extends BaseEntity {
 
     /** 文章标签集 */
     private List<SysTag> tags;
+
+    private String[] tagIds;
 
     public String getArticleId() {
         return articleId;
@@ -164,6 +167,14 @@ public class SysArticle extends BaseEntity {
         this.tags = tags;
     }
 
+    public String[] getTagIds() {
+        return tagIds;
+    }
+
+    public void setTagIds(String[] tagIds) {
+        this.tagIds = tagIds;
+    }
+
     @Override
     public String toString() {
         return "SysArticle{" +
@@ -173,14 +184,15 @@ public class SysArticle extends BaseEntity {
                 ", articleContent='" + articleContent + '\'' +
                 ", articleCover='" + articleCover + '\'' +
                 ", typeId='" + typeId + '\'' +
-                ", isTop=" + isTop +
-                ", type=" + type +
-                ", status=" + status +
+                ", isTop='" + isTop + '\'' +
+                ", type='" + type + '\'' +
+                ", status='" + status + '\'' +
                 ", dataScope=" + dataScope +
-                ", delFlag=" + delFlag +
+                ", delFlag='" + delFlag + '\'' +
                 ", user=" + user +
                 ", articleType=" + articleType +
                 ", tags=" + tags +
+                ", tagIds=" + Arrays.toString(tagIds) +
                 '}';
     }
 }

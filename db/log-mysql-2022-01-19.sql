@@ -591,23 +591,24 @@ values ('5', '账号自助-是否开启用户注册功能', 'sys.account.registe
 drop table if exists `sys_article`;
 create table `sys_article`
 (
-    `article_id`      varchar(64) character set utf8mb4 collate utf8mb4_general_ci   not null comment '主键',
-    `article_title`   varchar(64) character set utf8mb4 collate utf8mb4_general_ci   not null comment '文章标题',
-    `user_id`         varchar(100) character set utf8mb4 collate utf8mb4_general_ci  not null comment '作者id',
-    `article_content` longtext character set utf8mb4 collate utf8mb4_general_ci      not null comment '内容',
-    `article_cover`   varchar(1024) character set utf8mb4 collate utf8mb4_general_ci null comment '文章封面图',
-    `type_id`         varchar(64) character set utf8mb4 collate utf8mb4_general_ci   not null comment '文章分类',
-    `is_top`          char(1)                                                        not null default '0' comment '是否置顶 0否 1是',
-    `type`            char(1)                                                        not null default '1' comment '文章类型 1原创 2转载',
-    `status`          char(1)                                                        null     default '1' comment '状态值 1公开 2私密',
-    `del_flag`        char(1)                                                                 default '0' comment '删除标志（0 代表存在 1 代表删除）',
-    `create_by`       varchar(50) character set utf8mb4 collate utf8mb4_general_ci   not null comment '创建人',
-    `create_time`     datetime(0)                                                    null     default null comment '创建日期',
-    `update_by`       varchar(50) character set utf8mb4 collate utf8mb4_general_ci   not null comment '更新人',
-    `update_time`     datetime(0)                                                    null     default null comment '更新日期',
+    `article_id`      varchar(64) character set utf8mb4 collate utf8mb4_general_ci  not null comment '主键',
+    `article_title`   varchar(64) character set utf8mb4 collate utf8mb4_general_ci  not null comment '文章标题',
+    `user_id`         varchar(100) character set utf8mb4 collate utf8mb4_general_ci not null comment '作者id',
+    `article_content` longtext character set utf8mb4 collate utf8mb4_general_ci     not null comment '内容',
+    `article_cover`   varchar(1024) character set utf8mb4 collate utf8mb4_general_ci         default '' comment '文章封面图',
+    `type_id`         varchar(64) character set utf8mb4 collate utf8mb4_general_ci  not null comment '文章分类',
+    `is_top`          char(1)                                                       not null default '0' comment '是否置顶 0否 1是',
+    `type`            char(1)                                                       not null default '1' comment '文章类型 1原创 2转载',
+    `status`          char(1)                                                       null     default '1' comment '状态值 1公开 2私密',
+    `del_flag`        char(1)                                                                default '0' comment '删除标志（0 代表存在 1 代表删除）',
+    `create_by`       varchar(50) character set utf8mb4 collate utf8mb4_general_ci  not null comment '创建人',
+    `create_time`     datetime(0)                                                   null     default null comment '创建日期',
+    `update_by`       varchar(50) character set utf8mb4 collate utf8mb4_general_ci  null     default null comment '更新人',
+    `update_time`     datetime(0)                                                   null     default null comment '更新日期',
     primary key (`article_id`) using btree,
     index `uniq_sys_user_id` (`user_id`) using btree,
-    index `uniq_sys_type_id` (`type_id`) using btree
+    index `uniq_sys_type_id` (`type_id`) using btree,
+    index `uniq_sys_is_top` (`is_top`) using btree
 ) engine = innodb
   character set = utf8
   collate = utf8_general_ci comment = '文章表'
@@ -732,6 +733,7 @@ create table `sys_type`
 (
     `type_id`     varchar(64) character set utf8mb4 collate utf8mb4_general_ci not null comment '主键',
     `type_name`   varchar(64) character set utf8mb4 collate utf8mb4_general_ci not null comment '文章标签名称',
+    `type_color`  varchar(64) character set utf8mb4 collate utf8mb4_general_ci      default '' comment '文章标签颜色',
     `del_flag`    char(1)                                                           default '0' comment '删除标志（0代表存在 1代表删除）',
     `create_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci not null comment '创建人',
     `create_time` datetime(0)                                                  null default null comment '创建日期',
@@ -743,4 +745,4 @@ create table `sys_type`
   collate = utf8_general_ci comment = '文章类型表'
   row_format = Dynamic;
 insert into sys_type
-values ('1', '题解', '0', 'admin', sysdate(), '', sysdate());
+values ('1', '题解', '#409EFF', '0', 'admin', sysdate(), '', sysdate());

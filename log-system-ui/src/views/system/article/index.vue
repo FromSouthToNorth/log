@@ -11,7 +11,7 @@
               clearable
               size="small"
               style="width: 240px"
-              @keyup.enter.native=""
+              @keyup.enter.native="getList()"
             />
           </el-form-item>
           <el-form-item label="状态" prop="status">
@@ -57,7 +57,7 @@
             />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search" size="mini" @click="">搜索</el-button>
+            <el-button type="primary" icon="el-icon-search" size="mini" @click="getList">搜索</el-button>
             <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
           </el-form-item>
         </el-form>
@@ -94,7 +94,7 @@
               icon="el-icon-delete"
               size="mini"
               :disabled="multiple"
-              @click=""
+              @click="handleDelete"
               v-hasPermi="['system:article:remove']"
             >删除
             </el-button>
@@ -175,7 +175,7 @@
 </template>
 
 <script>
-import {adminListArticle} from "@/api/system/article";
+import {adminListArticle, changArticleTop, delArticle} from "@/api/system/article";
 
 export default {
   name: "ArticleList",
@@ -224,7 +224,6 @@ export default {
     getList() {
       this.loading = true;
       adminListArticle(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
-        console.log(response);
         this.articleList = response.rows
         this.total = response.total
         this.loading = false
@@ -234,6 +233,7 @@ export default {
     resetQuery() {
       this.dateRange = [];
       this.resetForm("queryForm");
+      this.getList();
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
@@ -249,12 +249,26 @@ export default {
       })
     },
     // 修改文章置顶
-    handleStatusChange() {
-
+    handleStatusChange(row) {
+      let text = row.isTop === "0" ? "取消" : "开启";
+      this.$modal.confirm('确认要' + text + '""' + row.articleTitle + "置顶吗？").then(() => {
+        return changArticleTop(row.articleId, row.isTop)
+      }).then(() => {
+        this.$modal.msgSuccess(text + "成功");
+      }).catch(function() {
+        row.status = row.status === "0" ? "1" : "0";
+      });
     },
     // 删除文章
-    handleDelete() {
-
+    handleDelete(row) {
+      const articleIds = row.articleId || this.ids;
+      this.$modal.confirm('是否要删除文章编号为"' + articleIds +'"的数据？').then(() => {
+        return delArticle(articleIds);
+      }).then(() => {
+        this.getList()
+        this.$modal.msgSuccess('删除成功')
+      }).catch(() => {
+      })
     }
   }
 }
