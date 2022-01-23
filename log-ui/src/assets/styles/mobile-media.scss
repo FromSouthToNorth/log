@@ -1,0 +1,80 @@
+@media screen and (max-width: 1000px) {
+  .body-adaptive .menu-main {
+    height: 48px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .body-adaptive .menu-main .menu-main__logo,
+  .body-adaptive .menu-main .menu-main__logo-link,
+  .body-adaptive .menu-main .menu-main__logo-link > svg {
+    height: 48px;
+    width: 48px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .menu-main__logo-link.menu-main__logo-link-mobile {
+    width: 48px;
+    height: 48px;
+    margin-right: 12px;
+    margin-left: 0;
+    top: 0;
+    left: 0;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .menu-main__action-link {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .body-adaptive .menu-second {
+    height: 48px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .menu-second-mobile {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 47px;
+    height: var(--jb-menu-main-mobile-height);
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .hy-display-sm-none {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .menu-second .second-input {
+    font-size: calc(var(--ruler) / 2);
+    padding: calc(var(--ruler) / 3);
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .menu-second ._hy-input-field_ipdmso7_53 {
+    padding: calc(var(--hy-input-padding) / 2) 4px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .menu-main.menu-main__mobile {
+    height: auto;
+    max-height: 184px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .menu-main.menu-main__mobile {
+    height: auto;
+    max-height: 96px;
+  }
+}

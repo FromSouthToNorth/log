@@ -1,0 +1,40 @@
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-width: 320px;
+  color: #343434;
+  background-color: #fff;
+  font-family: Gotham SSm A, Gotham SSm B, Helvetica, Arial, sans-serif;
+  line-height: 1.667;
+}
+
+* {
+  max-height: 1000000px;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+a, abbr, acronym, address, applet, article, aside, audio, b, big, blockquote, body, canvas, caption, center, cite, code, dd, del, details, dfn, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, header, hgroup, hr, html, i, iframe, img, ins, label, legend, li, mark, menu, nav, object, ol, output, p, pre, q, ruby, s, samp, section, small, span, strike, strong, sub, summary, sup, table, tbody, td, tfoot, th, thead, time, tr, tt, u, ul, var, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, .h {
+  font-family: "Inter", "Arial", "Helvetica Neue", "Helvetica", sans-serif;
+  font-weight: 700;
+  margin: 0 0 0.5em;
+  color: #27282C;
+}
