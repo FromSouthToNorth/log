@@ -71,16 +71,16 @@
         </div>
       </div>
     </section>
-<!--    <section class="section hy-section_bg_gray-light">-->
-<!--      <div class="hy-container z-index-1 customers-container">-->
-<!--        <div class="hy-row wt-row_size_m">-->
-<!--          <SectionTitle title="Blog" />-->
-<!--          <ArticleBox v-for="item in 2" :article="article" :class-name="item === 1 ? '':'hy-offset-top-48'" >-->
-<!--            <hr class="hy-hr hy-hr_theme_light hy-offset-top-48" v-if="item!==2">-->
-<!--          </ArticleBox>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </section>-->
+    <section class="section hy-section_bg_gray-light">
+      <div class="hy-container z-index-1 customers-container">
+        <div class="hy-row wt-row_size_m">
+          <SectionTitle title="Blog" />
+          <ArticleBox v-for="item in 2" :article="article" :class-name="item === 1 ? '':'hy-offset-top-48'" >
+            <hr class="hy-hr hy-hr_theme_light hy-offset-top-48" v-if="item!==2">
+          </ArticleBox>
+        </div>
+      </div>
+    </section>
     <section class="section">
       <div class="hy-container">
         <div class="section__head">
