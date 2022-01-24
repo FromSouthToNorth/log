@@ -1,48 +1,48 @@
-package vip.hyzt.system.service;
+package vip.hyzt.system.mapper;
 
-import vip.hyzt.system.domain.SysType;
+import vip.hyzt.system.domain.SysArticleType;
 
 import java.util.List;
 
 /**
- * 文章分类业务服务接口
+ * 文章分类持久层
  * @author hy
  */
-public interface ISysTypeService {
+public interface SysArticleTypeMapper {
 
     /**
      * 查询文章分类列表
      * @param type 查询分类参数
      * @return 文章分类结果集
      */
-    List<SysType> selectTypeList(SysType type);
+    List<SysArticleType> selectTypeList(SysArticleType type);
 
     /**
      * 查询所以文章分类
      * @return 文章分类结果集
      */
-    List<SysType> selectTypeAll();
+    List<SysArticleType> selectTypeAll();
 
     /**
      * 根据文章类型查询类型信息
      * @param typeId 类型 ID
      * @return 文章类型信息
      */
-    SysType selectTypeById(String typeId);
+    SysArticleType selectTypeById(String typeId);
 
     /**
      * 新增文章类型
      * @param type 文章类型信息
      * @return 结果
      */
-    int insertType(SysType type);
+    int insertType(SysArticleType type);
 
     /**
      * 根据文章类型编号编辑文章类型
      * @param type 文章类型信息
      * @return 结果
      */
-    int updateTypeById(SysType type);
+    int updateTypeById(SysArticleType type);
 
     /**
      * 根据文章类型编号批量删除文章类型
@@ -53,10 +53,10 @@ public interface ISysTypeService {
 
     /**
      * 校验文章类型名称是否唯一
-     * @param type 文章类型信息
-     * @return 结果
+     * @param typeName 文章类型名称
+     * @return 文章类型信息
      */
-    String checkTypeNameUnique(SysType type);
+    SysArticleType checkTypeNameUnique(String typeName);
 
     /**
      * 根据文章类型编号查询文章类型使用量

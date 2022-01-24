@@ -1,16 +1,15 @@
 package vip.hyzt.system.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vip.hyzt.common.annotation.DataScope;
 import vip.hyzt.common.utils.StringUtils;
 import vip.hyzt.common.utils.uuid.IdUtils;
 import vip.hyzt.system.domain.SysArticle;
-import vip.hyzt.system.domain.SysArticleTag;
+import vip.hyzt.system.domain.SysArticleConnectTag;
 import vip.hyzt.system.mapper.SysArticleMapper;
-import vip.hyzt.system.mapper.SysArticleTagMapper;
+import vip.hyzt.system.mapper.SysArticleConnectTagMapper;
 import vip.hyzt.system.service.ISysArticleService;
 
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class SysArticleServiceImpl implements ISysArticleService {
     private SysArticleMapper articleMapper;
 
     @Autowired
-    private SysArticleTagMapper articleTagMapper;
+    private SysArticleConnectTagMapper articleTagMapper;
 
     /**
      * 查询文章列表
@@ -107,9 +106,9 @@ public class SysArticleServiceImpl implements ISysArticleService {
     private void insertArticleTag(SysArticle article) {
         String[] tagIds = article.getTagIds();
         if (StringUtils.isNotNull(tagIds)) {
-            List<SysArticleTag> list = new ArrayList<>();
+            List<SysArticleConnectTag> list = new ArrayList<>();
             for (String tagId : tagIds) {
-                SysArticleTag at = new SysArticleTag();
+                SysArticleConnectTag at = new SysArticleConnectTag();
                 at.setId(IdUtils.simpleUUID());
                 at.setArticleId(article.getArticleId());
                 at.setTagId(tagId);

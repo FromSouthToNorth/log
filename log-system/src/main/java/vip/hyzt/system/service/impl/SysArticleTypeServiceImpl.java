@@ -6,9 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import vip.hyzt.common.constant.UserConstants;
 import vip.hyzt.common.exception.ServiceException;
-import vip.hyzt.system.domain.SysType;
-import vip.hyzt.system.mapper.SysTypeMapper;
-import vip.hyzt.system.service.ISysTypeService;
+import vip.hyzt.system.domain.SysArticleType;
+import vip.hyzt.system.mapper.SysArticleTypeMapper;
+import vip.hyzt.system.service.ISysArticleTypeService;
 
 import java.util.List;
 
@@ -17,10 +17,10 @@ import java.util.List;
  * @author hy
  */
 @Service
-public class SysTypeServiceImpl implements ISysTypeService {
+public class SysArticleTypeServiceImpl implements ISysArticleTypeService {
 
     @Autowired
-    private SysTypeMapper typeMapper;
+    private SysArticleTypeMapper typeMapper;
 
     /**
      * 查询文章分类列表
@@ -28,7 +28,7 @@ public class SysTypeServiceImpl implements ISysTypeService {
      * @return 文章分类结果集
      */
     @Override
-    public List<SysType> selectTypeList(SysType type) {
+    public List<SysArticleType> selectTypeList(SysArticleType type) {
         return typeMapper.selectTypeList(type);
     }
 
@@ -37,7 +37,7 @@ public class SysTypeServiceImpl implements ISysTypeService {
      * @return 文章分类结果集
      */
     @Override
-    public List<SysType> selectTypeAll() {
+    public List<SysArticleType> selectTypeAll() {
         return typeMapper.selectTypeAll();
     }
 
@@ -47,7 +47,7 @@ public class SysTypeServiceImpl implements ISysTypeService {
      * @return 文章类型信息
      */
     @Override
-    public SysType selectTypeById(String typeId) {
+    public SysArticleType selectTypeById(String typeId) {
         return typeMapper.selectTypeById(typeId);
     }
 
@@ -57,7 +57,7 @@ public class SysTypeServiceImpl implements ISysTypeService {
      * @return 结果
      */
     @Override
-    public int insertType(SysType type) {
+    public int insertType(SysArticleType type) {
         return typeMapper.insertType(type);
     }
 
@@ -67,7 +67,7 @@ public class SysTypeServiceImpl implements ISysTypeService {
      * @return 结果
      */
     @Override
-    public int updateTypeById(SysType type) {
+    public int updateTypeById(SysArticleType type) {
         return typeMapper.updateTypeById(type);
     }
 
@@ -80,7 +80,7 @@ public class SysTypeServiceImpl implements ISysTypeService {
     @Transactional
     public int deleteTypeByIds(String[] typeIds) {
         for (String typeId : typeIds) {
-            SysType type = selectTypeById(typeId);
+            SysArticleType type = selectTypeById(typeId);
             if (countTypeByTypeId(typeId) > 0) {
                 throw new ServiceException(String.format("%1$s 类型已分配,不能删除", type.getTypeName()));
             }
@@ -94,9 +94,9 @@ public class SysTypeServiceImpl implements ISysTypeService {
      * @return 文章类型信息
      */
     @Override
-    public String checkTypeNameUnique(SysType type) {
+    public String checkTypeNameUnique(SysArticleType type) {
         String typeId = ObjectUtils.isEmpty(type) ? "-1" : type.getTypeId();
-        SysType typeInfo = typeMapper.checkTypeNameUnique(type.getTypeName());
+        SysArticleType typeInfo = typeMapper.checkTypeNameUnique(type.getTypeName());
         if (!ObjectUtils.isEmpty(typeInfo) && typeInfo.getTypeId().equals(typeId)) {
             return UserConstants.NOT_UNIQUE;
         }

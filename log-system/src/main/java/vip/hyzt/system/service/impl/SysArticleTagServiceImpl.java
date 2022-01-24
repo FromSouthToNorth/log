@@ -6,9 +6,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import vip.hyzt.common.constant.UserConstants;
 import vip.hyzt.common.exception.ServiceException;
-import vip.hyzt.system.domain.SysTag;
-import vip.hyzt.system.mapper.SysTagMapper;
-import vip.hyzt.system.service.ISysTagService;
+import vip.hyzt.system.domain.SysArticleTag;
+import vip.hyzt.system.mapper.SysArticleConnectTagMapper;
+import vip.hyzt.system.mapper.SysArticleTagMapper;
+import vip.hyzt.system.service.ISysArticleTagService;
 
 import java.util.List;
 
@@ -17,10 +18,10 @@ import java.util.List;
  * @author hy
  */
 @Service
-public class SysTagServiceImpl implements ISysTagService {
+public class SysArticleTagServiceImpl implements ISysArticleTagService {
 
     @Autowired
-    private SysTagMapper tagMapper;
+    private SysArticleTagMapper tagMapper;
 
     /**
      * 查询文章标签列表
@@ -28,7 +29,7 @@ public class SysTagServiceImpl implements ISysTagService {
      * @return 文章标签结果集
      */
     @Override
-    public List<SysTag> selectTagList(SysTag tag) {
+    public List<SysArticleTag> selectTagList(SysArticleTag tag) {
         return tagMapper.selectTagList(tag);
     }
 
@@ -37,7 +38,7 @@ public class SysTagServiceImpl implements ISysTagService {
      * @return 文章标签列表
      */
     @Override
-    public List<SysTag> selectTagAll() {
+    public List<SysArticleTag> selectTagAll() {
         return tagMapper.selectTagAll();
     }
 
@@ -57,7 +58,7 @@ public class SysTagServiceImpl implements ISysTagService {
      * @return 标签标签信息
      */
     @Override
-    public SysTag selectTagById(String tagId) {
+    public SysArticleTag selectTagById(String tagId) {
         return tagMapper.selectTagById(tagId);
     }
 
@@ -67,7 +68,7 @@ public class SysTagServiceImpl implements ISysTagService {
      * @return 结果
      */
     @Override
-    public int insertTag(SysTag tag) {
+    public int insertTag(SysArticleTag tag) {
         return tagMapper.insertTag(tag);
     }
 
@@ -77,7 +78,7 @@ public class SysTagServiceImpl implements ISysTagService {
      * @return 结果
      */
     @Override
-    public int updateTagById(SysTag tag) {
+    public int updateTagById(SysArticleTag tag) {
         return tagMapper.updateTagById(tag);
     }
 
@@ -90,7 +91,7 @@ public class SysTagServiceImpl implements ISysTagService {
     @Transactional
     public int deleteTagByIds(String[] tagIds) {
         for (String tagId : tagIds) {
-            SysTag tag = selectTagById(tagId);
+            SysArticleTag tag = selectTagById(tagId);
             if (countTagByTagId(tagId) > 0) {
                 throw new ServiceException(String.format("%1$s 标签已分配,不能删除", tag.getTagName()));
             }
@@ -104,9 +105,9 @@ public class SysTagServiceImpl implements ISysTagService {
      * @return 结果
      */
     @Override
-    public String checkTagNameUnique(SysTag tag) {
+    public String checkTagNameUnique(SysArticleTag tag) {
         String tagId = ObjectUtils.isEmpty(tag) ? "-1" : tag.getTagId();
-        SysTag tagInfo = tagMapper.checkTagNameUnique(tag.getTagName());
+        SysArticleTag tagInfo = tagMapper.checkTagNameUnique(tag.getTagName());
         if (!ObjectUtils.isEmpty(tagInfo) && tagInfo.getTagId().equals(tagId)) {
             return UserConstants.NOT_UNIQUE;
         }

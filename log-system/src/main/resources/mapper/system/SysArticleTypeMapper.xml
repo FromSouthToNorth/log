@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="vip.hyzt.system.mapper.SysTypeMapper">
+<mapper namespace="vip.hyzt.system.mapper.SysArticleTypeMapper">
 
-    <resultMap  id="SysTypeResult"          type="SysType">
+    <resultMap  id="SysArticleTypeResult"          type="SysArticleType">
         <id     property="typeId"           column="type_id" />
         <result property="typeName"         column="type_name" />
         <result property="createBy"         column="create_by"/>
@@ -21,10 +21,10 @@
             st.create_time,
             st.update_by,
             st.update_time
-        from sys_type st
+        from sys_article_type st
     </sql>
 
-    <select id="selectTypeList" parameterType="SysType" resultMap="SysTypeResult">
+    <select id="selectTypeList" parameterType="SysArticleType" resultMap="SysArticleTypeResult">
         <include refid="selectType" />
         where st.del_flag = 0
         <if test="typeName != null and typeName != ''">
@@ -38,17 +38,17 @@
         </if>
     </select>
 
-    <select id="selectTypeAll" resultMap="SysTypeResult">
+    <select id="selectTypeAll" resultMap="SysArticleTypeResult">
         <include refid="selectType" />
     </select>
 
-    <select id="selectTypeById" parameterType="String" resultMap="SysTypeResult">
+    <select id="selectTypeById" parameterType="String" resultMap="SysArticleTypeResult">
         <include refid="selectType" />
         where st.type_id = #{typeId}
     </select>
 
-    <insert id="insertType" parameterType="SysType" useGeneratedKeys="true" keyProperty="typeId">
-        insert into sys_type (
+    <insert id="insertType" parameterType="SysArticleType" useGeneratedKeys="true" keyProperty="typeId">
+        insert into sys_article_type (
         <if test="typeId != null and typeId != ''">type_id,</if>
         <if test="typeName != null and typeName != ''">type_name,</if>
         <if test="createBy != null and createBy != ''">create_by,</if>
@@ -62,8 +62,8 @@
         )
     </insert>
 
-    <update id="updateTypeById" parameterType="SysType">
-        update sys_type
+    <update id="updateTypeById" parameterType="SysArticleType">
+        update sys_article_type
         <set>
             <if test="typeName != null and typeName != ''">type_name = #{typeName},</if>
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
@@ -73,13 +73,13 @@
     </update>
 
     <update id="deleteTypeByIds" parameterType="String">
-        update sys_type set del_flag = 1 where type_id in
+        update sys_article_type set del_flag = 1 where type_id in
         <foreach collection="array" item="typeId" open="(" separator="," close=")">
             #{typeId}
         </foreach>
     </update>
 
-    <select id="checkTypeNameUnique" parameterType="String" resultMap="SysTypeResult">
+    <select id="checkTypeNameUnique" parameterType="String" resultMap="SysArticleTypeResult">
         <include refid="selectType" />
         where st.type_name = #{typeName} and del_flag = 0 limit 1
     </select>

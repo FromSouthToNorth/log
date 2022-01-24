@@ -689,8 +689,8 @@ public static int bibarySearch(int[] nums, int target) {
         'https://images.unsplash.com/photo-1642420804129-a7f80c504a40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60',
         '1', '1', '1', '1', '0', 'admin', sysdate(), '', sysdate());
 
-drop table if exists `sys_tag`;
-create table `sys_tag`
+drop table if exists `sys_article_tag`;
+create table `sys_article_tag`
 (
     `tag_id`      varchar(64) character set utf8mb4 collate utf8mb4_general_ci not null comment '主键',
     `tag_name`    varchar(64) character set utf8mb4 collate utf8mb4_general_ci not null comment '文章标签名称',
@@ -704,11 +704,11 @@ create table `sys_tag`
   character set = utf8
   collate = utf8_general_ci comment = '文章标签表'
   row_format = Dynamic;
-insert into sys_tag
+insert into sys_article_tag
 values ('1', '算法', 0, 'admin', sysdate(), '', sysdate());
 
-drop table if exists `sys_article_tag`;
-create table `sys_article_tag`
+drop table if exists `sys_article_connect_tag`;
+create table `sys_article_connect_tag`
 (
     `id`         varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci       not null comment '主键id',
     `tag_id`     varchar(64) character set utf8mb4 collate utf8mb4_general_ci not null comment '标签主键',
@@ -725,11 +725,11 @@ create table `sys_article_tag`
   collate = utf8_general_ci comment = '文章标签关联表'
   row_format = Dynamic;
 
-insert into sys_article_tag
+insert into sys_article_connect_tag
 values ('1', '1', '1');
 
-drop table if exists `sys_type`;
-create table `sys_type`
+drop table if exists `sys_article_type`;
+create table `sys_article_type`
 (
     `type_id`     varchar(64) character set utf8mb4 collate utf8mb4_general_ci not null comment '主键',
     `type_name`   varchar(64) character set utf8mb4 collate utf8mb4_general_ci not null comment '文章标签名称',
@@ -743,5 +743,5 @@ create table `sys_type`
   character set = utf8
   collate = utf8_general_ci comment = '文章类型表'
   row_format = Dynamic;
-insert into sys_type
+insert into sys_article_type
 values ('1', '题解', '0', 'admin', sysdate(), '', sysdate());

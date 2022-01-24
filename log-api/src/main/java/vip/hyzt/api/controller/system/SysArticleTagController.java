@@ -11,8 +11,8 @@ import vip.hyzt.common.enums.BusinessType;
 import vip.hyzt.common.utils.uuid.IdUtils;
 import vip.hyzt.core.domain.Result;
 import vip.hyzt.core.web.controller.BaseController;
-import vip.hyzt.system.domain.SysTag;
-import vip.hyzt.system.service.ISysTagService;
+import vip.hyzt.system.domain.SysArticleTag;
+import vip.hyzt.system.service.ISysArticleTagService;
 
 import java.util.List;
 
@@ -22,16 +22,16 @@ import java.util.List;
  * @since 2022/01/24
  */
 @RestController
-public class SysTagController extends BaseController {
+public class SysArticleTagController extends BaseController {
 
     @Autowired
-    private ISysTagService tagService;
+    private ISysArticleTagService tagService;
 
     @PreAuthorize("@ss.hasPermi('system:tag:query')")
     @GetMapping("/system/tag/list")
-    public TableDataInfo adminTagList(SysTag tag) {
+    public TableDataInfo adminTagList(SysArticleTag tag) {
         startPage();
-        List<SysTag> list = tagService.selectTagList(tag);
+        List<SysArticleTag> list = tagService.selectTagList(tag);
         return getDataTable(list);
     }
 
@@ -50,7 +50,7 @@ public class SysTagController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:tag:add')")
     @Log(title = "文章标签管理", businessType = BusinessType.INSERT)
     @PostMapping("/system/tag")
-    public Result add(@Validated @RequestBody SysTag tag) {
+    public Result add(@Validated @RequestBody SysArticleTag tag) {
         if (UserConstants.NOT_UNIQUE.equals(tagService.checkTagNameUnique(tag))) {
             return Result.error("新增文章标签'" + tag.getTagName() + "'失败, 标签名称已存在" );
         }
@@ -65,7 +65,7 @@ public class SysTagController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:tag:edit')")
     @Log(title = "文章标签管理", businessType = BusinessType.UPDATE)
     @PutMapping("/system/tag")
-    public Result edit(@Validated @RequestBody SysTag tag) {
+    public Result edit(@Validated @RequestBody SysArticleTag tag) {
         if (UserConstants.NOT_UNIQUE.equals(tagService.checkTagNameUnique(tag))) {
             return Result.error("编辑文章标签'" + tag.getTagName() + "'失败, 标签名称已存在" );
         }

@@ -4,7 +4,7 @@ package vip.hyzt.system.domain;
  * 文章类型实体类
  * @author hy
  */
-public class SysType extends BaseEntity {
+public class SysArticleType extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 

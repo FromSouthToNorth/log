@@ -12,11 +12,11 @@ import vip.hyzt.common.enums.FilePathEnum;
 import vip.hyzt.core.domain.Result;
 import vip.hyzt.core.web.controller.BaseController;
 import vip.hyzt.system.domain.SysArticle;
-import vip.hyzt.system.domain.SysTag;
-import vip.hyzt.system.domain.SysType;
+import vip.hyzt.system.domain.SysArticleTag;
+import vip.hyzt.system.domain.SysArticleType;
 import vip.hyzt.system.service.ISysArticleService;
-import vip.hyzt.system.service.ISysTagService;
-import vip.hyzt.system.service.ISysTypeService;
+import vip.hyzt.system.service.ISysArticleTagService;
+import vip.hyzt.system.service.ISysArticleTypeService;
 import vip.hyzt.system.service.impl.SysUploadService;
 
 import java.util.List;
@@ -32,10 +32,10 @@ public class SysArticleController extends BaseController {
     private ISysArticleService articleService;
 
     @Autowired
-    private ISysTagService tagService;
+    private ISysArticleTagService tagService;
 
     @Autowired
-    private ISysTypeService typeService;
+    private ISysArticleTypeService typeService;
 
     @Autowired
     private SysUploadService uploadService;
@@ -58,8 +58,8 @@ public class SysArticleController extends BaseController {
     @GetMapping(value = {"/system/article/{articleId}"})
     public Result getInfo(@PathVariable(value = "articleId", required = false) String articleId) {
         Result ajax = Result.success();
-        List<SysTag> tags = tagService.selectTagAll();
-        List<SysType> types = typeService.selectTypeAll();
+        List<SysArticleTag> tags = tagService.selectTagAll();
+        List<SysArticleType> types = typeService.selectTypeAll();
         ajax.put("tags", tags);
         ajax.put("types", types);
         ajax.put(Result.DATA_TAG, articleService.selectArticleByArticleId(articleId));

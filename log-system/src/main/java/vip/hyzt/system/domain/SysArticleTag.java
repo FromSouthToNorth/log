@@ -1,27 +1,18 @@
 package vip.hyzt.system.domain;
 
 /**
- * 文章标签关联信息
+ * 文章标签实体类
  * @author hy
  */
-public class SysArticleTag {
+public class SysArticleTag extends BaseEntity {
 
-    /** 主键id */
-    private String id;
+    private static final long serialVersionUID = 1L;
 
-    /** 标签主键 */
+    /** 主键 */
     private String tagId;
 
-    /** 文章主键 */
-    private String articleId;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    /** 文章标签名称 */
+    private String tagName;
 
     public String getTagId() {
         return tagId;
@@ -31,11 +22,19 @@ public class SysArticleTag {
         this.tagId = tagId;
     }
 
-    public String getArticleId() {
-        return articleId;
+    public String getTagName() {
+        return tagName;
     }
 
-    public void setArticleId(String articleId) {
-        this.articleId = articleId;
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
+    }
+
+    @Override
+    public String toString() {
+        return "SysTag{" +
+                "tagId='" + tagId + '\'' +
+                ", tagName='" + tagName + '\'' +
+                '}';
     }
 }

@@ -11,8 +11,8 @@ import vip.hyzt.common.enums.BusinessType;
 import vip.hyzt.common.utils.uuid.IdUtils;
 import vip.hyzt.core.domain.Result;
 import vip.hyzt.core.web.controller.BaseController;
-import vip.hyzt.system.domain.SysType;
-import vip.hyzt.system.service.ISysTypeService;
+import vip.hyzt.system.domain.SysArticleType;
+import vip.hyzt.system.service.ISysArticleTypeService;
 
 import java.util.List;
 
@@ -22,19 +22,19 @@ import java.util.List;
  * @since 2022/01/24
  */
 @RestController
-public class SysTypeController extends BaseController {
+public class SysArticleTypeController extends BaseController {
 
     @Autowired
-    private ISysTypeService typeService;
+    private ISysArticleTypeService typeService;
 
     /**
      * 查询文章类型列表
      */
     @PreAuthorize("@ss.hasPermi('system:type:query')")
     @GetMapping("/system/type/list")
-    public TableDataInfo adminTypeList(SysType type) {
+    public TableDataInfo adminTypeList(SysArticleType type) {
         startPage();
-        List<SysType> list = typeService.selectTypeList(type);
+        List<SysArticleType> list = typeService.selectTypeList(type);
         return getDataTable(list);
     }
 
@@ -53,7 +53,7 @@ public class SysTypeController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:type:add')")
     @Log(title = "文章类型管理", businessType = BusinessType.INSERT)
     @PostMapping("/system/type")
-    public Result add(@Validated @RequestBody SysType type) {
+    public Result add(@Validated @RequestBody SysArticleType type) {
         if (UserConstants.NOT_UNIQUE.equals(typeService.checkTypeNameUnique(type))) {
             return Result.error("新增文章类型'" + type.getTypeName() + "'失败, 类型名称已存在" );
         }
@@ -68,7 +68,7 @@ public class SysTypeController extends BaseController {
     @PreAuthorize("@ss.hasPermi('system:type:edit')")
     @Log(title = "文章类型管理", businessType = BusinessType.UPDATE)
     @PutMapping("/system/type")
-    public Result edit(@Validated @RequestBody SysType type) {
+    public Result edit(@Validated @RequestBody SysArticleType type) {
         if (UserConstants.NOT_UNIQUE.equals(typeService.checkTypeNameUnique(type))) {
             return Result.error("编辑文章类型'" + type.getTypeName() + "'失败, 类型名称已存在" );
         }

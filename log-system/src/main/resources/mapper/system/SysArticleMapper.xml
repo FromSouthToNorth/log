@@ -18,10 +18,10 @@
         <result property="createTime"       column="create_time"/>
         <result property="updateBy"         column="update_by"/>
         <result property="updateTime"       column="update_time"/>
-        <association property="articleType" resultMap="SysTypeResult" />
+        <association property="articleType" resultMap="SysArticleTypeResult" />
     </resultMap>
 
-    <resultMap id="SysTypeResult" type="SysType">
+    <resultMap id="SysArticleTypeResult" type="SysArticleType">
         <id     property="typeId"   column="type_id" />
         <result property="typeName" column="type_name" />
     </resultMap>

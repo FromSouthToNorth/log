@@ -48,10 +48,10 @@ public class SysArticle extends BaseEntity {
     private SysUser user;
 
     /** 文章类型 */
-    private SysType articleType;
+    private SysArticleType articleType;
 
     /** 文章标签集 */
-    private List<SysTag> tags;
+    private List<SysArticleTag> tags;
 
     private String[] tagIds;
 
@@ -151,19 +151,19 @@ public class SysArticle extends BaseEntity {
         this.user = user;
     }
 
-    public SysType getArticleType() {
+    public SysArticleType getArticleType() {
         return articleType;
     }
 
-    public void setArticleType(SysType articleType) {
+    public void setArticleType(SysArticleType articleType) {
         this.articleType = articleType;
     }
 
-    public List<SysTag> getTags() {
+    public List<SysArticleTag> getTags() {
         return tags;
     }
 
-    public void setTags(List<SysTag> tags) {
+    public void setTags(List<SysArticleTag> tags) {
         this.tags = tags;
     }
 
