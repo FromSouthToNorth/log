@@ -201,6 +201,8 @@ export default {
       multiple: true,
       // 非单个禁用
       single: true,
+      // 选中数组
+      ids: [],
       // 总条数
       total: 0,
       articleList: [],

@@ -27,9 +27,6 @@
     <select id="selectTagList" parameterType="SysTag" resultMap="SysTagResult">
         <include refid="selectTag" />
         where st.del_flag = 0
-        <if test="tagId != null and tagId != ''">
-            and st.tag_id = #{tagId}
-        </if>
         <if test="tagName != null and tagName != ''">
             and st.tag_name like concat('%', #{tagName}, '%')
         </if>
@@ -51,6 +48,52 @@
                  left join sys_article_tag sat on t.tag_id = sat.tag_id
                  left join sys_article sa on sat.article_id = sa.article_id
         where sa.article_id = #{articleId}
+    </select>
+
+    <select id="selectTagById" parameterType="String" resultMap="SysTagResult">
+        <include refid="selectTag" />
+        where st.tag_id = #{tagId}
+    </select>
+
+    <insert id="insertTag" parameterType="SysTag" useGeneratedKeys="true" keyProperty="tagId">
+        insert into sys_tag (
+        <if test="tagId != null and tagId != ''">tag_id,</if>
+        <if test="tagName != null and tagName != ''">tag_name,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_time
+        )
+        values (
+        <if test="tagId != null and tagId != ''">#{tagId},</if>
+        <if test="tagName != null and tagName != ''">#{tagName},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
+    </insert>
+
+    <update id="updateTagById" parameterType="SysTag">
+        update sys_tag
+        <set>
+            <if test="tagName != null and tagName != ''">tag_name = #{tagName},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where tag_id = #{tagId}
+    </update>
+
+    <update id="deleteTagByIds" parameterType="String">
+        update sys_tag set del_flag = 1 where tag_id in
+        <foreach collection="array" item="tagId" open="(" separator="," close=")">
+            #{tagId}
+        </foreach>
+    </update>
+
+    <select id="checkTagNameUnique" parameterType="String" resultMap="SysTagResult">
+        <include refid="selectTag" />
+        where st.tag_name = #{tagName} and del_flag = 0 limit 1
+    </select>
+
+    <select id="countTagByTagId" parameterType="String" resultType="Integer">
+        select count(1) from sys_article_tag where tag_id = #{tagId}
     </select>
 
 </mapper>

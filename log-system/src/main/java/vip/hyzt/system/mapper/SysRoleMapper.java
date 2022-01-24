@@ -105,5 +105,4 @@ public interface SysRoleMapper {
      */
     public int deleteRoleByIds(String[] roleIds);
 
-
 }

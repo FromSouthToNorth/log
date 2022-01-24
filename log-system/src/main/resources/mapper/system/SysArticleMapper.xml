@@ -87,7 +87,7 @@
         where sa.article_id = #{articleId}
     </select>
 
-    <insert id="insertArticle" parameterType="SysArticle" useGeneratedKeys="true" keyProperty="article">
+    <insert id="insertArticle" parameterType="SysArticle" useGeneratedKeys="true" keyProperty="articleId">
         insert into sys_article (
         <if test="articleId != null and articleId != ''">article_id,</if>
         <if test="articleTitle != null and articleTitle != ''">article_title,</if>

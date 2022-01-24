@@ -45,7 +45,7 @@ public class SysArticleController extends BaseController {
      */
     @PreAuthorize("@ss.hasPermi('system:article:list')")
     @GetMapping("/system/article/list")
-    public TableDataInfo adminList(SysArticle article) {
+    public TableDataInfo articleList(SysArticle article) {
         startPage();
         List<SysArticle> list = articleService.selectArticle(article);
         return getDataTable(list);

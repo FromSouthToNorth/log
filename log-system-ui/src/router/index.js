@@ -120,7 +120,7 @@ export const constantRoutes = [
       {
         path: 'index/:articleId(\\w+)',
         component: (resolve) => require(['@/views/system/article/EditArticle'], resolve),
-        name: 'Data',
+        name: 'ArticleEdit',
         meta: { title: '编辑文章', activeMenu: '/system/article'}
       }
     ]
@@ -133,8 +133,8 @@ export const constantRoutes = [
       {
         path: 'index',
         component: (resolve) => require(['@/views/system/article/AddArticle'], resolve),
-        name: 'Data',
-        meta: { title: '添加编辑', activeMenu: '/system/article'}
+        name: 'ArticleAdd',
+        meta: { title: '添加文章', activeMenu: '/system/article'}
       }
     ]
   },

@@ -27,10 +27,7 @@
     <select id="selectTypeList" parameterType="SysType" resultMap="SysTypeResult">
         <include refid="selectType" />
         where st.del_flag = 0
-        <if test="typeId != null and typeId != ''">
-            and st.type_id = #{typeId}
-        </if>
-        <if test="tagName != null and tagName != ''">
+        <if test="typeName != null and typeName != ''">
             and st.type_name like concat('%', #{typeName}, '%')
         </if>
         <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
@@ -43,6 +40,52 @@
 
     <select id="selectTypeAll" resultMap="SysTypeResult">
         <include refid="selectType" />
+    </select>
+
+    <select id="selectTypeById" parameterType="String" resultMap="SysTypeResult">
+        <include refid="selectType" />
+        where st.type_id = #{typeId}
+    </select>
+
+    <insert id="insertType" parameterType="SysType" useGeneratedKeys="true" keyProperty="typeId">
+        insert into sys_type (
+        <if test="typeId != null and typeId != ''">type_id,</if>
+        <if test="typeName != null and typeName != ''">type_name,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_time
+        )
+        values (
+        <if test="typeId != null and typeId != ''">#{typeId},</if>
+        <if test="typeName != null and typeName != ''">#{typeName},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate()
+        )
+    </insert>
+
+    <update id="updateTypeById" parameterType="SysType">
+        update sys_type
+        <set>
+            <if test="typeName != null and typeName != ''">type_name = #{typeName},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </set>
+        where type_id = #{typeId}
+    </update>
+
+    <update id="deleteTypeByIds" parameterType="String">
+        update sys_type set del_flag = 1 where type_id in
+        <foreach collection="array" item="typeId" open="(" separator="," close=")">
+            #{typeId}
+        </foreach>
+    </update>
+
+    <select id="checkTypeNameUnique" parameterType="String" resultMap="SysTypeResult">
+        <include refid="selectType" />
+        where st.type_name = #{typeName} and del_flag = 0 limit 1
+    </select>
+
+    <select id="countTypeByTypeId" parameterType="String" resultType="Integer">
+        select count(1) from sys_article where type_id = #{typeId} and del_flag = 0
     </select>
 
 </mapper>

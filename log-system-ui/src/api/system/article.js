@@ -1,5 +1,4 @@
 import request from "@/utils/request";
-import { praseStrEmpty } from "@/utils/ruoyi";
 
 /** 获取文章列表 */
 export function adminListArticle(query) {

@@ -697,7 +697,7 @@ create table `sys_tag`
     `del_flag`    char(1)                                                           default 0 comment '删除标志（0代表存在 1代表删除）',
     `create_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci not null comment '创建人',
     `create_time` datetime(0)                                                  null default null comment '创建日期',
-    `update_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci not null comment '更新人',
+    `update_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci null default null comment '更新人',
     `update_time` datetime(0)                                                  null default null comment '更新日期',
     primary key (`tag_id`) using btree
 ) engine = innodb
@@ -733,11 +733,10 @@ create table `sys_type`
 (
     `type_id`     varchar(64) character set utf8mb4 collate utf8mb4_general_ci not null comment '主键',
     `type_name`   varchar(64) character set utf8mb4 collate utf8mb4_general_ci not null comment '文章标签名称',
-    `type_color`  varchar(64) character set utf8mb4 collate utf8mb4_general_ci      default '' comment '文章标签颜色',
     `del_flag`    char(1)                                                           default '0' comment '删除标志（0代表存在 1代表删除）',
     `create_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci not null comment '创建人',
     `create_time` datetime(0)                                                  null default null comment '创建日期',
-    `update_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci not null comment '更新人',
+    `update_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci null default null comment '更新人',
     `update_time` datetime(0)                                                  null default null comment '更新日期',
     primary key (`type_id`) using btree
 ) engine = innodb
@@ -745,4 +744,4 @@ create table `sys_type`
   collate = utf8_general_ci comment = '文章类型表'
   row_format = Dynamic;
 insert into sys_type
-values ('1', '题解', '#409EFF', '0', 'admin', sysdate(), '', sysdate());
+values ('1', '题解', '0', 'admin', sysdate(), '', sysdate());

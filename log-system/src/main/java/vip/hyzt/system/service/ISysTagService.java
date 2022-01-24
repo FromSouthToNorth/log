@@ -29,4 +29,47 @@ public interface ISysTagService {
      * @return 选中的标签 ID 列表
      */
     List<String> selectTagListByArticleId(String articleId);
+
+
+    /**
+     * 根据标签标签查询标签信息
+     * @param tagId 标签 ID
+     * @return 标签标签信息
+     */
+    SysTag selectTagById(String tagId);
+
+    /**
+     * 新增标签标签
+     * @param tag 标签标签信息
+     * @return 结果
+     */
+    int insertTag(SysTag tag);
+
+    /**
+     * 根据标签标签编号编辑标签标签
+     * @param tag 标签标签信息
+     * @return 结果
+     */
+    int updateTagById(SysTag tag);
+
+    /**
+     * 根据标签标签编号批量删除标签标签
+     * @param tagIds 删除的标签标签编号
+     * @return 结果
+     */
+    int deleteTagByIds(String[] tagIds);
+
+    /**
+     * 校验标签标签名称是否唯一
+     * @param tag 标签标签信息
+     * @return 结果
+     */
+    String checkTagNameUnique(SysTag tag);
+
+    /**
+     * 根据标签标签编号查询标签标签使用量
+     * @param tagId 标签标签编号
+     * @return 结果
+     */
+    int countTagByTagId(String tagId);
 }

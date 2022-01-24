@@ -26,23 +26,22 @@
             />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search" size="mini" @click="">搜索</el-button>
+            <el-button type="primary" icon="el-icon-search" size="mini" @click="getList">搜索</el-button>
             <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
           </el-form-item>
         </el-form>
 
         <el-row :gutter="10" class="mb8">
           <el-col :span="1.5">
-            <router-link to="/system/article-add/index">
-              <el-button
-                type="primary"
-                plain
-                icon="el-icon-plus"
-                size="mini"
-                v-hasPermi="['system:article:add']"
-              >新增类型
-              </el-button>
-            </router-link>
+            <el-button
+              type="primary"
+              plain
+              icon="el-icon-plus"
+              size="mini"
+              @click="handleAdd"
+              v-hasPermi="['system:type:add']"
+            >新增类型
+            </el-button>
           </el-col>
           <el-col :span="1.5">
             <el-button
@@ -50,7 +49,7 @@
               plain
               icon="el-icon-edit"
               size="mini"
-              :disabled="multiple"
+              :disabled="single"
               @click="handleUpdate"
               v-hasPermi="['system:type:edit']"
             >编辑
@@ -63,7 +62,7 @@
               icon="el-icon-delete"
               size="mini"
               :disabled="multiple"
-              @click=""
+              @click="handleDelete"
               v-hasPermi="['system:type:remove']"
             >删除
             </el-button>
@@ -72,10 +71,60 @@
         </el-row>
       </el-col>
     </el-row>
+
+    <el-table v-loading="loading" :data="typeList" @selection-change="handleSelectionChange">
+      <el-table-column type="selection" width="50" align="center"></el-table-column>
+      <el-table-column label="类型名称" align="center" prop="typeName" key="typeName" v-if="columns[0].visible" />
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-edit"
+            @click="handleUpdate(scope.row)"
+            v-hasPermi="['system:user:edit']"
+          >编辑
+          </el-button>
+          <el-button
+            size="mini"
+            type="text"
+            icon="el-icon-delete"
+            @click="handleDelete(scope.row)"
+            v-hasPermi="['system:user:remove']"
+          >删除
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <pagination
+      v-show="total > 0"
+      :page.sync="queryParams.pageNum"
+      :limit.sync="queryParams.pageSize"
+      @pagination="getList"
+      :total="total" />
+
+    <!-- 添加或修改参数配置对话框 -->
+    <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="类型昵称" prop="typeName">
+              <el-input v-model="form.typeName" placeholder="请输入类型昵称" maxlength="30"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import {addArticleType, adminListArticleType, getArticleTypeInfo, updateArticleType, delArticleType} from "@/api/system/type";
+
 export default {
   name: "index",
   data() {
@@ -101,16 +150,107 @@ export default {
       // 列表信息
       columns: [
         {key: 0, label: `名称`, visible: true},
-      ]
+      ],
+      typeList: [],
+      // 选中数组
+      ids: [],
+      // 弹出层标题
+      title: '',
+      // 是否显示弹出层
+      open: false,
+      // 表单参数
+      form: {},
+      // 表单校验
+      rules: {
+        typeName: [
+          {required: true, message: "用户名称不能为空", trigger: "blur"}
+        ]
+      }
     }
   },
+  created() {
+    this.getList()
+  },
   methods: {
+    getList() {
+      this.loading = true
+      adminListArticleType(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
+        this.typeList = response.rows
+        this.total = response.total
+        this.loading = false
+      })
+    },
+    // 多选框选中数据
+    handleSelectionChange(selection) {
+      console.log(selection);
+      this.ids = selection.map(item => item.typeId);
+      this.single = selection.length !== 1;
+      this.multiple = !selection.length;
+    },
+    /** 提交按钮 */
+    submitForm() {
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+          if (this.form.typeId) {
+            updateArticleType(this.form).then(result => {
+              this.$modal.msgSuccess("修改成功")
+              this.open = false
+              this.getList()
+            })
+          }
+          else {
+            addArticleType(this.form).then(result => {
+              this.$modal.msgSuccess("新增成功")
+              this.open = false
+              this.getList()
+            })
+          }
+        }
+      })
+    },
+    /** 重置按钮操作 */
     resetQuery() {
       this.dateRange = [];
       this.resetForm("queryForm");
     },
-    handleUpdate(row) {
+    reset() {
+      this.form = {
+        typeId: undefined,
+        typeName: undefined
+      }
+      this.resetForm("form")
     },
+    /** 编辑取消按钮 */
+    cancel() {
+      this.open = false
+      this.reset()
+    },
+    /** 添加按钮 */
+    handleAdd() {
+      this.reset()
+      this.open = true
+      this.title = '添加类型'
+    },
+    /** 编辑按钮 */
+    handleUpdate(row) {
+      this.reset()
+      const typeId = row.typeId || this.ids;
+      getArticleTypeInfo(typeId).then(result => {
+        this.title = '编辑类型'
+        this.open = true
+        this.form = result.data
+      })
+    },
+    /** 删除按钮 */
+    handleDelete(row){
+      const typeIds = row.typeId || this.ids
+      this.$modal.confirm('是否确认删除类型编号为"' + typeIds + '"的数据项？').then(function() {
+        return delArticleType(typeIds)
+      }).then(() => {
+        this.getList();
+        this.$modal.msgSuccess("删除成功");
+      }).catch(() => {});
+    }
   }
 }
 </script>
