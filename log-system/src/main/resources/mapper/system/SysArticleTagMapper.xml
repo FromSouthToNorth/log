@@ -43,10 +43,10 @@
     </select>
 
     <select id="selectTagListByArticleId" parameterType="String" resultType="String">
-        select t.tag_id
-        from sys_article_tag t
-                 left join sys_article_tag sat on t.tag_id = sat.tag_id
-                 left join sys_article sa on sat.article_id = sa.article_id
+        select sat.tag_id
+        from sys_article_tag sat
+                 left join sys_article_connect_tag sact on sact.tag_id = sat.tag_id
+                 left join sys_article sa on sa.article_id = sact.article_id
         where sa.article_id = #{articleId}
     </select>
 

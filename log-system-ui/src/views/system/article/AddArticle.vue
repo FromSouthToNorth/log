@@ -22,7 +22,7 @@
     />
     <el-dialog :visible.sync="visibleArticleEdit" width="40%">
       <div slot="title">发布文章</div>
-      <el-form :model="articleParams" ref="queryForm" :inline="true" label-width="100px">
+      <el-form :model="articleParams" ref="queryForm" :rules="rules" :inline="true" label-width="100px">
         <el-form-item label="文章标题" prop="articleTitle">
           <el-input
             v-model="articleParams.articleTitle"
@@ -68,7 +68,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="标签" prop="tags">
+        <el-form-item label="标签" prop="tagIds">
           <el-select
             v-model="articleParams.tagIds"
             placeholder="文章标签"
@@ -161,8 +161,8 @@ export default {
         articleTitle: undefined,
         typeId: undefined,
         tagIds: [],
-        type: '',
-        status: '',
+        type: '1',
+        status: '1',
         isTop: 0,
         articleContent: undefined,
         articleCover: ''
@@ -172,6 +172,17 @@ export default {
       visibleArticleEdit: false,
       header: {
         Authorization: 'Bearer ' + getToken()
+      },
+      rules: {
+        articleTitle: [
+          { required: true, message: '请输入文章标题', trigger: 'blur' }
+        ],
+        typeId: [
+          { required: true, message: '请选择文章类型', trigger: 'change' }
+        ],
+        tagIds: [
+          { required: true, message: '请选择文章标签', trigger: 'change' }
+        ]
       }
     }
   },
@@ -190,21 +201,26 @@ export default {
     submitArticle() {
       if (!this.articleParams.articleTitle && this.articleParams.articleTitle === '') {
         this.$message.error("文章标题不能为空!")
+        return
       }
-      if (!this.articleParams.articleContent && this.articleParams.articleContent === '') {
-        this.$message.error("文章内容不能为空!")
-      }
-      addArticle(this.articleParams).then(result => {
-        console.log(result);
-        this.$modal.msgSuccess("新增成功")
-        this.visibleArticleEdit = false
-        this.$router.push({
-          path: '/system/article'
-        })
+      this.$refs['queryForm'].validate(valid => {
+        if (valid) {
+          addArticle(this.articleParams).then(result => {
+            this.$modal.msgSuccess("新增成功")
+            this.visibleArticleEdit = false
+            this.$router.push({
+              path: '/system/article'
+            })
+          })
+        }
       })
     },
     /** 文章编辑界面发布按钮 */
     pushArticle() {
+      if (!this.articleParams.articleTitle && this.articleParams.articleTitle === '') {
+        this.$message.error("文章标题不能为空!")
+        return
+      }
       if (this.articleParams.articleContent && this.articleParams.articleContent !== '') {
         this.visibleArticleEdit = true
       }

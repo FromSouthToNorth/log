@@ -22,7 +22,7 @@
     />
     <el-dialog :visible.sync="visibleArticleEdit" width="40%">
       <div slot="title">发布文章</div>
-      <el-form :model="articleParams" ref="queryForm" :inline="true" label-width="100px">
+      <el-form :model="articleParams" :rules="rules" ref="queryForm" :inline="true" label-width="100px">
         <el-form-item label="文章标题" prop="articleTitle">
           <el-input
             v-model="articleParams.articleTitle"
@@ -68,7 +68,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="标签" prop="tags">
+        <el-form-item label="标签" prop="tagIds">
           <el-select
             v-model="articleParams.tagIds"
             placeholder="文章标签"
@@ -163,8 +163,8 @@ export default {
         articleTitle: undefined,
         typeId: undefined,
         tagIds: [],
-        type: '',
-        status: '',
+        type: '1',
+        status: '1',
         isTop: 0,
         articleContent: undefined,
         articleCover: ''
@@ -174,6 +174,17 @@ export default {
       visibleArticleEdit: false,
       header: {
         Authorization: 'Bearer ' + getToken()
+      },
+      rules: {
+        articleTitle: [
+          { required: true, message: '请输入文章标题', trigger: 'blur' }
+        ],
+        typeId: [
+          { required: true, message: '请选择文章类型', trigger: 'change' }
+        ],
+        tagIds: [
+          { required: true, message: '请选择文章标签', trigger: 'change' }
+        ]
       }
     }
   },
@@ -201,25 +212,28 @@ export default {
     },
     /** 提交文章 */
     submitArticle() {
-      if (!this.articleParams.articleTitle && this.articleParams.articleTitle === '') {
-        this.$message.error("文章标题不能为空!")
-      }
       if (!this.articleParams.articleContent && this.articleParams.articleContent === '') {
         this.$message.error("文章内容不能为空!")
+        return
       }
-      editArticle(this.articleParams).then(result => {
-        this.$modal.msgSuccess("编辑成功")
-        this.visibleArticleEdit = false
-        this.$router.push({
-          path: '/system/article'
-        })
+      this.$refs['queryForm'].validate(valid => {
+        if (valid) {
+          editArticle(this.articleParams).then(result => {
+            this.$modal.msgSuccess("编辑成功")
+            this.visibleArticleEdit = false
+            this.$router.push({
+              path: '/system/article'
+            })
+          })
+        }
       })
     },
     /** 文章编辑界面发布按钮 */
     pushArticle() {
       if (this.articleParams.articleContent && this.articleParams.articleContent !== '') {
         this.visibleArticleEdit = true
-      } else {
+      }
+      else {
         this.$message.error(" 文章内容不能为空! ")
       }
     },
@@ -243,7 +257,8 @@ export default {
       if (code === 200) {
         this.articleParams.articleCover = imgUrl
         this.$message.success(msg);
-      } else {
+      }
+      else {
         this.$message.error(msg);
       }
     },
@@ -255,7 +270,8 @@ export default {
         adminArticleUploadImg(formData).then(result => {
           this.$refs.md.$img2Url(pos, result.imgUrl);
         })
-      } else {
+      }
+      else {
         imageConversion.compressAccurately(file, 200).then(result => {
           formData.append("articlefile", new window.File([result], file.name, {type: file.type}))
           adminArticleUploadImg(formData).then(result => {
