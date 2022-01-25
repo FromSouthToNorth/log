@@ -2,7 +2,7 @@
 <div class="page__footer">
   <footer class="hy-footer hy-footer_mode_full hy-footer_theme_dark jb-footer">
     <div class="hy-container">
-      <FooterCatalog :catalog="footerCatalog" />
+<!--      <FooterCatalog :catalog="footerCatalog" />-->
       <div class="hy-footer__main">
         <div class="hy-footer__social hy-offset-top-24 hy-offset-top-sm-32">
           <div class="hy-social-list hy-row hy-row_size_xs">
@@ -32,8 +32,8 @@
 </template>
 
 <script>
-import FooterCatalog from "@comp/FooterCatalog";
-import IconButton from "@comp/IconButton";
+import FooterCatalog from "@/components/FooterCatalog";
+import IconButton from "@/components/IconButton";
 export default {
   name: 'PageFooter',
   components: {IconButton, FooterCatalog},

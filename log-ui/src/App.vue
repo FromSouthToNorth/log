@@ -8,8 +8,8 @@
 
 <script>
 
-import PageHeader from "@comp/PageHeader";
-import PageFooter from "@comp/PageFooter";
+import PageHeader from "@/components/PageHeader";
+import PageFooter from "@/components/PageFooter";
 
 export default {
   name: 'App',

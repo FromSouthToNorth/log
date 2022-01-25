@@ -6,50 +6,67 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-module.exports = {
-  productionSourceMap: false,
+const name = process.env.VUE_APP_TITLE || '若依管理系统' // 网页标题
 
-  configureWebpack: config => {
-    if (process.env.NODE_ENV === 'production') {
-      config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true
+const port = process.env.port || process.env.npm_config_port || 3000 // 端口
+
+module.exports = {
+  // 部署生产环境和开发环境下的URL。
+  // 默认情况下，Vue CLI 会假设你的应用是被部署在一个域名的根路径上
+  // 例如 https://www.ruoyi.vip/。如果应用被部署在一个子路径上，你就需要用这个选项指定这个子路径。例如，如果你的应用被部署在 https://www.ruoyi.vip/admin/，则设置 baseUrl 为 /admin/。
+  publicPath: process.env.NODE_ENV === "production" ? "/" : "/",
+  // 在npm run build 或 yarn build 时 ，生成文件的目录名称（要和baseUrl的生产环境路径一致）（默认dist）
+  outputDir: 'dist',
+  // 用于放置生成的静态资源 (js、css、img、fonts) 的；（项目打包之后，静态资源会放在这个文件夹下）
+  assetsDir: 'static',
+  // 是否开启eslint保存检测，有效值：ture | false | 'error'
+  lintOnSave: process.env.NODE_ENV === 'development',
+  // 如果你不需要生产环境的 source map，可以将其设置为 false 以加速生产环境构建。
+  productionSourceMap: false,
+  // webpack-dev-server 相关配置
+  devServer: {
+    host: '0.0.0.0',
+    port: port,
+    open: true,
+    proxy: {
+      // detail: https://cli.vuejs.org/config/#devserver-proxy
+      [process.env.VUE_APP_BASE_API]: {
+        target: `http://localhost:8080`,
+        changeOrigin: true,
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_BASE_API]: ''
+        }
+      }
+    },
+    disableHostCheck: true
+  },
+  css: {
+    loaderOptions: {
+      sass: {
+        sassOptions: {outputStyle: "expanded"}
+      }
     }
   },
-
-  chainWebpack: (config) => {
-    config.resolve.alias
-      .set('@', resolve('src'))
-      .set('@api', resolve('src/api'))
-      .set('@assets', resolve('src/assets'))
-      .set('@comp', resolve('src/components'))
-      .set('@views', resolve('src/views'))
-
-    if (process.env.NODE_ENV === 'production') {
-      config.plugin('compressionPlugin').use(new CompressionPlugin({
-        test: /\.(js|css|less)$/, // 匹配文件名
-        threshold: 10240, // 对超过10k的数据压缩
-        deleteOriginalAssets: false // 不删除源文件
-      }))
-    }
-
-    // 配置 webpack 识别 markdown 为普通的文件
-    config.module
-      .rule('markdown')
-      .test(/\.md$/)
-      .use()
-      .loader('file-loader')
-      .end()
-
-    // 编译vxe-table包里的es6代码，解决IE11兼容问题
-    config.module
-      .rule('vxe')
-      .test(/\.js$/)
-      .include
-      .add(resolve('node_modules/vxe-table'))
-      .add(resolve('node_modules/vxe-table-plugin-antd'))
-      .end()
-      .use()
-      .loader('babel-loader')
-      .end()
+  configureWebpack: {
+    name: name,
+    resolve: {
+      alias: {
+        '@': resolve('src')
+      }
+    },
+    plugins: [
+      // http://doc.ruoyi.vip/ruoyi-vue/other/faq.html#使用gzip解压缩静态文件
+      new CompressionPlugin({
+        test: /\.(js|css|html)?$/i,     // 压缩文件格式
+        filename: '[path].gz[query]',   // 压缩后的文件名
+        algorithm: 'gzip',              // 使用gzip压缩
+        minRatio: 0.8                   // 压缩率小于1才会压缩
+      })
+    ],
+  },
+  chainWebpack(config) {
+    config.plugins.delete('preload') // TODO: need test
+    config.plugins.delete('prefetch') // TODO: need test
 
     // set svg-sprite-loader
     config.module
@@ -67,18 +84,48 @@ module.exports = {
         symbolId: 'icon-[name]'
       })
       .end()
-  },
 
-  devServer: {
-    port: 3000,
-    proxy: {
-     '': {
-       target: '',
-       ws: false,
-       changeOrigin: true
-     },
-    }
-  },
-
-  lintOnSave: undefined
+    config
+      .when(process.env.NODE_ENV !== 'development',
+        config => {
+          config
+            .plugin('ScriptExtHtmlWebpackPlugin')
+            .after('html')
+            .use('script-ext-html-webpack-plugin', [{
+              // `runtime` must same as runtimeChunk name. default is `runtime`
+              inline: /runtime\..*\.js$/
+            }])
+            .end()
+          config
+            .optimization.splitChunks({
+            chunks: 'all',
+            cacheGroups: {
+              libs: {
+                name: 'chunk-libs',
+                test: /[\\/]node_modules[\\/]/,
+                priority: 10,
+                chunks: 'initial' // only package third parties that are initially dependent
+              },
+              elementUI: {
+                name: 'chunk-elementUI', // split elementUI into a single package
+                priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
+                test: /[\\/]node_modules[\\/]_?element-ui(.*)/ // in order to adapt to cnpm
+              },
+              commons: {
+                name: 'chunk-commons',
+                test: resolve('src/components'), // can customize your rules
+                minChunks: 3, //  minimum common number
+                priority: 5,
+                reuseExistingChunk: true
+              }
+            }
+          })
+          config.optimization.runtimeChunk('single'),
+            {
+              from: path.resolve(__dirname, './public/robots.txt'), //防爬虫文件
+              to: './' //到根目录下
+            }
+        }
+      )
+  }
 }

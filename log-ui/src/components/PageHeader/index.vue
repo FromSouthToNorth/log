@@ -34,7 +34,7 @@
             :class="hamburger ? 'menu-main__item-mobile' : ''"
             class="hy-text-1 ht-text-1_theme_dark menu-main__item">{{ item.title }}</div>
           <div v-if="!hamburger" class="hy-col-auto-fill hy-h4 hy-h4-theme_dark menu-main__action-link menu-main__logo-link-mobile">
-            look forward to
+            白映
           </div>
           <div @click="hamburgerClick" v-if="screenWidth <= 1000 && !hamburger" class="hy-col-inline menu-main__action-icon menu-main__action-icon-mobile _hamburger">
             <svg viewBox="0 0 24 24" class="hy-icon hy-icon_size_m"><path d="M4 5h16v2H4zm0 6h16v2H4zm0 6h16v2H4z"></path></svg>
@@ -52,7 +52,7 @@
             <a class="menu-second-title-box" href="/">
             <span class="menu-second-title-box__logo _fixed hy-logo _hy-text-20">
               <h3 class="_hy-text-20">
-                look forward to
+                白映
               </h3>
             </span>
             </a>

@@ -1,5 +1,15 @@
 @import "mobile-media";
 
+@font-face {
+  font-family: "JetBrainsMono";
+  src: url("../font/JetBrainsMono-VariableFont_wght.ttf");
+}
+
+@font-face {
+  font-family: "ItalicJetBrainsMono";
+  src: url("../font/JetBrainsMono-Italic-VariableFont_wght.ttf");
+}
+
 .page {
   position: relative;
   max-width: 100%;
