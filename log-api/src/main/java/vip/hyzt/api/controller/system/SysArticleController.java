@@ -125,4 +125,24 @@ public class SysArticleController extends BaseController {
     public Result remove(@PathVariable String[] articleIds) {
         return toAjax(articleService.deleteArticleByIds(articleIds));
     }
+
+    /**
+     * 查询置顶文章
+     */
+    @GetMapping("/home/article/top")
+    public Result topArticle() {
+        Result ajax = Result.success();
+        ajax.put(Result.DATA_TAG, articleService.topArticle());
+        return ajax;
+    }
+
+    /**
+     * 查询文章列表
+     */
+    @GetMapping("/home/article")
+    public Result list() {
+        Result ajax = Result.success();
+        ajax.put(Result.DATA_TAG, articleService.selectArticleAll());
+        return ajax;
+    }
 }

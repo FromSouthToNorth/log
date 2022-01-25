@@ -100,6 +100,24 @@ public class SysArticleServiceImpl implements ISysArticleService {
     }
 
     /**
+     * 查询置顶文章
+     * @return 置顶文章
+     */
+    @Override
+    public SysArticle topArticle() {
+        return articleMapper.topArticle();
+    }
+
+    /**
+     * 查询文章列表
+     * @return 文章列表
+     */
+    @Override
+    public List<SysArticle> selectArticleAll() {
+        return articleMapper.selectArticleAll();
+    }
+
+    /**
      * 新增文章标签信息
      * @param article 文章信息
      */

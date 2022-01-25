@@ -51,4 +51,16 @@ public interface ISysArticleService {
      * @return 结果
      */
     int deleteArticleByIds(String[] articleIds);
+
+    /**
+     * 查询置顶文章
+     * @return 置顶文章
+     */
+    SysArticle topArticle();
+
+    /**
+     * 查询文章列表
+     * @return 文章列表
+     */
+    List<SysArticle> selectArticleAll();
 }

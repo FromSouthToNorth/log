@@ -83,6 +83,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/webjars/**").anonymous()
                 .antMatchers("/*/api-docs").anonymous()
                 .antMatchers("/druid/**").anonymous()
+                .antMatchers(HttpMethod.GET, "/home/**").anonymous()
                 .anyRequest().authenticated()
                 .and()
                 .headers().frameOptions().disable();

@@ -19,11 +19,17 @@
         <result property="updateBy"         column="update_by"/>
         <result property="updateTime"       column="update_time"/>
         <association property="articleType" resultMap="SysArticleTypeResult" />
+        <association property="user"        resultMap="SysUserResult" />
     </resultMap>
 
     <resultMap id="SysArticleTypeResult" type="SysArticleType">
         <id     property="typeId"   column="type_id" />
         <result property="typeName" column="type_name" />
+    </resultMap>
+
+    <resultMap id="SysUserResult" type="SysUser">
+        <result property="realName" column="real_name" />
+        <result property="avatar"   column="avatar" />
     </resultMap>
 
     <select id="selectArticle" parameterType="SysArticle" resultMap="SysArticleResult">
@@ -143,5 +149,34 @@
             #{articleId}
         </foreach>
     </update>
+
+    <select id="topArticle" resultMap="SysArticleResult">
+        select
+            article_id,
+            article_title,
+            article_content,
+            article_cover,
+            type_id,
+            is_top,
+            type,
+            status,
+            create_time,
+            update_time
+        from sys_article
+        where is_top = '1' limit 1
+    </select>
+
+    <select id="selectArticleAll" resultMap="SysArticleResult">
+        select
+            sa.article_id,
+            sa.article_title,
+            sa.article_content,
+            sa.article_cover,
+            sa.create_time,
+            su.real_name,
+            su.avatar
+        from sys_article sa
+                 left join sys_user su on su.user_id = sa.user_id
+    </select>
 
 </mapper>

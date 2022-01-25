@@ -2,15 +2,15 @@
 <section class="promo">
   <div class="container">
     <div class="promo__row">
-      <a href="" class="promo__img" :style="promoImgStyleUrl"></a>
+      <a href="" class="promo__img" :style="{backgroundImage: `url(${topArticle.articleCover})`}"></a>
       <div class="promo__text">
         <h2>
           <a>
-            JetBrains IDEs and .NET Tools 2021.3 Have Been Released
+            {{ topArticle.articleTitle }}
           </a>
         </h2>
         <p>
-          All of the IDEs and .NET tools 2021.3 releases are now published. Below is a quick summary of each tool release. A…
+          {{ topArticle.articleContent }}
         </p>
       </div>
     </div>
@@ -21,11 +21,14 @@
 <script>
 export default {
   name: "Promo",
+  props: {
+    topArticle: {
+      type: Object
+    }
+  },
   data() {
     return {
-      promoImgStyleUrl: {
-        backgroundImage: `url('https://blog.jetbrains.com/wp-content/uploads/2021/12/Blog_Featured_image_1280x600-1.png')`
-      }
+      promoImgStyleUrl: 'https://blog.jetbrains.com/wp-content/uploads/2021/12/Blog_Featured_image_1280x600-1.png'
     }
   }
 }
@@ -33,6 +36,7 @@ export default {
 
 <style lang="scss" scoped>
 .promo {
+  font-family: "JetBrains Mono";
   padding: 32px 0 80px 0;
 }
 
@@ -84,6 +88,12 @@ export default {
     position: static;
     margin: 0 0 16px;
     opacity: .7;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    font-size: 18px;
   }
 }
 

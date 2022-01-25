@@ -2,23 +2,23 @@
   <div class="col">
     <a class="card eaps">
       <Photoswipe auto>
-        <img v-show="data.imgHeader" width="2560" height="1440" class="" :src="data.imgHeader" alt="">
+        <img width="2560" height="1200" class="" :src="data.articleCover" alt="">
       </Photoswipe>
       <div class="card__header">
-        <svg-icon v-show="data.iconHeader" class-name="card__logo card__logo--small" :icon-class="data.iconHeader"/>
-        <time class="publish-date">2021年6月23日</time>
-        <h3 style="float: none; position: static;" v-text="data.title">二叉树 binary tree</h3>
-        <span v-show="!data.imgHeader" class="tag">了解详情</span>
+        <svg-icon v-if="!data.articleCover" class-name="card__logo card__logo--small" :icon-class="'idea_icon'"/>
+        <time class="publish-date">{{ parseTime(data.createTime, '{y}-{m}-{d}') }}</time>
+        <h3 style="float: none; position: static;" v-text="data.articleTitle">二叉树 binary tree</h3>
+        <span class="tag">了解详情</span>
       </div>
       <div class="card__body">
-        <p style="float: none; position: static;" v-text="data.describe">
+        <p style="float: none; position: static;" v-text="data.articleContent">
           本 LeetBook 将会帮助你掌握树和二叉树的概念、熟悉不同的遍历方法、并能够运用递归解决二叉树相关题目。
         </p>
       </div>
       <div class="card__footer">
         <div class="author">
-          <img class="avatar" :src="data.avatar" alt="">
-          <span v-text="data.author">hy</span>
+          <img class="avatar" :src="data.user.avatar" alt="">
+          <span v-text="data.user.realName">hy</span>
         </div>
       </div>
     </a>
@@ -32,6 +32,9 @@ export default {
     data: {
       type: Object
     }
+  },
+  created() {
+    console.log(this.data);
   }
 }
 </script>
@@ -45,7 +48,7 @@ export default {
   transition: transform 0.15s ease-in-out;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
+  //flex-wrap: wrap;
   border: 1px solid rgba(39, 40, 44, 0.15);
   cursor: pointer;
   padding: 0 0 12px;
@@ -57,7 +60,7 @@ export default {
 
 .card h3 {
   font-family: "JetBrains Mono";
-  font-size: 20px;
+  font-size: 18px;
   line-height: 1.6;
   margin: 0 0 7px;
 }
@@ -126,6 +129,11 @@ img, svg {
 
 .card__body p {
   font-family: "JetBrains Mono";
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
 }
 
 .card__footer {

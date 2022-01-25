@@ -8,6 +8,11 @@ import '@/assets/styles/reset.scss';
 import '@/assets/styles/index.scss';
 
 import '@/assets/icons';
+import { formatTime } from "@/utils";
+import { parseTime } from "@/utils/logutils";
+
+Vue.prototype.formatTime = formatTime
+Vue.prototype.parseTime = parseTime
 
 Vue.config.productionTip = false;
 Vue.use(Photoswipe);
