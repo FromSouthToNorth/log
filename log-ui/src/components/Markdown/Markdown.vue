@@ -1,14 +1,12 @@
 <template>
-  <div>
-    <article id="write" ref="article" v-if="article" v-html="article" class="article markdown-body"/>
-  </div>
+  <article id="write" ref="article" v-if="article" v-html="article" class="article markdown-body"/>
 </template>
 
 <script>
 import MarkdownIt from 'markdown-it'
 import highlight from 'highlight.js'
 import Clipboard from 'clipboard'
-import tocbot from 'tocbot'
+// import tocbot from 'tocbot'
 
 export default {
   name: 'Markdown',
@@ -25,7 +23,7 @@ export default {
   },
   destroyed() {
     this.clipboard.destroy()
-    tocbot.destroy()
+    // tocbot.destroy()
   },
   created() {
     this.markdownToHtml(this.article)
@@ -142,125 +140,112 @@ export default {
   padding: 12px 2px 12px 30px;
   border-radius: 5px;
   position: relative;
-  font-size: 13px;
+  font-size: 13px ;
   line-height: 24px;
   overflow: hidden;
+  &:hover .copy-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+  }
+  code {
+    display: block;
+    margin: 0 10px;
+    overflow-x: auto;
+    &::-webkit-scrollbar {
+      z-index: 11;
+      width: 6px;
+    }
+    &::-webkit-scrollbar:horizontal {
+      height: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 5px;
+      width: 6px;
+      background: #666;
+    }
+    &::-webkit-scrollbar-corner,
+    &::-webkit-scrollbar-track {
+      background: #1e1e1e;
+    }
+    &::-webkit-scrollbar-track-piece {
+      background: #1e1e1e;
+      width: 6px;
+    }
+  }
+  .line-numbers-rows {
+    position: absolute;
+    pointer-events: none;
+    top: 12px;
+    bottom: 12px;
+    left: 0;
+    font-size: 12px;
+    width: 30px;
+    text-align: center;
+    letter-spacing: -1px;
+    border-right: 1px solid rgba(0, 0, 0, 0.66);
+    user-select: none;
+    counter-reset: linenumber;
+    span {
+      pointer-events: none;
+      display: block;
+      counter-increment: linenumber;
+      &:before {
+        content: counter(linenumber);
+        color: #999;
+        display: block;
+        text-align: center;
+      }
+    }
+  }
+  b.name {
+    position: absolute;
+    top: 7px;
+    right: 45px;
+    z-index: 1;
+    color: #999;
+    pointer-events: none;
+  }
+  .copy-btn {
+    padding: 4px;
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    z-index: 1;
+    color: #ccc;
+    background-color: #525252;
+    border-radius: 4px;
+    opacity: 0;
+    width: 24px;
+    height: 24px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.6s ease-in-out 0s;
+    & i {
+      //background: url("../../assets/svg/copy.svg") center center / cover no-repeat;
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+    }
+  }
 }
-
-pre.hljs:hover .copy-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 1;
-}
-
-.markdown-body pre.hljs code {
-  display: block;
-  margin: 0 10px;
-  overflow-x: auto;
-}
-
-.markdown-body pre.hljs code::-webkit-scrollbar {
-  z-index: 11;
-  width: 6px;
-}
-
-.markdown-body pre.hljs code::-webkit-scrollbar:horizontal {
-  height: 6px;
-}
-
-.markdown-body pre.hljs code::-webkit-scrollbar-thumb {
-  border-radius: 5px;
-  width: 6px;
-  background: #666;
-}
-
-.markdown-body pre.hljs code::-webkit-scrollbar-corner,
-.markdown-body pre.hljs code::-webkit-scrollbar-track {
-  background: #1e1e1e;
-}
-
-.markdown-body pre.hljs code::-webkit-scrollbar-track-piece {
-  background: #1e1e1e;
-  width: 6px;
-}
-
-.markdown-body .line-numbers-rows {
-  position: absolute;
-  pointer-events: none;
-  top: 12px;
-  bottom: 12px;
-  left: 0;
-  font-size: 12px;
-  width: 30px;
-  text-align: center;
-  letter-spacing: -1px;
-  border-right: 1px solid rgba(0, 0, 0, 0.66);
-  user-select: none;
-  counter-reset: linenumber;
-}
-
-.markdown-body .line-numbers-rows span {
-  pointer-events: none;
-  display: block;
-  counter-increment: linenumber;
-}
-
-.markdown-body .line-numbers-rows span:before {
-  content: counter(linenumber);
-  color: #999;
-  display: block;
-  text-align: center;
-}
-
-b.name {
-  position: absolute;
-  top: 7px;
-  right: 45px;
-  z-index: 1;
-  color: #999;
-  pointer-events: none;
-}
-
-.copy-btn {
-  padding: 4px;
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  z-index: 1;
-  color: #ccc;
-  background-color: #525252;
-  border-radius: 4px;
-  opacity: 0;
-  width: 24px;
-  height: 24px;
-  outline: none;
-  border: none;
-  cursor: pointer;
-  transition: opacity 0.6s ease-in-out 0s;
-}
-
-.markdown-body .copy-btn i {
-  background: url("../../assets/icons/svg/copy.svg") center center / cover no-repeat;
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-}
-
-.markdown-body {
-  font-family: JetBrainsMono;
-}
-
 .markdown-body ol, ul {
   list-style-type: disc;
 }
 
-.markdown-body pre.hljs {
-  font-family: JetBrainsMono;
-  background: #262626;
-}
+#app .markdown-body {
 
-pre.hljs code {
-  font-family: JetBrainsMono;
+  font-family: "JetBrainsMono";
+
+  & pre.hljs {
+    font-family: "JetBrainsMono";
+    background: #262626;
+
+    & code {
+      font-family: "JetBrainsMono";
+    }
+  }
 }
 </style>
