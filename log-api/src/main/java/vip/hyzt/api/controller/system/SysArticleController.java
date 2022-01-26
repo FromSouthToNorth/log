@@ -145,4 +145,17 @@ public class SysArticleController extends BaseController {
         ajax.put(Result.DATA_TAG, articleService.selectArticleAll());
         return ajax;
     }
+
+    /**
+     * 根据文章编号查询文章
+     */
+    @GetMapping(value = {"/home/article/{articleId}"})
+    public Result getArticleInfo(@PathVariable(value = "articleId", required = false) String articleId) {
+        Result ajax = Result.success();
+        List<SysArticleTag> tags = tagService.selectTagAll();
+        ajax.put("tags", tags);
+        ajax.put(Result.DATA_TAG, articleService.selectArticleByArticleId(articleId));
+        ajax.put("tagIds", tagService.selectTagListByArticleId(articleId));
+        return ajax;
+    }
 }

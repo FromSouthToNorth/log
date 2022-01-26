@@ -90,9 +90,12 @@
             sa.create_by,
             sa.create_time,
             sa.update_by,
-            sa.update_time
+            sa.update_time,
+            su.real_name,
+            su.avatar
         from sys_article sa
         left join sys_type st on st.type_id = sa.type_id
+        left join sys_user su on su.user_id = sa.user_id
         where sa.article_id = #{articleId}
     </select>
 

@@ -15,3 +15,11 @@ export function articleList() {
     method: 'get'
   })
 }
+
+/** 根据文章编号查询文章 */
+export function getArticleIngo(articleId) {
+  return request({
+    url: '/home/article/' + articleId,
+    method: 'get'
+  })
+}

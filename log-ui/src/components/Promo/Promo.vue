@@ -1,21 +1,21 @@
 <template>
-<section class="promo">
-  <div class="container">
-    <div class="promo__row">
-      <a href="" class="promo__img" :style="{backgroundImage: `url(${topArticle.articleCover})`}"></a>
-      <div class="promo__text">
-        <h2>
-          <a>
-            {{ topArticle.articleTitle }}
-          </a>
-        </h2>
-        <p>
-          {{ topArticle.remark }}
-        </p>
+  <section class="promo">
+    <router-link class="container" tag="div" :to="'/article/' + topArticle.articleId">
+      <div class="promo__row">
+        <a href="" class="promo__img" :style="{backgroundImage: `url(${topArticle.articleCover})`}"></a>
+        <div class="promo__text">
+          <h2>
+            <a>
+              {{ topArticle.articleTitle }}
+            </a>
+          </h2>
+          <p>
+            {{ topArticle.remark }}
+          </p>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
+    </router-link>
+  </section>
 </template>
 
 <script>
@@ -78,6 +78,7 @@ export default {
     font-weight: 500;
     margin-top: 0;
     margin-bottom: 16px;
+
     & a {
       color: #27282C;
     }

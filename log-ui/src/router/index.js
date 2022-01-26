@@ -15,6 +15,11 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/article/:articleId(\\w+)',
+    component: (resolve) => require(["@/views/article"], resolve),
+    hidden: true
+  },
+  {
     path: '*',
     redirect: '/404',
     hidden: true
