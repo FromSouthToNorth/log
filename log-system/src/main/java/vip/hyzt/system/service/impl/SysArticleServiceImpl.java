@@ -58,6 +58,9 @@ public class SysArticleServiceImpl implements ISysArticleService {
     @Transactional
     public int insertArticle(SysArticle article) {
         article.setArticleId(IdUtils.simpleUUID());
+        if ("1".equals(article.getIsTop())) {
+            articleMapper.cancelArticleTop();
+        }
         int rows = articleMapper.insertArticle(article);
         insertArticleTag(article);
         return rows;
@@ -71,6 +74,9 @@ public class SysArticleServiceImpl implements ISysArticleService {
     @Override
     @Transactional
     public int updateArticle(SysArticle article) {
+        if ("1".equals(article.getIsTop())) {
+            articleMapper.cancelArticleTop();
+        }
         int rows = articleMapper.updateArticle(article);
         articleTagMapper.deleteArticleTagByArticleId(article.getArticleId());
         insertArticleTag(article);

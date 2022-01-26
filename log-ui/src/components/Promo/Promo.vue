@@ -10,7 +10,7 @@
           </a>
         </h2>
         <p>
-          {{ topArticle.articleContent }}
+          {{ topArticle.remark }}
         </p>
       </div>
     </div>

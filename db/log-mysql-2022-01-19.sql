@@ -593,6 +593,7 @@ create table `sys_article`
 (
     `article_id`      varchar(64) character set utf8mb4 collate utf8mb4_general_ci  not null comment '主键',
     `article_title`   varchar(64) character set utf8mb4 collate utf8mb4_general_ci  not null comment '文章标题',
+    `remark`          varchar(256)  character set utf8mb4 collate utf8mb4_general_ci not null comment '文章描述',
     `user_id`         varchar(100) character set utf8mb4 collate utf8mb4_general_ci not null comment '作者id',
     `article_content` longtext character set utf8mb4 collate utf8mb4_general_ci     not null comment '内容',
     `article_cover`   varchar(1024) character set utf8mb4 collate utf8mb4_general_ci         default '' comment '文章封面图',
@@ -615,7 +616,7 @@ create table `sys_article`
   row_format = Dynamic;
 
 insert into sys_article
-values ('1', '二分查找', '1', '## 二分查找
+values ('1', '二分查找', '二分查找的基本思想是将n个元素分成大致相等的两部分，取a[n/2]与x做比较，如果x=a[n/2],则找到x,算法中止；如果x<a[n/2],则只要在数组a的左半部分继续搜索x,如果x>a[n/2],则只要在数组a的右半部搜索x. 时间复杂度即是while循环的次数。', '1', '## 二分查找
 
 ### 整体思路示例
 

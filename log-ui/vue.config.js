@@ -6,9 +6,9 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const name = process.env.VUE_APP_TITLE || '若依管理系统' // 网页标题
+const name = process.env.VUE_APP_TITLE || '白映' // 网页标题
 
-const port = process.env.port || process.env.npm_config_port || 3000 // 端口
+const port = process.env.port || process.env.npm_config_port || 80 // 端口
 
 module.exports = {
   // 部署生产环境和开发环境下的URL。

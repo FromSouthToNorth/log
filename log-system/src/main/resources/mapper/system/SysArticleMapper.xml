@@ -7,6 +7,7 @@
     <resultMap  id="SysArticleResult"       type="SysArticle">
         <id     property="articleId"        column="article_id"/>
         <result property="articleTitle"     column="article_title"/>
+        <result property="remark"           column="remark" />
         <result property="userId"           column="user_id"/>
         <result property="articleContent"   column="article_content"/>
         <result property="articleCover"     column="article_cover"/>
@@ -36,6 +37,7 @@
         select
             sa.article_id,
             sa.article_title,
+            sa.remark,
             sa.user_id,
             sa.article_content,
             sa.article_cover,
@@ -75,6 +77,7 @@
         select
             sa.article_id,
             sa.article_title,
+            sa.remark,
             sa.user_id,
             sa.article_content,
             sa.article_cover,
@@ -97,6 +100,7 @@
         insert into sys_article (
         <if test="articleId != null and articleId != ''">article_id,</if>
         <if test="articleTitle != null and articleTitle != ''">article_title,</if>
+        <if test="remark != null and remark != ''">remark,</if>
         <if test="userId != null and userId != ''">user_id,</if>
         <if test="articleContent != null and articleContent != ''">article_content,</if>
         <if test="articleCover != null and articleCover != ''">article_cover,</if>
@@ -110,6 +114,7 @@
         values (
         <if test="articleId != null and articleId != ''">#{articleId},</if>
         <if test="articleTitle != null and articleTitle != ''">#{articleTitle},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
         <if test="userId != null and userId != ''">#{userId},</if>
         <if test="articleContent != null and articleContent != ''">#{articleContent},</if>
         <if test="articleCover != null and articleCover != ''">#{articleCover},</if>
@@ -126,6 +131,7 @@
         update sys_article
         <set>
             <if test="articleTitle != null and articleTitle != ''">article_title = #{articleTitle},</if>
+            <if test="remark != null and remark != ''">remark = #{remark},</if>
             <if test="userId != null and userId != ''">user_id = #{userId},</if>
             <if test="articleContent != null and articleContent != ''">article_content = #{articleContent},</if>
             <if test="articleCover != null and articleCover != ''">article_cover = #{articleCover},</if>
@@ -152,24 +158,26 @@
 
     <select id="topArticle" resultMap="SysArticleResult">
         select
-            article_id,
-            article_title,
-            article_content,
-            article_cover,
-            type_id,
-            is_top,
-            type,
-            status,
-            create_time,
-            update_time
-        from sys_article
-        where is_top = '1' limit 1
+            sa.article_id,
+            sa.article_title,
+            sa.remark,
+            sa.article_content,
+            sa.article_cover,
+            sa.type_id,
+            sa.is_top,
+            sa.type,
+            sa.status,
+            sa.create_time,
+            sa.update_time
+        from sys_article sa
+        where sa.is_top = '1' limit 1
     </select>
 
     <select id="selectArticleAll" resultMap="SysArticleResult">
         select
             sa.article_id,
             sa.article_title,
+            sa.remark,
             sa.article_content,
             sa.article_cover,
             sa.create_time,

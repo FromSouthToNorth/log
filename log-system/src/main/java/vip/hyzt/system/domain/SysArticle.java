@@ -38,9 +38,6 @@ public class SysArticle extends BaseEntity {
     /** 状态值 1公开 2私密 */
     private String status;
 
-    /** 数据范围（1：全部数据权限 2: 自定义数据权限 3：仅自己数据权限） */
-    private int dataScope;
-
     /** 删除标志（0 代表存在 1 代表删除） */
     private String delFlag;
 
@@ -127,14 +124,6 @@ public class SysArticle extends BaseEntity {
         this.status = status;
     }
 
-    public int getDataScope() {
-        return dataScope;
-    }
-
-    public void setDataScope(int dataScope) {
-        this.dataScope = dataScope;
-    }
-
     public String getDelFlag() {
         return delFlag;
     }
@@ -187,7 +176,6 @@ public class SysArticle extends BaseEntity {
                 ", isTop='" + isTop + '\'' +
                 ", type='" + type + '\'' +
                 ", status='" + status + '\'' +
-                ", dataScope=" + dataScope +
                 ", delFlag='" + delFlag + '\'' +
                 ", user=" + user +
                 ", articleType=" + articleType +

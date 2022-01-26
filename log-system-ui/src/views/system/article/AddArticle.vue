@@ -20,7 +20,7 @@
       v-model="articleParams.articleContent"
       :style="{ height: 'calc(100vh - 160px)' }"
     />
-    <el-dialog :visible.sync="visibleArticleEdit" width="40%">
+    <el-dialog :visible.sync="visibleArticleEdit" width="60%">
       <div slot="title">发布文章</div>
       <el-form :model="articleParams" ref="queryForm" :rules="rules" :inline="true" label-width="100px">
         <el-form-item label="文章标题" prop="articleTitle">
@@ -32,6 +32,14 @@
             style="width: 240px;"
           />
         </el-form-item>
+        <el-form-item label="文章描述" prop="remark">
+          <el-input
+            type="textarea"
+            placeholder="请输入内容"
+            v-model="articleParams.remark"
+            maxlength="160"
+          />
+        </el-form-item>
         <el-form-item label="上传文章封面">
           <el-upload
             drag
@@ -40,7 +48,7 @@
             :headers="header"
             :before-upload="beforeUpload"
             :on-success="onSuccess"
-            action="/dev-api/system/article/image">
+            action="/prod-api/system/article/image">
             <i class="el-icon-upload" v-show="articleParams.articleCover == ''" />
             <div class="el-upload__text" v-show="articleParams.articleCover == ''">将文件拖到此处，或<em>点击上传</em></div>
             <img
@@ -159,6 +167,7 @@ export default {
     return {
       articleParams: {
         articleTitle: undefined,
+        remark: undefined,
         typeId: undefined,
         tagIds: [],
         type: '1',
@@ -176,6 +185,9 @@ export default {
       rules: {
         articleTitle: [
           { required: true, message: '请输入文章标题', trigger: 'blur' }
+        ],
+        remark: [
+          { required: true, message: '请输入文章描述', trigger: 'blur' }
         ],
         typeId: [
           { required: true, message: '请选择文章类型', trigger: 'change' }

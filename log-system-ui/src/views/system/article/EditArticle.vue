@@ -32,6 +32,14 @@
             style="width: 240px;"
           />
         </el-form-item>
+        <el-form-item label="文章描述" prop="remark">
+          <el-input
+            type="textarea"
+            placeholder="请输入内容"
+            v-model="articleParams.remark"
+            maxlength="160"
+          />
+        </el-form-item>
         <el-form-item label="上传文章封面">
           <el-upload
             drag
@@ -40,7 +48,7 @@
             :before-upload="beforeUpload"
             :on-success="onSuccess"
             name="articlefile"
-            action="/dev-api/system/article/image">
+            action="/prod-api/system/article/image">
             <i class="el-icon-upload" v-show="articleParams.articleCover === '' && !articleParams.articleCover"></i>
             <div class="el-upload__text" v-show="articleParams.articleCover === '' && !articleParams.articleCover">将文件拖到此处，或<em>点击上传</em></div>
             <img
@@ -160,6 +168,7 @@ export default {
     return {
       articleParams: {
         articleId: undefined,
+        remark: undefined,
         articleTitle: undefined,
         typeId: undefined,
         tagIds: [],
@@ -178,6 +187,9 @@ export default {
       rules: {
         articleTitle: [
           { required: true, message: '请输入文章标题', trigger: 'blur' }
+        ],
+        remark: [
+          { required: true, message: '请输入文章描述', trigger: 'blur' }
         ],
         typeId: [
           { required: true, message: '请选择文章类型', trigger: 'change' }
@@ -200,6 +212,7 @@ export default {
         this.types = result.types
         let article = result.data
         this.articleParams.articleId = article.articleId
+        this.articleParams.remark = article.remark
         this.articleParams.tagIds = result.tagIds
         this.articleParams.articleTitle = article.articleTitle
         this.articleParams.typeId = article.typeId

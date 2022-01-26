@@ -7,18 +7,17 @@
       <div class="card__header">
         <svg-icon v-if="!data.articleCover" class-name="card__logo card__logo--small" :icon-class="'idea_icon'"/>
         <time class="publish-date">{{ parseTime(data.createTime, '{y}-{m}-{d}') }}</time>
-        <h3 style="float: none; position: static;" v-text="data.articleTitle">二叉树 binary tree</h3>
+        <h3 style="float: none; position: static;" v-text="data.articleTitle"></h3>
         <span class="tag">了解详情</span>
       </div>
       <div class="card__body">
-        <p style="float: none; position: static;" v-text="data.articleContent">
-          本 LeetBook 将会帮助你掌握树和二叉树的概念、熟悉不同的遍历方法、并能够运用递归解决二叉树相关题目。
+        <p style="float: none; position: static;" v-text="data.remark">
         </p>
       </div>
       <div class="card__footer">
         <div class="author">
           <img class="avatar" :src="data.user.avatar" alt="">
-          <span v-text="data.user.realName">hy</span>
+          <span v-text="data.user.realName"></span>
         </div>
       </div>
     </a>
@@ -48,7 +47,7 @@ export default {
   transition: transform 0.15s ease-in-out;
   display: flex;
   flex-direction: column;
-  //flex-wrap: wrap;
+  flex-wrap: wrap;
   border: 1px solid rgba(39, 40, 44, 0.15);
   cursor: pointer;
   padding: 0 0 12px;

@@ -260,6 +260,7 @@ export default {
       }).catch(function() {
         row.status = row.status === "0" ? "1" : "0";
       });
+      this.getList()
     },
     // 删除文章
     handleDelete(row) {
