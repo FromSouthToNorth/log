@@ -108,7 +108,7 @@ public class SysArticleTagServiceImpl implements ISysArticleTagService {
     public String checkTagNameUnique(SysArticleTag tag) {
         String tagId = ObjectUtils.isEmpty(tag) ? "-1" : tag.getTagId();
         SysArticleTag tagInfo = tagMapper.checkTagNameUnique(tag.getTagName());
-        if (!ObjectUtils.isEmpty(tagInfo) && tagInfo.getTagId().equals(tagId)) {
+        if (!ObjectUtils.isEmpty(tagInfo) && !tagInfo.getTagId().equals(tagId)) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;

@@ -97,7 +97,7 @@ public class SysArticleTypeServiceImpl implements ISysArticleTypeService {
     public String checkTypeNameUnique(SysArticleType type) {
         String typeId = ObjectUtils.isEmpty(type) ? "-1" : type.getTypeId();
         SysArticleType typeInfo = typeMapper.checkTypeNameUnique(type.getTypeName());
-        if (!ObjectUtils.isEmpty(typeInfo) && typeInfo.getTypeId().equals(typeId)) {
+        if (!ObjectUtils.isEmpty(typeInfo) && !typeInfo.getTypeId().equals(typeId)) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;

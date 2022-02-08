@@ -52,7 +52,7 @@
             sa.update_by,
             sa.update_time
         from sys_article sa
-        left join sys_type st on st.type_id = sa.type_id
+        left join sys_article_type st on st.type_id = sa.type_id
         where sa.del_flag = 0
         <if test="articleTitle != null and articleTitle != ''">
             and sa.article_title like concat('%', #{articleTitle}, '%')
@@ -94,7 +94,7 @@
             su.real_name,
             su.avatar
         from sys_article sa
-        left join sys_type st on st.type_id = sa.type_id
+        left join sys_article_type st on st.type_id = sa.type_id
         left join sys_user su on su.user_id = sa.user_id
         where sa.article_id = #{articleId}
     </select>
@@ -188,6 +188,7 @@
             su.avatar
         from sys_article sa
                  left join sys_user su on su.user_id = sa.user_id
+        where sa.del_flag = 0
     </select>
 
 </mapper>

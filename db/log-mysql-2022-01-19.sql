@@ -11,11 +11,10 @@ create table `sys_role`
     `status`              char(1)                                                            default '0' comment '角色状态（0正常 1停用）',
     `data_scope`          char(1)                                                            default '1' comment '数据范围（1：全部数据权限 2: 自定义数据权限 3：仅自己数据权限）',
     `menu_check_strictly` tinyint(1)                                                         default 1 comment '菜单树选择项是否关联显示',
-    `dept_check_strictly` tinyint(1)                                                         default 1 comment '部门树选择项是否关联显示',
     `del_flag`            char(1)                                                            default '0' comment '删除标志（0代表存在 1代表删除）',
     `create_by`           varchar(50) character set utf8mb4 collate utf8mb4_general_ci  not null comment '创建人',
     `create_time`         datetime(0)                                                   null default null comment '创建日期',
-    `update_by`           varchar(50) character set utf8mb4 collate utf8mb4_general_ci  not null comment '更新人',
+    `update_by`           varchar(50) character set utf8mb4 collate utf8mb4_general_ci  null default null comment '更新人',
     `update_time`         datetime(0)                                                   null default null comment '更新日期',
     primary key (`role_id`) using btree,
     unique index `uniq_sys_role_role_key` (`role_key`) using btree,
@@ -27,9 +26,9 @@ create table `sys_role`
 
 -- 初始化角色信息
 insert into sys_role
-values ('1', '超级管理员', 'admin', 1, '0', '1', 1, 1, '0', 'admin', sysdate(), '', null);
+values ('1', '超级管理员', 'admin', 1, '0', '1', 1, '0', 'admin', sysdate(), '', null);
 insert into sys_role
-values ('2', '普通用户', 'common', 2, '0', '3', 1, 1, '0', 'admin', sysdate(), '', null);
+values ('2', '普通用户', 'common', 2, '0', '3', 1, '0', 'admin', sysdate(), '', null);
 
 -- 用户表
 drop table if exists `sys_user`;

@@ -27,9 +27,9 @@
     </delete>
 
     <insert id="batchRoleMenu">
-        insert into sys_role_permission(id, role_id, menu_id) values
+        insert into sys_role_permission(id, role_id, permission_id) values
         <foreach item="item" index="index" collection="list" separator=",">
-            (#{item.id}, #{item.roleId},#{item.menuId})
+            (#{item.id}, #{item.roleId},#{item.permissionId})
         </foreach>
     </insert>
 

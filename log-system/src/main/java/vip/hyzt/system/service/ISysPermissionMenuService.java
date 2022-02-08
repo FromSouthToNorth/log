@@ -30,6 +30,13 @@ public interface ISysPermissionMenuService {
 
     /**
      * 根据用户查询系统菜单列表
+     * @param userId - 用户 id
+     * @return 菜单列表
+     */
+    List<SysPermissionMenu> selectPermissionMenuList(String userId);
+
+    /**
+     * 根据用户查询系统菜单列表
      * @param permissionMenu - 菜单信息
      * @param userId - 用户 id
      * @return 菜单列表

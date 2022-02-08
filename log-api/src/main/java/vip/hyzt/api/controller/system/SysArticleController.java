@@ -95,7 +95,7 @@ public class SysArticleController extends BaseController {
     }
 
     /**
-     * 新增文章
+     * 修改文章
      */
     @PreAuthorize("@ss.hasPermi('system:article:edit')")
     @Log(title = "文章管理", businessType = BusinessType.UPDATE)

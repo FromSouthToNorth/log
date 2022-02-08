@@ -66,6 +66,16 @@ public class SysPermissionMenuServiceImpl implements ISysPermissionMenuService {
     }
 
     /**
+     * 根据用户查询系统菜单列表
+     * @param userId 用户ID
+     * @return 菜单列表
+     */
+    @Override
+    public List<SysPermissionMenu> selectPermissionMenuList(String userId) {
+        return selectPermissionMenuList(new SysPermissionMenu(), userId);
+    }
+
+    /**
      * 查询系统菜单列表
      * @param permissionMenu - 菜单信息
      * @param userId - 用户id
@@ -253,7 +263,7 @@ public class SysPermissionMenuServiceImpl implements ISysPermissionMenuService {
     public String checkMenuNameUnique(SysPermissionMenu menu) {
         String menuId = ObjectUtils.isEmpty(menu.getMenuId()) ? "-1" : menu.getMenuId();
         SysPermissionMenu info = permissionMenuMapper.checkMenuNameUnique(menu.getMenuName(), menu.getParentId());
-        if (!ObjectUtils.isEmpty(info) && info.getMenuId().equals(menuId)) {
+        if (!ObjectUtils.isEmpty(info) && !info.getMenuId().equals(menuId)) {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;

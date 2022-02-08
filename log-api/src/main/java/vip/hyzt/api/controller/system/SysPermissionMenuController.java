@@ -61,7 +61,7 @@ public class SysPermissionMenuController extends BaseController {
      */
     @GetMapping(value = "/roleMenuTreeselect/{roleId}")
     public Result roleMenuTreeselect(@PathVariable("roleId") String roleId) {
-        List<SysPermissionMenu> menus = menuService.selectPermissionMenuTreeByUserId(getUserId());
+        List<SysPermissionMenu> menus = menuService.selectPermissionMenuList(getUserId());
         Result ajax = Result.success();
         ajax.put("checkedKeys", menuService.selectMenuListByRoleId(roleId));
         ajax.put("menus", menuService.buildMenuTreeSelect(menus));
