@@ -45,7 +45,7 @@
         <svg-icon class-name="_mobile-close" @click="hamburgerClick" icon-class="close" />
       </div>
     </header>
-    <div class="menu-second" :style="searchFixed ? fixed : ''">
+    <div class="menu-second" ref="menuSecond" :style="searchFixed ? fixed : ''">
       <div class="hy-container">
         <div class="menu-second-desktop menu-second-mobile hy-row hy-row_size_0 hy-row_align_center">
           <div class="hy-col-auto-fill menu-second-mobile__trigger" v-if="screenWidth >= 1000">
@@ -97,10 +97,8 @@ export default {
       fixed: {
         position: 'fixed',
         top: '0px',
-        left: '0px',
-        zIndex: '905',
-        marginTop: '0px',
-        marginBottom: '0px',
+        zIndex: '991',
+        bottom: 'auto',
         width: document.body.clientWidth + 'px'
       },
       timer: false,
@@ -131,7 +129,11 @@ export default {
         this.fixed.width = document.body.clientWidth + 'px'
       })();
     }
-    window.addEventListener("scroll", this.scrolling)
+    window.addEventListener("scroll", () => {
+      window.requestAnimationFrame(() => {
+        this.scrolling()
+      })
+    })
   },
   methods: {
     /* 导航路由跳转 */
@@ -147,8 +149,7 @@ export default {
     },
     /* 监听滚动条 */
     scrolling() {
-      this.oldScrollTop = window.pageYOffset || document.documentElement.scrollTop ||
-        document.body.scrollTop;
+      this.oldScrollTop = window.scrollY
       this.searchFixed = this.oldScrollTop >= this.$refs.header.offsetHeight;
     },
     /* 输入框 */
@@ -271,7 +272,6 @@ export default {
         mainTimeline.add(tl, i / 8);
 
       }
-
 
       //top of head
       for (let i = 0; i < numBubbles; i++) {

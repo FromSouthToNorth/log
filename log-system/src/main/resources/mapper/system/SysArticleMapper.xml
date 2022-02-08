@@ -71,6 +71,7 @@
         </if>
         <!-- 数据范围过滤 -->
         ${params.dataScope}
+        order by sa.create_time desc
     </select>
 
     <select id="selectArticleByArticleId" resultMap="SysArticleResult" parameterType="String">
@@ -189,6 +190,7 @@
         from sys_article sa
                  left join sys_user su on su.user_id = sa.user_id
         where sa.del_flag = 0
+        order by sa.create_time desc
     </select>
 
 </mapper>

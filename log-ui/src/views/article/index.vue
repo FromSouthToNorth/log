@@ -50,6 +50,7 @@ export default {
     font-weight: 300;
     font-family: JetBrainsMono;
     padding: 64px 15px;
+    min-height: 600px;
   }
 
   h1 {

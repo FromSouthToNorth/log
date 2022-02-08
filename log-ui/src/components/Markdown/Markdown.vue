@@ -102,7 +102,7 @@ export default {
             }
           );
           // 复制功能主要使用的是 clipboard.js
-          let html = `<button class="copy-btn" type="button" data-clipboard-action="copy" data-clipboard-target="#copy${codeIndex}"><i>复制</i></button>`;
+          let html = `<button class="copy-btn" type="button" data-clipboard-action="copy" data-clipboard-target="#copy${codeIndex}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M11.3 8.3H19a3 3 0 0 1 3 3V19a3 3 0 0 1-3 3h-7.7a3 3 0 0 1-3-3v-7.7a3 3 0 0 1 3-3zm0 2a1 1 0 0 0-1 1V19a1 1 0 0 0 1 1H19a1 1 0 0 0 1-1v-7.7a1 1 0 0 0-1-1h-7.7zm-5.6 3.4a1 1 0 0 1 0 2h-.9A2.8 2.8 0 0 1 2 12.9V4.8A2.8 2.8 0 0 1 4.8 2h8.1a2.8 2.8 0 0 1 2.8 2.8v.9a1 1 0 0 1-2 0v-.9a.8.8 0 0 0-.8-.8H4.8a.8.8 0 0 0-.8.8v8.1a.8.8 0 0 0 .8.8h.9z" fill="#fff" fill-rule="evenodd"/></svg></button>`;
           const linesLength = str.split(/\n/).length - 1;
           // 生成行号
           let linesNum = '<span aria-hidden="true" class="line-numbers-rows">';
@@ -117,9 +117,9 @@ export default {
             // highlight.js 高亮代码
             const preCode = highlight.highlight(str, {language: lang}).value;
             html = html + preCode;
-            if (linesLength) {
-              html += '<b class="name">' + lang + "</b>";
-            }
+            // if (linesLength) {
+            //   html += '<b class="name">' + lang + "</b>";
+            // }
             // 将代码包裹在 textarea 中，由于防止textarea渲染出现问题，这里将 "<" 用 "<" 代替，不影响复制功能
             return `<pre class="hljs"><code>${html}</code>${linesNum}</pre><textarea style="position: absolute;top: -9999px;left: -9999px;z-index: -9999;" id="copy${codeIndex}">${str.replace(
               /<\/textarea>/g,
@@ -140,40 +140,48 @@ export default {
   padding: 12px 2px 12px 30px;
   border-radius: 5px;
   position: relative;
-  font-size: 13px ;
+  font-size: 13px;
   line-height: 24px;
   overflow: hidden;
+
   &:hover .copy-btn {
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 1;
   }
+
   code {
     display: block;
     margin: 0 10px;
     overflow-x: auto;
+
     &::-webkit-scrollbar {
       z-index: 11;
       width: 6px;
     }
+
     &::-webkit-scrollbar:horizontal {
       height: 6px;
     }
+
     &::-webkit-scrollbar-thumb {
       border-radius: 5px;
       width: 6px;
       background: #666;
     }
+
     &::-webkit-scrollbar-corner,
     &::-webkit-scrollbar-track {
       background: #1e1e1e;
     }
+
     &::-webkit-scrollbar-track-piece {
       background: #1e1e1e;
       width: 6px;
     }
   }
+
   .line-numbers-rows {
     position: absolute;
     pointer-events: none;
@@ -187,10 +195,12 @@ export default {
     border-right: 1px solid rgba(0, 0, 0, 0.66);
     user-select: none;
     counter-reset: linenumber;
+
     span {
       pointer-events: none;
       display: block;
       counter-increment: linenumber;
+
       &:before {
         content: counter(linenumber);
         color: #999;
@@ -199,6 +209,7 @@ export default {
       }
     }
   }
+
   b.name {
     position: absolute;
     top: 7px;
@@ -207,6 +218,7 @@ export default {
     color: #999;
     pointer-events: none;
   }
+
   .copy-btn {
     padding: 4px;
     position: absolute;
@@ -222,15 +234,16 @@ export default {
     outline: none;
     border: none;
     cursor: pointer;
-    transition: opacity 0.6s ease-in-out 0s;
-    & i {
-      //background: url("../../assets/svg/copy.svg") center center / cover no-repeat;
+    transition: opacity 0.3s ease-in-out 0s;
+
+    & svg {
       display: inline-block;
       width: 100%;
       height: 100%;
     }
   }
 }
+
 .markdown-body ol, ul {
   list-style-type: disc;
 }

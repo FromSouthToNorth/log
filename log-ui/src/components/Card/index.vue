@@ -1,14 +1,12 @@
 <template>
   <div class="col">
     <router-link class="card eaps" tag="a" :to="'/article/' + data.articleId">
-      <Photoswipe auto>
-        <img width="2560" height="1200" class="" :src="data.articleCover" alt="">
-      </Photoswipe>
+      <img width="2560" height="1200" class="" :src="data.articleCover" :alt="data.articleTitle">
       <div class="card__header">
         <svg-icon v-if="!data.articleCover" class-name="card__logo card__logo--small" :icon-class="'idea_icon'"/>
         <time class="publish-date">{{ parseTime(data.createTime, '{y}年{m}月{d}日') }}</time>
         <h3 style="float: none; position: static;" v-text="data.articleTitle"></h3>
-        <span class="tag">了解详情</span>
+<!--        <span class="tag">了解详情</span>-->
       </div>
       <div class="card__body">
         <p style="float: none; position: static;" v-text="data.remark">
@@ -104,21 +102,21 @@ img, svg {
   color: #27282c;
 }
 
-.card.eaps .tag {
-  font-family: "JetBrains Mono";
-  font-size: 13px;
-  line-height: 1.54;
-  font-weight: 300;
-  position: absolute;
-  top: 11px;
-  right: 5px;
-  text-transform: uppercase;
-}
-
-.card.eaps .tag:hover {
-  background-color: rgba(39, 40, 44, 0.05);
-  color: #27282C;
-}
+//.card.eaps .tag {
+//  font-family: "JetBrains Mono";
+//  font-size: 13px;
+//  line-height: 1.54;
+//  font-weight: 300;
+//  position: absolute;
+//  top: 11px;
+//  right: 5px;
+//  text-transform: uppercase;
+//}
+//
+//.card.eaps .tag:hover {
+//  background-color: rgba(39, 40, 44, 0.05);
+//  color: #27282C;
+//}
 
 .card__body {
   color: #27282c;
