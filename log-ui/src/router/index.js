@@ -7,22 +7,21 @@ export const constantRoutes = [
   {
     path: '/',
     component: (resolve) => require(["@/views/Home"], resolve),
-    hidden: true
   },
   {
     path: '/tag',
     component: (resolve) => require(["@/views/tag/Tag"], resolve),
-    hidden: true
+    meta: {
+      title: '标签'
+    }
   },
   {
     path: '/article/:articleId(\\w+)',
     component: (resolve) => require(["@/views/article"], resolve),
-    hidden: true
   },
   {
     path: '*',
     redirect: '/404',
-    hidden: true
   },
   {
     path: '/404',

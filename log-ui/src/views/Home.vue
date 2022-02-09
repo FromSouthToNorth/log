@@ -40,7 +40,6 @@ export default {
     },
     getArticleList() {
       articleList().then(result => {
-        console.log(result);
         this.articleCards = result.data
       })
     }

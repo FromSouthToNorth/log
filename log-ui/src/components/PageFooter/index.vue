@@ -18,7 +18,7 @@
           </div>
         </div>
         <div class="hy-footer__copyright hy-offset-top-24 hy-offset-top-sm-12">
-          <a href="http://www.beian.miit.gov.cn/" class="hy-text-3 hy-text-3_hardness_pale hy-text-3_theme_dark">蜀ICP备20019889号</a>
+          <a href="http://www.beian.miit.gov.cn/" class="hy-text-3 hy-text-3_hardness_pale hy-text-3_theme_dark">蜀 ICP备20019889号</a>
         </div>
         <div class="hy-footer__motto hy-offset-top-24 hy-offset-top-sm-0">
           <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=51012202000694" class="hy-text-3 hy-text-3_hardness_pale hy-text-3_theme_dark">
@@ -79,7 +79,7 @@ export default {
         }
       ],
       iconButton: [
-        {link: '', iconClass: 'github-fill', title: 'github'},
+        {link: 'https://github.com/FromSouthToNorth', iconClass: 'github-fill', title: 'github'},
         {link: '', iconClass: 'wechat-fill', title: 'wechat'},
         {link: '', iconClass: 'qq', title: 'qq'},
       ]

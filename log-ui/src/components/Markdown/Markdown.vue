@@ -1,5 +1,5 @@
 <template>
-  <article id="write" ref="article" v-if="article" v-html="article" class="article markdown-body"/>
+  <article id="write" ref="article" v-if="article" v-html="articleContent" class="article markdown-body"/>
 </template>
 
 <script>
@@ -18,7 +18,8 @@ export default {
   data() {
     return {
       clipboard: null,
-      images: []
+      images: [],
+      articleContent: undefined,
     }
   },
   destroyed() {
@@ -129,7 +130,7 @@ export default {
         }
       })
       article = md.render(article)
-      this.article = article
+      this.articleContent = article
     }
   }
 }

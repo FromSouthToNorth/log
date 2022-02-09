@@ -24,7 +24,7 @@ export default {
   components: {Markdown},
   data() {
     return {
-      article: undefined
+      article: null
     }
   },
   created() {
@@ -34,6 +34,7 @@ export default {
   methods: {
     getArticle(articleId) {
       getArticleIngo(articleId).then(result => {
+        document.title = result.data.articleTitle
         this.article = result.data
       })
     }

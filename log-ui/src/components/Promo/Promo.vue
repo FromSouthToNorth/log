@@ -37,8 +37,9 @@ export default {
 <style lang="scss" scoped>
 .promo {
   font-family: "JetBrains Mono";
-  padding: 32px 0 80px 0;
+  padding: 64px 0 120px 0;
 }
+
 
 .container {
   max-width: 1200px;
@@ -92,7 +93,7 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     font-size: 18px;
   }
@@ -113,6 +114,17 @@ export default {
   .promo__img {
     height: 32vh;
     min-height: 285px;
+  }
+
+  .promo__text h2 {
+    font-size: 34px;
+    line-height: 1.17647;
+  }
+}
+
+@media (min-width: 769px) {
+  .promo {
+    padding: 84px 0 150px 0;
   }
 }
 
@@ -144,6 +156,16 @@ export default {
   .promo__text {
     width: 41.27%;
     max-width: 420px;
+  }
+
+  .promo__text p {
+    margin: 0 0 24px;
+  }
+
+  .promo__text h2 {
+    font-size: 35px;
+    line-height: 1.2;
+    margin-bottom: 24px;
   }
 }
 </style>

@@ -295,14 +295,12 @@ img {
   }
 }
 
-.page__footer, .page__header {
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-}
 
 .hy-footer_mode_full {
-  padding-top: 64px;
-  padding-bottom: 96px;
+  padding: 32px 0;
+  flex-shrink: 0;
+  background: #27282C;
+  color: #fff;
 }
 
 @media screen and (max-width: 640px) {
@@ -332,7 +330,7 @@ img {
 
 .hy-text-3 {
   letter-spacing: normal;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Droid Sans, Helvetica Neue, Arial, sans-serif;
+  font-family: JetBrains Mono;
   font-size: 12px;
   font-weight: 400;
   line-height: 16px;

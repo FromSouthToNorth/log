@@ -6,6 +6,7 @@ import 'github-markdown-css';
 import 'highlight.js/styles/github-dark.css';
 import '@/assets/styles/reset.scss';
 import '@/assets/styles/index.scss';
+import './beforeEach';
 
 import '@/assets/icons';
 import { formatTime } from "@/utils";
