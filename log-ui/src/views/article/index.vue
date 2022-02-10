@@ -10,7 +10,7 @@
     </aside>
     <div class="content" v-if="article">
       <a href="" class="tag">{{ article.articleType.typeName }}</a>
-      <h1>{{ article.articleTitle }}</h1>
+      <h1 id="articleTitle">{{ article.articleTitle }}</h1>
       <div class="post-info">
         <img class="avatar" :src="article.user.avatar"
              loading="lazy"
@@ -28,7 +28,9 @@
           <h2>发现更多</h2>
         </div>
         <div class="row">
-          <Card :data="item" :key="index" v-for="(item, index) in discoverMore" />
+          <a href="#articleTitle" @click="getArticle(item.articleId)" class="col" :key="index" v-for="(item, index) in discoverMore">
+            <Card :data="item" />
+          </a>
         </div>
       </div>
     </div>
@@ -78,7 +80,9 @@ export default {
       document.removeEventListener("scroll", this.scrolling)
     },
     scrolling() {
-      this.hiddenSidebar = window.scrollY >= this.$refs.article.offsetHeight - this.$refs.sidebarHolder.offsetHeight
+      this.$nextTick(() => {
+        this.hiddenSidebar = window.scrollY >= this.$refs.article.offsetHeight - this.$refs.sidebarHolder.offsetHeight
+      })
     },
     /** 文章 ID 查询文章 */
     getArticle(articleId) {
@@ -420,6 +424,15 @@ export default {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
+
+  li {
+    a {
+      max-width: 88px;
+      overflow:hidden; //超出的文本隐藏
+      text-overflow:ellipsis; //溢出用省略号显示
+      white-space:nowrap; //溢出不换行
+    }
+  }
 }
 
 @media (min-width: 1025px) {
@@ -429,6 +442,7 @@ export default {
       max-width: 700px;
       padding: 64px 0;
       margin: 0 32px;
+      min-height: 600px;
     }
   }
 

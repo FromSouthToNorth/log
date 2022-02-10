@@ -1,25 +1,22 @@
 <template>
-  <div class="col">
-    <router-link class="card eaps" tag="a" :to="'/article/' + data.articleId">
-      <img width="2560" height="1200" class="" :src="data.articleCover" :alt="data.articleTitle">
-      <div class="card__header">
-        <svg-icon v-if="!data.articleCover" class-name="card__logo card__logo--small" :icon-class="'idea_icon'"/>
-        <time class="publish-date">{{ parseTime(data.createTime, '{y}年{m}月{d}日') }}</time>
-        <h3 style="float: none; position: static;" v-text="data.articleTitle"></h3>
-<!--        <span class="tag">了解详情</span>-->
+  <a class="card eaps">
+    <img width="2560" height="1200" class="" :src="data.articleCover" :alt="data.articleTitle">
+    <div class="card__header">
+      <svg-icon v-if="!data.articleCover" class-name="card__logo card__logo--small" :icon-class="'idea_icon'"/>
+      <time class="publish-date">{{ parseTime(data.createTime, '{y}年{m}月{d}日') }}</time>
+      <h3 style="float: none; position: static;" v-text="data.articleTitle"></h3>
+    </div>
+    <div class="card__body">
+      <p style="float: none; position: static;" v-text="data.remark">
+      </p>
+    </div>
+    <div class="card__footer">
+      <div class="author">
+        <img class="avatar" :src="data.user.avatar" alt="">
+        <span v-text="data.user.realName"></span>
       </div>
-      <div class="card__body">
-        <p style="float: none; position: static;" v-text="data.remark">
-        </p>
-      </div>
-      <div class="card__footer">
-        <div class="author">
-          <img class="avatar" :src="data.user.avatar" alt="">
-          <span v-text="data.user.realName"></span>
-        </div>
-      </div>
-    </router-link>
-  </div>
+    </div>
+  </a>
 </template>
 
 <script>

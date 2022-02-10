@@ -4,8 +4,10 @@
     <section class="section">
       <div class="hy-container">
         <SectionTitle title="文章" />
-        <div class="row">
-          <Card v-if="articleCards" :data="item" :key="index" v-for="(item, index) in articleCards" />
+        <div class="row" v-if="articleCards">
+          <router-link class="col" tag="div" :key="index" :to="'/article/' + item.articleId" v-for="(item, index) in articleCards">
+            <Card :data="item" />
+          </router-link>
         </div>
       </div>
     </section>
