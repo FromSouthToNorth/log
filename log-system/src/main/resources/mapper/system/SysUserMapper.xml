@@ -99,7 +99,7 @@
         <if test="sex != null">#{sex},</if>
         <if test="email != null and email != ''">#{email},</if>
         <if test="phone != null and phone != ''">#{phone},</if>
-        <if test="status != null">#{tatus},</if>
+        <if test="status != null">#{status},</if>
         <if test="createBy != null and createBy != ''">#{create_by},</if>
         sysdate()
         )
