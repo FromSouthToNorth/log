@@ -48,7 +48,7 @@
             :headers="header"
             :before-upload="beforeUpload"
             :on-success="onSuccess"
-            action="/prod-api/system/article/image">
+            :action="action">
             <i class="el-icon-upload" v-show="articleParams.articleCover == ''" />
             <div class="el-upload__text" v-show="articleParams.articleCover == ''">将文件拖到此处，或<em>点击上传</em></div>
             <img
@@ -176,6 +176,7 @@ export default {
         articleContent: undefined,
         articleCover: ''
       },
+      action: process.env.VUE_APP_BASE_API + '/system/article/image',
       types: [],
       tags: [],
       visibleArticleEdit: false,
