@@ -213,7 +213,7 @@ export default {
         let article = result.data
         this.articleParams.articleId = article.articleId
         this.articleParams.remark = article.remark
-        this.articleParams.tagIds = result.tagIds
+        this.articleParams.tagIds = article.tagIds
         this.articleParams.articleTitle = article.articleTitle
         this.articleParams.typeId = article.typeId
         this.articleParams.type = article.type

@@ -1,5 +1,6 @@
 package vip.hyzt.system.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import vip.hyzt.system.domain.SysArticle;
 
 import java.util.List;
@@ -63,4 +64,12 @@ public interface SysArticleMapper {
      * @return 文章列表
      */
     List<SysArticle> selectArticleAll();
+
+    /**
+     * 根据文章分类标签发现更多文章
+     * @param typeId 分类 ID
+     * @param tagIds 标签 ID
+     * @return 发现更多的文章
+     */
+    List<SysArticle> selectArticleDiscoverMore(@Param("articleId") String articleId , @Param("typeId") String typeId, @Param("tagIds") String[] tagIds);
 }

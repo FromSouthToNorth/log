@@ -130,7 +130,7 @@
         sysdate()
         )
     </insert>
-    
+
     <update id="updateArticle" parameterType="SysArticle">
         update sys_article
         <set>
@@ -191,6 +191,27 @@
                  left join sys_user su on su.user_id = sa.user_id
         where sa.del_flag = 0
         order by sa.create_time desc
+    </select>
+
+    <select id="selectArticleDiscoverMore" resultMap="SysArticleResult" parameterType="String">
+        select
+            sa.article_id,
+            sa.article_title,
+            sa.remark,
+            sa.article_content,
+            sa.article_cover,
+            sa.create_time,
+            su.real_name,
+            su.avatar
+        from sys_article sa
+                 left join sys_article_connect_tag sact on sa.article_id = sact.article_id
+                 left join sys_user su on sa.user_id = su.user_id
+        where sa.type_id = #{typeId}
+          and sa.article_id <![CDATA[<>]]> #{articleId}
+          and sact.tag_id in
+        <foreach collection="tagIds" item="tagId" index="index" open="(" separator="," close=")">
+            #{tagId}
+        </foreach>
     </select>
 
 </mapper>

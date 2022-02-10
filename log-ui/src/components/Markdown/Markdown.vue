@@ -6,7 +6,7 @@
 import MarkdownIt from 'markdown-it'
 import highlight from 'highlight.js'
 import Clipboard from 'clipboard'
-// import tocbot from 'tocbot'
+import tocbot from 'tocbot'
 
 export default {
   name: 'Markdown',
@@ -24,14 +24,14 @@ export default {
   },
   destroyed() {
     this.clipboard.destroy()
-    // tocbot.destroy()
+    tocbot.destroy()
   },
   created() {
     this.markdownToHtml(this.article)
   },
   mounted() {
     this.clipboardBtn()
-    // this.content()
+    // this.generateContent()
     this.constructorImages()
   },
   methods: {
@@ -55,27 +55,27 @@ export default {
       })
     },
     /* 目录生产 */
-    // content() {
-    //   let nodes = this.$refs.article.children
-    //   if (nodes.length) {
-    //     for (let i = 0; i < nodes.length; i++) {
-    //       let node = nodes[i];
-    //       let reg = /^H[1-4]{1}$/
-    //       if (reg.exec(node.tagName)) {
-    //         node.id = i
-    //       }
-    //     }
-    //   }
-    //   tocbot.init({
-    //     tocSelector: '#toc',            // 要把目录添加元素位置，支持选择器
-    //     contentSelector: '.article',    // 获取html的元素
-    //     headingSelector: 'h1, h2, h3, h4',  // 要显示的id的目录
-    //     hasInnerContainers: true,
-    //     onClick: function (e) {
-    //       e.preventDefault();
-    //     }
-    //   })
-    // },
+    generateContent() {
+      let nodes = this.$refs.article.children
+      if (nodes.length) {
+        for (let i = 0; i < nodes.length; i++) {
+          let node = nodes[i];
+          let reg = /^H[1-4]{1}$/
+          if (reg.exec(node.tagName)) {
+            node.id = i
+          }
+        }
+      }
+      tocbot.init({
+        tocSelector: '#toc',            // 要把目录添加元素位置，支持选择器
+        contentSelector: '.article',    // 获取html的元素
+        headingSelector: 'h1, h2, h3, h4',  // 要显示的id的目录
+        hasInnerContainers: true,
+        onClick: function (e) {
+          e.preventDefault();
+        }
+      })
+    },
     /* 复制代码按钮 */
     clipboardBtn() {
       this.clipboard = new Clipboard('.copy-btn');

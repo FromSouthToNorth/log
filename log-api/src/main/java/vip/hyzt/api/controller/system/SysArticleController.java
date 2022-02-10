@@ -62,8 +62,10 @@ public class SysArticleController extends BaseController {
         List<SysArticleType> types = typeService.selectTypeAll();
         ajax.put("tags", tags);
         ajax.put("types", types);
-        ajax.put(Result.DATA_TAG, articleService.selectArticleByArticleId(articleId));
-        ajax.put("tagIds", tagService.selectTagListByArticleId(articleId));
+        SysArticle article = articleService.selectArticleByArticleId(articleId);
+        List<String> tagIds = tagService.selectTagListByArticleId(articleId);
+        article.setTagIds(tagIds.toArray(new String[tagIds.size()]));
+        ajax.put(Result.DATA_TAG, article);
         return ajax;
     }
 
@@ -152,10 +154,11 @@ public class SysArticleController extends BaseController {
     @GetMapping(value = {"/home/article/{articleId}"})
     public Result getArticleInfo(@PathVariable(value = "articleId", required = false) String articleId) {
         Result ajax = Result.success();
-        List<SysArticleTag> tags = tagService.selectTagAll();
-        ajax.put("tags", tags);
-        ajax.put(Result.DATA_TAG, articleService.selectArticleByArticleId(articleId));
-        ajax.put("tagIds", tagService.selectTagListByArticleId(articleId));
+        SysArticle article = articleService.selectArticleByArticleId(articleId);
+        List<String> tagIds = tagService.selectTagListByArticleId(articleId);
+        article.setTagIds(tagIds.toArray(new String[tagIds.size()]));
+        ajax.put(Result.DATA_TAG, article);
+        ajax.put("discoverMore", articleService.selectArticleDiscoverMore(article));
         return ajax;
     }
 }

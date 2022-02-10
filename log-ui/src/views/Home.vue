@@ -33,11 +33,13 @@ export default {
     this.getArticleList()
   },
   methods: {
+    /** 获取置顶文章 */
     getTopArticle() {
       topArticle().then(result => {
         this.topArticle = result.data
       })
     },
+    /** 获取文章列表 */
     getArticleList() {
       articleList().then(result => {
         this.articleCards = result.data

@@ -715,6 +715,13 @@ hr {
   margin: 0 0 32px;
 }
 
+.section__head {
+  h2 {
+    width: 55%;
+    margin: 0;
+  }
+}
+
 @media (min-width: 769px) {
   .section__head h2 {
     width: 65.5%;
@@ -729,6 +736,11 @@ hr {
   .section__head h2 {
     font-size: 31px;
     line-height: 1.29;
+  }
+
+  h2 {
+    font-size: 32px;
+    line-height: 1.17647;
   }
 }
 

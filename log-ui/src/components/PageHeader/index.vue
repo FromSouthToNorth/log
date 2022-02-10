@@ -135,7 +135,14 @@ export default {
       })
     })
   },
+  destroyed() {
+    this.scrollingDestroy()
+  },
   methods: {
+    /** 移除滚动监听事件 */
+    scrollingDestroy() {
+      document.removeEventListener("scroll", this.scrolling)
+    },
     /* 导航路由跳转 */
     toRouter(link) {
       if (this.$route.path.indexOf(link)) {

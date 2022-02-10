@@ -124,6 +124,16 @@ public class SysArticleServiceImpl implements ISysArticleService {
     }
 
     /**
+     * 根据文章的分类标签发现更多文章
+     * @param article 文章的分类标签
+     * @return 发现更多的文章
+     */
+    @Override
+    public List<SysArticle> selectArticleDiscoverMore(SysArticle article) {
+        return articleMapper.selectArticleDiscoverMore(article.getArticleId(), article.getTypeId(), article.getTagIds());
+    }
+
+    /**
      * 新增文章标签信息
      * @param article 文章信息
      */
