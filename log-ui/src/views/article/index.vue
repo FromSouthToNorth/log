@@ -67,21 +67,18 @@ export default {
     this.getArticle(articleId)
     this.scrollingDestroy()
   },
-  mounted() {
-    window.addEventListener("scroll", () => {
-      window.requestAnimationFrame(() => {
-        this.scrolling()
-      })
-    })
-  },
   methods: {
     /** 移除滚动监听事件 */
     scrollingDestroy() {
       document.removeEventListener("scroll", this.scrolling)
     },
     scrolling() {
-      this.$nextTick(() => {
-        this.hiddenSidebar = window.scrollY >= this.$refs.article.offsetHeight - this.$refs.sidebarHolder.offsetHeight
+      window.addEventListener("scroll", () => {
+        window.requestAnimationFrame(() => {
+          let article = this.$refs.article.offsetHeight;
+          let sidebar = this.$refs.sidebarHolder.offsetHeight;
+          this.hiddenSidebar = window.scrollY >= article - sidebar
+        })
       })
     },
     /** 文章 ID 查询文章 */
@@ -95,6 +92,7 @@ export default {
           this.generateContent()
           this.constructorImages()
           this.clipboardBtn()
+          this.scrolling()
         })
       })
     },
