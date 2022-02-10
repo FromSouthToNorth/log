@@ -433,6 +433,11 @@ export default {
   }
 }
 
+.sidebar {
+  transition: opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
+  display: none;
+}
+
 @media (min-width: 1025px) {
   .article-section {
 
@@ -450,7 +455,6 @@ export default {
     width: 100%;
     max-width: 1536px;
     margin: 0 auto;
-    transition: opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
 
     &.hidden {
       opacity: 0;
