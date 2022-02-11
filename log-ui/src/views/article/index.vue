@@ -23,7 +23,7 @@
       </div>
       <article id="write" ref="article" v-if="article" v-html="article.articleContent" class="article markdown-body"/>
     </div>
-    <div class="section light-gray-bg" v-if="discoverMore">
+    <div class="section light-gray-bg" v-if="discoverMore.length > 0">
       <div class="container">
         <div class="section__head">
           <h2>发现更多</h2>
