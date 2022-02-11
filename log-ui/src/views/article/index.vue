@@ -46,7 +46,7 @@ import MarkdownIt from 'markdown-it'
 import highlight from 'highlight.js'
 import Clipboard from 'clipboard'
 import tocbot from 'tocbot'
-import MarkdownItKatex from "markdown-it-mathjax3";
+import MarkdownItKatex from "markdown-it-latex2img";
 
 export default {
   name: "index",
