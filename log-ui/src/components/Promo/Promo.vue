@@ -2,7 +2,8 @@
   <section class="promo">
     <router-link class="container" tag="div" :to="'/article/' + topArticle.articleId">
       <div class="promo__row">
-        <a href="" class="promo__img" :style="{backgroundImage: `url(${topArticle.articleCover})`}"></a>
+        <a v-if="topArticle.articleCover" href="" class="promo__img" :style="{backgroundImage: `url(${topArticle.articleCover})`}"></a>
+        <svg-icon style="width: 100px; height: 100px" v-else :icon-class="'jet-brains'" />
         <div class="promo__text">
           <h2>
             <a>
@@ -97,6 +98,14 @@ export default {
     -webkit-box-orient: vertical;
     font-size: 18px;
   }
+}
+
+.banner-tile_academy {
+  background-color: #27282c;
+}
+
+.banner-tile_secondary {
+  padding: 32px;
 }
 
 @media (min-width: 640px) {
