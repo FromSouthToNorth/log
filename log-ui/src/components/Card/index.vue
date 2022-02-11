@@ -2,7 +2,7 @@
   <a class="card eaps">
     <img v-if="data.articleCover" width="2560" height="1200" class="" :src="data.articleCover" :alt="data.articleTitle">
     <div class="card__header">
-      <svg-icon v-if="!data.articleCover" class-name="card__logo card__logo--small" :icon-class="'idea_icon'"/>
+      <svg-icon v-if="!data.articleCover" class-name="card__logo card__logo--small" :icon-class="'idea'"/>
       <time class="publish-date">{{ parseTime(data.createTime, '{y}年{m}月{d}日') }}</time>
       <h3 style="float: none; position: static;" v-text="data.articleTitle"></h3>
     </div>
