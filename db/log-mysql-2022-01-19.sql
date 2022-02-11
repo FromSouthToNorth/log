@@ -48,8 +48,9 @@ create table `sys_user`
     `del_flag`    char(1)                                                            default '0' comment '删除标志（0代表存在 1代表删除）',
     `create_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci  not null comment '创建人',
     `create_time` datetime(0)                                                   null default null comment '创建日期',
-    `update_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci  not null comment '更新人',
+    `update_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci       default null comment '更新人',
     `update_time` datetime(0)                                                   null default null comment '更新日期',
+    `remark`      varchar(500) character set utf8mb4 collate utf8mb4_general_ci      default null comment '备注',
     primary key (`user_id`) using btree,
     unique index `index_user_name` (`user_name`) using btree,
     unique index `uniq_sys_user_phone` (`phone`) using btree,
@@ -66,11 +67,11 @@ create table `sys_user`
 insert into sys_user
 values ('1', 'admin', 'hy', '00', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2',
         'https://202007002.oss-cn-chengdu.aliyuncs.com/articles/微信图片_20220120165107.jpg', null, 1,
-        '598050554@qq.com', '18181795450', '0', '0', 'admin', sysdate(), '', null);
+        '598050554@qq.com', '18181795450', '0', '0', 'admin', sysdate(), '', null, null);
 insert into sys_user
 values ('2', 'outsider', 'lqr', '00', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2',
         'https://202007002.oss-cn-chengdu.aliyuncs.com/articles/微信图片_20220120165119.jpg', null, 1,
-        '1172484612@qq.com', '15982620714', '0', '0', 'admin', sysdate(), '', null);
+        '1172484612@qq.com', '15982620714', '0', '0', 'admin', sysdate(), '', null, null);
 
 -- 用户角色表
 drop table if exists `sys_user_role`;
@@ -117,7 +118,7 @@ create table `sys_permission_menu`
     `del_flag`    char(1)                                                           default '0' comment '删除标志（0代表存在 1代表删除）',
     `create_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci not null comment '创建人',
     `create_time` datetime(0)                                                  null default null comment '创建日期',
-    `update_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci not null comment '更新人',
+    `update_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci      default null comment '更新人',
     `update_time` datetime(0)                                                  null default null comment '更新日期',
     primary key (`menu_id`) using btree,
     index `index_prem_pid` (`parent_id`) using btree,
@@ -592,7 +593,7 @@ create table `sys_article`
 (
     `article_id`      varchar(64) character set utf8mb4 collate utf8mb4_general_ci  not null comment '主键',
     `article_title`   varchar(64) character set utf8mb4 collate utf8mb4_general_ci  not null comment '文章标题',
-    `remark`          varchar(256)  character set utf8mb4 collate utf8mb4_general_ci not null comment '文章描述',
+    `remark`          varchar(256) character set utf8mb4 collate utf8mb4_general_ci not null comment '文章描述',
     `user_id`         varchar(100) character set utf8mb4 collate utf8mb4_general_ci not null comment '作者id',
     `article_content` longtext character set utf8mb4 collate utf8mb4_general_ci     not null comment '内容',
     `article_cover`   varchar(1024) character set utf8mb4 collate utf8mb4_general_ci         default '' comment '文章封面图',
@@ -615,7 +616,9 @@ create table `sys_article`
   row_format = Dynamic;
 
 insert into sys_article
-values ('1', '二分查找', '二分查找的基本思想是将n个元素分成大致相等的两部分，取a[n/2]与x做比较，如果x=a[n/2],则找到x,算法中止；如果x<a[n/2],则只要在数组a的左半部分继续搜索x,如果x>a[n/2],则只要在数组a的右半部搜索x. 时间复杂度即是while循环的次数。', '1', '## 二分查找
+values ('1', '二分查找',
+        '二分查找的基本思想是将n个元素分成大致相等的两部分，取a[n/2]与x做比较，如果x=a[n/2],则找到x,算法中止；如果x<a[n/2],则只要在数组a的左半部分继续搜索x,如果x>a[n/2],则只要在数组a的右半部搜索x. 时间复杂度即是while循环的次数。',
+        '1', '## 二分查找
 
 ### 整体思路示例
 

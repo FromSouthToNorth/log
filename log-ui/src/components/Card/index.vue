@@ -1,6 +1,6 @@
 <template>
   <a class="card eaps">
-    <img width="2560" height="1200" class="" :src="data.articleCover" :alt="data.articleTitle">
+    <img v-if="data.articleCover" width="2560" height="1200" class="" :src="data.articleCover" :alt="data.articleTitle">
     <div class="card__header">
       <svg-icon v-if="!data.articleCover" class-name="card__logo card__logo--small" :icon-class="'idea_icon'"/>
       <time class="publish-date">{{ parseTime(data.createTime, '{y}年{m}月{d}日') }}</time>

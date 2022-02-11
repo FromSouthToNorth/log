@@ -1,8 +1,9 @@
 <template>
   <section class="article-section">
     <aside class="sidebar" v-if="article" :class="hiddenSidebar ? 'hidden' : ''">
-      <div class="sidebar__holder" style="top: 294px;" ref="sidebarHolder">
-        <img class="sidebar__logo" :src="article.articleCover" :alt="article.articleTitle">
+      <div class="sidebar__holder" ref="sidebarHolder">
+        <img v-if="article.articleCover" class="sidebar__logo" :src="article.articleCover" :alt="article.articleTitle">
+        <svg-icon v-else class-name="card__logo card__logo--small sidebar__logo" style="width: 40px; height: 40px;" :icon-class="'idea_icon'" />
         <span class="sidebar__title">{{ article.articleTitle }}</span>
         <div class="tag-list" id="toc">
         </div>
@@ -45,6 +46,7 @@ import MarkdownIt from 'markdown-it'
 import highlight from 'highlight.js'
 import Clipboard from 'clipboard'
 import tocbot from 'tocbot'
+import MarkdownItKatex from "markdown-it-latex2img";
 
 export default {
   name: "index",
@@ -132,7 +134,7 @@ export default {
       tocbot.init({
         tocSelector: '#toc',                // 要把目录添加元素位置，支持选择器
         contentSelector: '.article',        // 获取html的元素
-        headingSelector: 'h1, h2, h3, h4',  // 要显示的id的目录
+        headingSelector: 'h1, h2, h3',  // 要显示的id的目录
         hasInnerContainers: true,
         onClick: function (e) {
           e.preventDefault();
@@ -191,7 +193,7 @@ export default {
             )}</textarea>`;
           }
         }
-      })
+      }).use(MarkdownItKatex)
       article = md.render(article)
       this.article.articleContent = article
     }
@@ -487,7 +489,7 @@ export default {
 
   .sidebar__holder {
     position: fixed;
-    top: 35vh;
+    top: 25vh;
     max-width: 272px;
     display: flex;
     flex-direction: column;

@@ -86,6 +86,7 @@
         <if test="email != null and email != ''">email,</if>
         <if test="phone != null and phone != ''">phone,</if>
         <if test="status != null">status,</if>
+        <if test="remark != null">remark,</if>
         <if test="createBy != null and createBy != ''">create_by,</if>
         create_time
         ) values (
@@ -100,7 +101,8 @@
         <if test="email != null and email != ''">#{email},</if>
         <if test="phone != null and phone != ''">#{phone},</if>
         <if test="status != null">#{status},</if>
-        <if test="createBy != null and createBy != ''">#{create_by},</if>
+        <if test="remark != null">#{remark},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
         sysdate()
         )
     </insert>

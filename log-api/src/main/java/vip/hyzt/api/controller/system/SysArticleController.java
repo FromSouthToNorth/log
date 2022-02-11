@@ -2,6 +2,7 @@ package vip.hyzt.api.controller.system;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,6 +10,7 @@ import vip.hyzt.common.annotation.Log;
 import vip.hyzt.common.core.page.TableDataInfo;
 import vip.hyzt.common.enums.BusinessType;
 import vip.hyzt.common.enums.FilePathEnum;
+import vip.hyzt.common.utils.StringUtils;
 import vip.hyzt.core.domain.Result;
 import vip.hyzt.core.web.controller.BaseController;
 import vip.hyzt.system.domain.SysArticle;
@@ -62,9 +64,12 @@ public class SysArticleController extends BaseController {
         List<SysArticleType> types = typeService.selectTypeAll();
         ajax.put("tags", tags);
         ajax.put("types", types);
-        SysArticle article = articleService.selectArticleByArticleId(articleId);
-        List<String> tagIds = tagService.selectTagListByArticleId(articleId);
-        article.setTagIds(tagIds.toArray(new String[tagIds.size()]));
+        SysArticle article = null;
+        if (!StringUtils.isEmpty(articleId) && !"-1".equals(articleId)) {
+            article = articleService.selectArticleByArticleId(articleId);
+            List<String> tagIds = tagService.selectTagListByArticleId(articleId);
+            article.setTagIds(tagIds.toArray(new String[tagIds.size()]));
+        }
         ajax.put(Result.DATA_TAG, article);
         return ajax;
     }

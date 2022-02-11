@@ -5815,6 +5815,11 @@ markdown-it-highlightjs@3.6.0:
     highlight.js "^11.3.1"
     lodash.flow "^3.5.0"
 
+markdown-it-latex2img@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.npmmirror.com/markdown-it-latex2img/-/markdown-it-latex2img-0.0.6.tgz#a8967133b5523f0f23490d774072faa055faf9ee"
+  integrity sha512-plzX+YmYv28UnM172ZDKexyquec/GMit2K84g4x60u0YRFybhDQl8W0aTCHD8gJbhYVJRTWIDaL9YB0cvTijYQ==
+
 markdown-it@12.3.2:
   version "12.3.2"
   resolved "https://registry.npmmirror.com/markdown-it/download/markdown-it-12.3.2.tgz#bf92ac92283fe983fe4de8ff8abfb5ad72cd0c90"
