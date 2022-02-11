@@ -110,7 +110,7 @@
                 v-if="scope.row.articleCover"
                 :style="{ width: '80px', height: '50px' }"
                 :src="scope.row.articleCover"/>
-              <svg-icon v-else :icon-class="'idea_icon'" />
+              <svg-icon v-else :icon-class="'idea'" />
             </template>
           </el-table-column>
           <el-table-column label="标题" align="center" key="articleTitle" prop="articleTitle" v-if="columns[1].visible"/>
