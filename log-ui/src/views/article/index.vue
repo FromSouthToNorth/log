@@ -54,7 +54,7 @@ export default {
   data() {
     return {
       article: null,
-      discoverMore: null,
+      discoverMore: [],
       clipboard: null,
       images: [],
       hiddenSidebar: false

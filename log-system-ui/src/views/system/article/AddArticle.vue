@@ -14,12 +14,7 @@
         </el-button>
       </el-col>
     </el-row>
-    <mavon-editor
-      ref="md"
-      @imgAdd="uploadImg"
-      v-model="articleParams.articleContent"
-      :style="{ height: 'calc(100vh - 160px)' }"
-    />
+    <div id="vditor"></div>
     <el-dialog :visible.sync="visibleArticleEdit" width="60%">
       <div slot="title">发布文章</div>
       <el-form :model="articleParams" ref="queryForm" :rules="rules" :inline="true" label-width="100px">
@@ -160,11 +155,15 @@ import {addArticle, adminArticleUploadImg, adminGetArticleInfo} from "@/api/syst
 import * as imageConversion from "image-conversion";
 import { getToken } from '@/utils/auth'
 import errorCode from "@/utils/errorCode";
+import Vditor from "vditor";
+
 export default {
   name: "Article",
   dicts: ['sys_article_status', 'sys_article_type'],
   data() {
     return {
+      // 编辑器
+      contentEditor: '',
       articleParams: {
         articleTitle: undefined,
         remark: undefined,
@@ -201,8 +200,47 @@ export default {
   },
   created() {
     this.getTypeAndTag()
+    this.initContentEditor()
   },
   methods: {
+    initContentEditor() {
+      let itself = this
+      this.$nextTick(() => {
+        this.contentEditor = new Vditor('vditor', {
+          height: 740,
+          preview: {
+            hljs: {
+              enable: true,
+              style: 'dracula',
+              lineNumber: true
+            }
+          },
+          outline: {
+            enable: true
+          },
+          input: (value) => {
+            itself.articleParams.articleContent = value
+          },
+          upload: {
+            url: this.action,           // 文件上传路径
+            fieldName: 'articlefile',   // 文件上传字段名
+            headers: this.header,       // 文件上传携带的请求头
+            format(files, result) {
+              let res = JSON.parse(result)
+              let { msg, code, imgUrl } = res
+              return JSON.stringify({
+                msg,
+                code,
+                data: {
+                  errFiles: [],
+                  succMap: {[imgUrl]: imgUrl}
+                }
+              })
+            }
+          }
+        })
+      })
+    },
     /** 获取文章 */
     getTypeAndTag() {
       adminGetArticleInfo("-1").then(result => {

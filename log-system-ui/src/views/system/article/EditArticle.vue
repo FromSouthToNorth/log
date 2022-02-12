@@ -14,12 +14,7 @@
         </el-button>
       </el-col>
     </el-row>
-    <mavon-editor
-      ref="md"
-      @imgAdd="uploadImg"
-      v-model="articleParams.articleContent"
-      :style="{ height: 'calc(100vh - 160px)' }"
-    />
+    <div id="vditor"></div>
     <el-dialog :visible.sync="visibleArticleEdit" width="40%">
       <div slot="title">发布文章</div>
       <el-form :model="articleParams" :rules="rules" ref="queryForm" :inline="true" label-width="100px">
@@ -160,6 +155,7 @@ import {adminArticleUploadImg, adminGetArticleInfo, editArticle} from "@/api/sys
 import * as imageConversion from "image-conversion";
 import {getToken} from '@/utils/auth'
 import errorCode from "@/utils/errorCode";
+import Vditor from "vditor";
 
 export default {
   name: "Article",
@@ -206,6 +202,46 @@ export default {
     this.getArticle(articleId)
   },
   methods: {
+    initContentEditor(article) {
+      this.$nextTick(() => {
+        this.contentEditor = new Vditor('vditor', {
+          height: 740,
+          preview: {
+            hljs: {
+              enable: true,
+              style: 'dracula',
+              lineNumber: true
+            }
+          },
+          outline: {
+            enable: true
+          },
+          input: (value) => {
+            this.articleParams.articleContent = value
+          },
+          after: () => {
+            this.contentEditor.setValue(article)
+          },
+          upload: {
+            url: this.action,           // 文件上传路径
+            fieldName: 'articlefile',   // 文件上传字段名
+            headers: this.header,       // 文件上传携带的请求头
+            format(files, result) {
+              let res = JSON.parse(result)
+              let { msg, code, imgUrl } = res
+              return JSON.stringify({
+                msg,
+                code,
+                data: {
+                  errFiles: [],
+                  succMap: {[imgUrl]: imgUrl}
+                }
+              })
+            }
+          }
+        })
+      })
+    },
     /** 获取文章 */
     getArticle(articleId) {
       adminGetArticleInfo(articleId).then(result => {
@@ -222,6 +258,7 @@ export default {
         this.articleParams.isTop = article.isTop
         this.articleParams.articleContent = article.articleContent
         this.articleParams.articleCover = article.articleCover
+        this.initContentEditor(this.articleParams.articleContent)
       })
     },
     /** 提交文章 */
