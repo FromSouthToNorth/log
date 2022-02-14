@@ -173,6 +173,7 @@ export default {
 
 .section {
   padding: 25px 0;
+  box-sizing: border-box;
 }
 
 .light-gray-bg {
