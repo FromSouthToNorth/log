@@ -9,7 +9,6 @@ import './beforeEach';
 import '@/assets/icons';
 import { formatTime } from "@/utils";
 import { parseTime } from "@/utils/logutils";
-import "vditor/dist/index.css"
 
 Vue.prototype.formatTime = formatTime
 Vue.prototype.parseTime = parseTime
