@@ -4,7 +4,7 @@
     <section class="section">
       <div class="hy-container">
         <SectionTitle title="文章" />
-        <div class="row" v-if="articleCards">
+        <div class="row card_container" v-if="articleCards">
           <router-link class="col" tag="div" :key="index" :to="'/article/' + item.articleId" v-for="(item, index) in articleCards">
             <Card :data="item" />
           </router-link>

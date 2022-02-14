@@ -81,6 +81,7 @@ export default {
 .card svg,
 .card img {
   flex-shrink: 0;
+  border: 0;
 }
 
 img, svg {
