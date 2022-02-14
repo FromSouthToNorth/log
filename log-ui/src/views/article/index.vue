@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import "vditor/dist/index.css"
 import {getArticleIngo} from "@/api/article";
 import SectionTitle from "@/components/SectionTitle";
 import Card from "@/components/Card";
@@ -102,7 +103,6 @@ export default {
         markdown,
         {
           hljs: {
-            style: 'api',
             lineNumber: true,
             enable: true
           },
@@ -196,6 +196,10 @@ export default {
   .katex {
     font-size: 16px;
   }
+}
+
+.vditor-reset {
+  overflow: hidden;
 }
 
 .sidebar {
