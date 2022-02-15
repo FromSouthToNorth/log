@@ -106,9 +106,6 @@ export default {
             lineNumber: true,
             enable: true
           },
-          speech: {
-            enable: true,
-          },
         })
     }
   }

@@ -4426,6 +4426,11 @@ highlight.js@^10.7.1:
   resolved "https://registry.nlark.com/highlight.js/download/highlight.js-10.7.3.tgz"
   integrity sha1-aXJy45kTVuQMPKxWanTu9oF1ZTE=
 
+highlight.js@^11.4.0:
+  version "11.4.0"
+  resolved "https://registry.npmmirror.com/highlight.js/-/highlight.js-11.4.0.tgz#34ceadd49e1596ee5aba3d99346cdfd4845ee05a"
+  integrity sha512-nawlpCBCSASs7EdvZOYOYVkJpGmAOKMYZgZtUqSRqodZE0GRVcFKwo1RcpeOemqh9hyttTdd5wDBwHkuSyUfnA==
+
 hmac-drbg@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npm.taobao.org/hmac-drbg/download/hmac-drbg-1.0.1.tgz"
