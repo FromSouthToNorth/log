@@ -4,6 +4,7 @@ import router from './router';
 import Photoswipe from "vue-pswipe";
 import '@/assets/styles/reset.scss';
 import '@/assets/styles/index.scss';
+import 'highlight.js/styles/idea.css'
 import './beforeEach';
 
 import '@/assets/icons';
