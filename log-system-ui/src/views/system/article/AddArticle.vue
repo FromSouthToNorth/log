@@ -265,6 +265,7 @@ export default {
           })
         }
       })
+      this.contentEditor.clearCache()
     },
     /** 文章编辑界面发布按钮 */
     pushArticle() {
