@@ -195,7 +195,7 @@ export default {
         tagIds: [
           { required: true, message: '请选择文章标签', trigger: 'change' }
         ]
-      }
+      },
     }
   },
   created() {
