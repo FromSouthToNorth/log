@@ -259,10 +259,10 @@ export default {
         return changArticleTop(row.articleId, row.isTop)
       }).then(() => {
         this.$modal.msgSuccess(text + "成功");
+        this.getList()
       }).catch(function() {
-        row.status = row.status === "0" ? "1" : "0";
+        row.isTop = row.isTop === "0" ? "1" : "0";
       });
-      this.getList()
     },
     // 删除文章
     handleDelete(row) {

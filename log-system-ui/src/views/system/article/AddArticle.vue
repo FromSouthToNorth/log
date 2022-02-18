@@ -195,7 +195,7 @@ export default {
         tagIds: [
           { required: true, message: '请选择文章标签', trigger: 'change' }
         ]
-      }
+      },
     }
   },
   created() {
@@ -214,6 +214,9 @@ export default {
               style: 'dracula',
               lineNumber: true
             }
+          },
+          cache: {
+            enable: false
           },
           outline: {
             enable: true
