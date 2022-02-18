@@ -215,9 +215,6 @@ export default {
               lineNumber: true
             }
           },
-          cache: {
-            enable: false
-          },
           outline: {
             enable: true
           },
