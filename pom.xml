@@ -25,10 +25,10 @@
         <bitwalker.version>1.21</bitwalker.version>
         <mybatis-spring-boot.version>2.1.4</mybatis-spring-boot.version>
         <junit.version>4.13.2</junit.version>
-        <mybatis-spring-boot.version>2.1.4</mybatis-spring-boot.version>
-        <pagehelper.boot.version>1.3.1</pagehelper.boot.version>
+        <mybatis-spring-boot.version>2.2.2</mybatis-spring-boot.version>
+        <pagehelper.boot.version>1.4.1</pagehelper.boot.version>
         <fastjson.version>1.2.78</fastjson.version>
-        <oshi.version>5.8.0</oshi.version>
+        <oshi.version>6.1.2</oshi.version>
         <jwt.version>0.9.1</jwt.version>
         <swagger.version>3.0.0</swagger.version>
         <kaptcha.version>2.3.2</kaptcha.version>
