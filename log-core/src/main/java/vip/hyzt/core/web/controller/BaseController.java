@@ -11,6 +11,7 @@ import vip.hyzt.common.core.page.PageDomain;
 import vip.hyzt.common.core.page.TableDataInfo;
 import vip.hyzt.common.core.page.TableSupport;
 import vip.hyzt.common.utils.DateUtils;
+import vip.hyzt.common.utils.PageUtils;
 import vip.hyzt.common.utils.StringUtils;
 import vip.hyzt.common.utils.sql.SqlUtil;
 import vip.hyzt.core.domain.LoginUser;
@@ -46,14 +47,7 @@ public class BaseController {
      * 设置请求分页数据
      */
     protected void startPage() {
-        PageDomain pageDomain = TableSupport.buildPageRequest();
-        Integer pageNum = pageDomain.getPageNum();
-        Integer pageSize = pageDomain.getPageSize();
-        if (StringUtils.isNotNull(pageNum) && StringUtils.isNotNull(pageSize)) {
-            String orderBy = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());
-            Boolean reasonable = pageDomain.getReasonable();
-            PageHelper.startPage(pageNum, pageSize, orderBy).setReasonable(reasonable);
-        }
+        PageUtils.startPage();
     }
 
     /**

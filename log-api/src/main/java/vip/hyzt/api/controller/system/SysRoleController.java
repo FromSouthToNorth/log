@@ -101,6 +101,8 @@ public class SysRoleController extends BaseController {
     @PutMapping
     public Result edit(@Validated @RequestBody SysRole role) {
         roleService.checkRoleAllowed(role);
+        String userId = SecurityService.getUserId();
+        roleService.checkRoleDataScope(role.getRoleId(), userId);
         if (UserConstants.NOT_UNIQUE.equals(roleService.checkRoleNameUnique(role))) {
             return Result.error("修改角色'" + role.getRoleName() + "'失败，角色名称已存在");
         }
@@ -130,6 +132,8 @@ public class SysRoleController extends BaseController {
     @PutMapping("/dataScope")
     public Result dataScope(@RequestBody SysRole role) {
         roleService.checkRoleAllowed(role);
+        String userId = SecurityService.getUserId();
+        roleService.checkRoleDataScope(role.getRoleId(), userId);
         return toAjax(roleService.authDataScope(role));
     }
 
@@ -141,6 +145,7 @@ public class SysRoleController extends BaseController {
     @PutMapping("/changeStatus")
     public Result changeStatus(@RequestBody SysRole role) {
         roleService.checkRoleAllowed(role);
+        roleService.checkRoleDataScope(role.getRoleId(), SecurityService.getUserId());
         role.setUpdateBy(getUsername());
         return toAjax(roleService.updateRoleStatus(role));
     }
@@ -213,6 +218,7 @@ public class SysRoleController extends BaseController {
     @Log(title = "角色管理", businessType = BusinessType.GRANT)
     @PutMapping("/authUser/selectAll")
     public Result selectAuthUserAll(String roleId, String[] userIds) {
+        roleService.checkRoleDataScope(roleId, SecurityService.getUserId());
         return toAjax(roleService.insertAuthUsers(roleId, userIds));
     }
 

@@ -13,6 +13,7 @@ import vip.hyzt.common.exception.user.CaptchaException;
 import vip.hyzt.common.exception.user.CaptchaExpireException;
 import vip.hyzt.common.exception.user.UserPasswordNotMatchException;
 import vip.hyzt.common.utils.MessageUtils;
+import vip.hyzt.common.utils.StringUtils;
 import vip.hyzt.core.domain.LoginUser;
 import vip.hyzt.core.manager.AsyncManager;
 import vip.hyzt.core.manager.factory.AsyncFactory;
@@ -67,7 +68,7 @@ public class SysLoginService {
      * Verification code
      */
     private void validateCaptcha(String username, String code, String uuid) {
-        String verifyKey = Constants.CAPTCHA_CODE_KEY + uuid;
+        String verifyKey = Constants.CAPTCHA_CODE_KEY + StringUtils.nvl(uuid, "");
         String captcha = redisCache.getCacheObject(verifyKey);
         redisCache.deleteObject(verifyKey);
         if (ObjectUtils.isEmpty(captcha)) {

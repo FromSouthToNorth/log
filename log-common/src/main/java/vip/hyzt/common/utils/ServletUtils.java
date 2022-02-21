@@ -19,10 +19,6 @@ import java.io.IOException;
  */
 public abstract class ServletUtils {
 
-    private final static String CONTENT_TYPE = "application/json";
-
-    private final static String CHARACTER_ENCODING = "utf-8";
-
     /**
      * Get String parameter
      * @param name Parameter name
@@ -84,9 +80,9 @@ public abstract class ServletUtils {
      */
     public static void renderString(HttpServletResponse response, String message) {
         try {
-            response.setStatus(HttpStatus.SUCCESS);
-            response.setContentType(CONTENT_TYPE);
-            response.setCharacterEncoding(CHARACTER_ENCODING);
+            response.setStatus(200);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("utf-8");
             response.getWriter().print(message);
         }
         catch (IOException e) {
@@ -102,4 +98,34 @@ public abstract class ServletUtils {
         return Convert.toBool(getRequest().getParameter(name));
     }
 
+    /**
+     * 获取Boolean参数
+     */
+    public static Boolean getParameterToBool(String name, Boolean defaultValue) {
+        return Convert.toBool(getRequest().getParameter(name), defaultValue);
+    }
+
+    /**
+     * 是否是Ajax异步请求
+     * @param request
+     */
+    public static boolean isAjaxRequest(HttpServletRequest request) {
+        String accept = request.getHeader("accept");
+        if (accept != null && accept.contains("application/json")) {
+            return true;
+        }
+
+        String xRequestedWith = request.getHeader("X-Requested-With");
+        if (xRequestedWith != null && xRequestedWith.contains("XMLHttpRequest")) {
+            return true;
+        }
+
+        String uri = request.getRequestURI();
+        if (StringUtils.inStringIgnoreCase(uri, ".json", ".xml")) {
+            return true;
+        }
+
+        String ajax = request.getParameter("__ajax");
+        return StringUtils.inStringIgnoreCase(ajax, "json", "xml");
+    }
 }

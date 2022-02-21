@@ -79,8 +79,9 @@ public interface ISysRoleService {
     /**
      * 校验角色是否有数据权限
      * @param roleId 角色id
+     * @param userId 用户id
      */
-    void checkRoleDataScope(String roleId);
+    void checkRoleDataScope(String roleId, String userId);
 
     /**
      * 通过角色ID查询角色使用数量
