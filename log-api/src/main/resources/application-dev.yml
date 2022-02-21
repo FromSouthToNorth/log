@@ -13,9 +13,9 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
       master:
-        url: jdbc:mysql://127.0.0.1:3306/log?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
-        username: root
-        password: 12345678
+        url: jdbc:mysql://rm-bp1c2u1tieiw2y03gro.mysql.rds.aliyuncs.com:3306/log?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+        username: hy1
+        password: Hy616513
       # 从库数据源
       slave:
         # 从数据源开关/默认关闭
