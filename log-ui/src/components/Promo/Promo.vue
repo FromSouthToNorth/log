@@ -2,8 +2,15 @@
   <section class="promo">
     <router-link class="container" tag="div" :to="'/article/' + topArticle.articleId">
       <div class="promo__row">
-        <a v-if="topArticle.articleCover" href="" class="promo__img" :style="{backgroundImage: `url(${topArticle.articleCover})`}"></a>
-        <svg-icon style="width: 100px; height: 100px" v-else :icon-class="'jet-brains'" />
+        <a v-if="topArticle.articleCover" href="" class="promo__img"
+           :style="{backgroundImage: `url(${topArticle.articleCover})`}"></a>
+        <!--        <svg-icon style="width: 100px; height: 100px" v-else :icon-class="'jet-brains'" />-->
+        <svg v-else class="promo__img" id="illustration" xmlns="http://www.w3.org/2000/svg"
+             preserveAspectRatio="xMidYMid meet"
+             aria-labelledby="svgTitle svgDesc" role="img">
+          <title id="svgTitle">A generative animation</title>
+          <desc id="svgDesc">Click on the image to redraw it!</desc>
+        </svg>
         <div class="promo__text">
           <h2>
             <a>
@@ -20,6 +27,8 @@
 </template>
 
 <script>
+import Illustration from "@/components/Promo/initSVG";
+
 export default {
   name: "Promo",
   props: {
@@ -29,7 +38,18 @@ export default {
   },
   data() {
     return {
-      promoImgStyleUrl: 'https://blog.jetbrains.com/wp-content/uploads/2021/12/Blog_Featured_image_1280x600-1.png'
+      promoImgStyleUrl: 'https://blog.jetbrains.com/wp-content/uploads/2021/12/Blog_Featured_image_1280x600-1.png',
+      illustration: undefined
+    }
+  },
+  mounted() {
+    if (!this.topArticle.articleCover) {
+      this.initSVG()
+    }
+  },
+  methods: {
+    initSVG() {
+      this.illustration = new Illustration("#illustration")
     }
   }
 }

@@ -10,9 +10,16 @@ export const constantRoutes = [
   },
   {
     path: '/tag',
-    component: (resolve) => require(["@/views/tag/Tag"], resolve),
+    component: (resolve) => require(["@/views/tag"], resolve),
     meta: {
       title: '标签'
+    }
+  },
+  {
+    path: '/aboutMe',
+    component: (resolve) => require(["@/views/aboutMe"], resolve),
+    meta: {
+      title: '关于我'
     }
   },
   {
