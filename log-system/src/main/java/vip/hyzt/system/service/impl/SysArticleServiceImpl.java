@@ -134,6 +134,16 @@ public class SysArticleServiceImpl implements ISysArticleService {
     }
 
     /**
+     * 关键字搜索文章
+     * @param keywords 关键字
+     * @return 搜索结果
+     */
+    @Override
+    public List<SysArticle> searchArticle(String keywords) {
+        return null;
+    }
+
+    /**
      * 新增文章标签信息
      * @param article 文章信息
      */
