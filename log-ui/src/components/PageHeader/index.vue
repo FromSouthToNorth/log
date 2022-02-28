@@ -70,33 +70,28 @@
                 </label>
               </div>
               <div class="quick-search__results" v-if="searchResults">
-                <div class="quick-search__results-header">
+                <div v-if="searchDataSource.length > 0" class="quick-search__results-header">
                   <div class="quick-search__results-title">
                     搜索结果
-                    <span class="quick-search__results-query">66</span>»
+                    <span class="quick-search__results-query">{{ keywords }}</span>»
                   </div>
                 </div>
-                <div>
+                <div v-if="searchDataSource.length > 0">
                   <ul class="search-results">
-                    <a href="" class="hy-link" :key="index" v-for="index in 8">
+                    <router-link tag="a" :to="'/article/' + data.articleId" href="" class="hy-link" :key="data.articleId" v-for="data in searchDataSource">
                       <li class="hy-link-item">
                         <span class="_hy-list-item__content">
                           <div class="quick-search__item">
-                            <h2 class="quick-search__title">Monthly and yearly plans with JetBrains Toolbox</h2>
-                            <div class="quick-search__snippet">
-                              incl. VAT US $12.00. Get quote. Buy. Iceberg. per user,. per month. US $44.90. incl. VAT US $53.
-                              <em>88</em>
-                              . Get quote. Buy. CodeMR. per user,. per month. US $24.90. incl. VAT US $29.
-                              <em>88</em>
-                              . Get quote. Buy
+                            <h2 class="quick-search__title">{{ data.articleTitle }}</h2>
+                            <div class="quick-search__snippet" v-html="data.articleContent">
                             </div>
                           </div>
                         </span>
                       </li>
-                    </a>
+                    </router-link>
                   </ul>
                 </div>
-                <h3 class="quick-search__no-results" data-test="no-results">我们很抱歉！我们找不到结果 «2232»</h3>
+                <h3 v-if="searchDataSource.length === 0" class="quick-search__no-results" data-test="no-results">我们很抱歉！我们找不到结果 «{{ keywords }}»</h3>
               </div>
             </div>
           </div>
@@ -111,6 +106,7 @@
 
 <script>
 import {gsap, Linear, Power2, TweenMax} from 'gsap'
+import {searchArticles} from "@/api/article";
 
 export default {
   name: 'PageHeader',
@@ -139,7 +135,8 @@ export default {
         {title: "关于我", path: "/aboutMe"}
       ],
       keywords: undefined,
-      searchResults: false
+      searchResults: false,
+      searchDataSource: []
     }
   },
   directives: {
@@ -152,10 +149,12 @@ export default {
     }
   },
   watch: {
-    searchValue(val) {
+    keywords(val) {
       this.searchResults = true
       this.searchResults = !!val
-      console.log(val);
+      if (val) {
+        this.searchArticle()
+      }
     }
   },
   mounted() {
@@ -177,6 +176,12 @@ export default {
     this.scrollingDestroy()
   },
   methods: {
+    /** 搜索文章 */
+    searchArticle() {
+      searchArticles(this.keywords).then(result => {
+        this.searchDataSource = result.data
+      })
+    },
     onBlur() {
       this.isSearchInput = !this.isSearchInput
       this.searchResults = !this.searchResults

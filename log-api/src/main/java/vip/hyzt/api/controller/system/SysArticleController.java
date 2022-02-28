@@ -166,4 +166,15 @@ public class SysArticleController extends BaseController {
         ajax.put("discoverMore", articleService.selectArticleDiscoverMore(article));
         return ajax;
     }
+
+    /**
+     * 搜索文章
+     */
+    @GetMapping(value = "/home/article/search/{keywords}")
+    public Result searchArticles(@PathVariable(value = "keywords", required = false) String keywords) {
+        Result ajax = Result.success();
+        List<SysArticle> articles = articleService.searchArticle(keywords);
+        ajax.put(Result.DATA_TAG, articles);
+        return ajax;
+    }
 }

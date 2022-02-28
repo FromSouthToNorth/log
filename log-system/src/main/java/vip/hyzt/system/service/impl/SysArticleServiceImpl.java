@@ -140,7 +140,24 @@ public class SysArticleServiceImpl implements ISysArticleService {
      */
     @Override
     public List<SysArticle> searchArticle(String keywords) {
-        return null;
+        List<SysArticle> articles = articleMapper.searchArticle(keywords);
+        for (SysArticle article : articles) {
+            String newS;
+            int index = article.getArticleContent().indexOf(keywords);
+            if (index != -1) {
+                // 获取关键词前面的文字
+                int preIndex = index > 25 ? index - 25 : 0;
+                String preText = article.getArticleContent().substring(preIndex, index);
+                // 获取关键词到后面的文字
+                int last = index + keywords.length();
+                int postLength = article.getArticleContent().length() - last;
+                int postIndex = postLength > 175 ? last + 175 : last + postLength;
+                String postText = article.getArticleContent().substring(index, postIndex);
+                newS = (preText + postText).replaceAll(keywords, "<em>" + keywords + "</em>");
+                article.setArticleContent(newS);
+            }
+        }
+        return articles;
     }
 
     /**

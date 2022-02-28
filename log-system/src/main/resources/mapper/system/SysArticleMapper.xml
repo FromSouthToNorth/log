@@ -215,15 +215,13 @@
     </select>
 
     <select id="searchArticle" resultMap="SysArticleResult" parameterType="String">
-        select article_id,
-               article_title,
-               remark,
-               article_content
+        select
+            article_id,
+            article_title,
+            article_content
         from sys_article
         where article_title like concat('%', #{keywords}, '%')
-           or remark like concat('%', #{keywords}, '%')
-           or concat('%', #{keywords}, '%')
-           or article_title like concat('%', #{keywords}, '%')
+           or article_content like concat('%', #{keywords}, '%')
     </select>
 
 </mapper>
