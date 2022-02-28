@@ -23,3 +23,11 @@ export function getArticleIngo(articleId) {
     method: 'get'
   })
 }
+
+/** 搜索文章 */
+export function searchArticles(keywords) {
+  return request({
+    url: '/home/article/search/' + keywords,
+    method: 'get'
+  })
+}
