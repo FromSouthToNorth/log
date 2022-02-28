@@ -63,11 +63,40 @@
                 <label class="_hy-input_1pdmso7_1 _hy-input_size_s_1pdmso7_80">
                   <div class="_hy-input__wrapper_1pdmso7_5">
                     <div class="_hy-input-field_ipdmso7_53">
-                      <input v-focus="focusState" @oninvalid="searchInvalid" @blur="isSearchInput = !isSearchInput"
-                             placeholder="Ctrl+K for advanced search" type="text" class="_hy-input__inner_1pdmso7_92">
+                      <input v-model="keywords" v-focus="focusState" @oninvalid="searchInvalid" @blur="onBlur"
+                             placeholder="搜索关键字" type="text" class="_hy-input__inner_1pdmso7_92">
                     </div>
                   </div>
                 </label>
+              </div>
+              <div class="quick-search__results" v-if="searchResults">
+                <div class="quick-search__results-header">
+                  <div class="quick-search__results-title">
+                    搜索结果
+                    <span class="quick-search__results-query">66</span>»
+                  </div>
+                </div>
+                <div>
+                  <ul class="search-results">
+                    <a href="" class="hy-link" :key="index" v-for="index in 8">
+                      <li class="hy-link-item">
+                        <span class="_hy-list-item__content">
+                          <div class="quick-search__item">
+                            <h2 class="quick-search__title">Monthly and yearly plans with JetBrains Toolbox</h2>
+                            <div class="quick-search__snippet">
+                              incl. VAT US $12.00. Get quote. Buy. Iceberg. per user,. per month. US $44.90. incl. VAT US $53.
+                              <em>88</em>
+                              . Get quote. Buy. CodeMR. per user,. per month. US $24.90. incl. VAT US $29.
+                              <em>88</em>
+                              . Get quote. Buy
+                            </div>
+                          </div>
+                        </span>
+                      </li>
+                    </a>
+                  </ul>
+                </div>
+                <h3 class="quick-search__no-results" data-test="no-results">我们很抱歉！我们找不到结果 «2232»</h3>
               </div>
             </div>
           </div>
@@ -108,7 +137,9 @@ export default {
         {title: "分类", path: "/type"},
         {title: "归档", path: "/archive"},
         {title: "关于我", path: "/aboutMe"}
-      ]
+      ],
+      keywords: undefined,
+      searchResults: false
     }
   },
   directives: {
@@ -118,6 +149,13 @@ export default {
           el.focus()
         }
       }
+    }
+  },
+  watch: {
+    searchValue(val) {
+      this.searchResults = true
+      this.searchResults = !!val
+      console.log(val);
     }
   },
   mounted() {
@@ -139,6 +177,11 @@ export default {
     this.scrollingDestroy()
   },
   methods: {
+    onBlur() {
+      this.isSearchInput = !this.isSearchInput
+      this.searchResults = !this.searchResults
+      this.keywords = undefined
+    },
     /** 移除滚动监听事件 */
     scrollingDestroy() {
       document.removeEventListener("scroll", this.scrolling)

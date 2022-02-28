@@ -70,4 +70,11 @@ public interface ISysArticleService {
      * @return 发现更多的文章
      */
     List<SysArticle> selectArticleDiscoverMore(SysArticle article);
+
+    /**
+     * 关键字搜索文章
+     * @param keywords 关键字
+     * @return 搜索结果
+     */
+    List<SysArticle> searchArticle(String keywords);
 }

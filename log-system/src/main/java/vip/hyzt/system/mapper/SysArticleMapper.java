@@ -72,4 +72,11 @@ public interface SysArticleMapper {
      * @return 发现更多的文章
      */
     List<SysArticle> selectArticleDiscoverMore(@Param("articleId") String articleId , @Param("typeId") String typeId, @Param("tagIds") String[] tagIds);
+
+    /**
+     * 关键字搜索文章
+     * @param keywords 关键字
+     * @return 搜索结果
+     */
+    List<SysArticle> searchArticle(String keywords);
 }

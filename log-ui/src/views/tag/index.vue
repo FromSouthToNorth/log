@@ -111,7 +111,7 @@
                                     </svg>
                                   </label>
                                 </span>
-                                  <span class="_hy-list-item__content_fhkgz_10">JAVA</span>
+                                  <span class="_hy-list-item__content">JAVA</span>
                                 </label>
                               </div>
                             </div>
