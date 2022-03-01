@@ -3,7 +3,7 @@
     <div  class="news-content">
       <div class="bg-beam hy-section_bg_dark hy-section">
         <div class="hy-container hy-offset-top-96">
-          <div class="hy-h2 hy-h2_theme_dark hy-offset-top-96">所以文章</div>
+          <div class="hy-h2 hy-h2_theme_dark hy-offset-top-96">所有文章</div>
           <div class="hy-offset-top-96"  v-for="(value, key) in articleArchiveMap" :key="key">
             <h2 class="hy-h2 hy-h2_theme_dark">
               {{ key }}
