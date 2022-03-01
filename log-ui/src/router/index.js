@@ -7,6 +7,9 @@ export const constantRoutes = [
   {
     path: '/',
     component: (resolve) => require(["@/views/Home"], resolve),
+    meta: {
+      title: '首页'
+    }
   },
   {
     path: '/tag',
@@ -20,6 +23,13 @@ export const constantRoutes = [
     component: (resolve) => require(["@/views/aboutMe"], resolve),
     meta: {
       title: '关于我'
+    }
+  },
+  {
+    path: '/archive',
+    component: (resolve) => require(["@/views/archive"], resolve),
+    meta: {
+      title: '归档'
     }
   },
   {

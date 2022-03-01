@@ -13,7 +13,10 @@ import vip.hyzt.system.mapper.SysArticleConnectTagMapper;
 import vip.hyzt.system.service.ISysArticleService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 文章业务服务实现
@@ -158,6 +161,21 @@ public class SysArticleServiceImpl implements ISysArticleService {
             }
         }
         return articles;
+    }
+
+    /**
+     * 查询文章归档
+     * @return 返回文章的归档
+     */
+    @Override
+    public Map<String, List<SysArticle>> articleArchive() {
+        List<String> years = articleMapper.selectArticleCreateYear();
+        Map<String, List<SysArticle>> articleMap = new ConcurrentHashMap<>();
+        for (String year : years) {
+            List<SysArticle> articles = articleMapper.selectArticleByYear(year);
+            articleMap.put(year, articles);
+        }
+        return articleMap;
     }
 
     /**

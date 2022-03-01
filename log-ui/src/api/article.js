@@ -31,3 +31,11 @@ export function searchArticles(keywords) {
     method: 'get'
   })
 }
+
+/** 文章归档 */
+export function articleArchive() {
+  return request({
+    url: '/home/article/archive',
+    method: 'get'
+  })
+}

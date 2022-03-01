@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
+import store from "@/store";
 import Photoswipe from "vue-pswipe";
 import '@/assets/styles/reset.scss';
 import '@/assets/styles/index.scss';
@@ -20,5 +21,6 @@ Vue.use(Photoswipe);
 new Vue({
   el: '#app',
   router,
+  store,
   render: h => h(App),
 })
