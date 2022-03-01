@@ -290,6 +290,27 @@ hr {
   border: 1px solid;
 }
 
+._hy-input__wrapper_1pdmso7_5:hover {
+  border-color: hsla(90, 100%, 0%, .6);
+}
+
+.ht-icon_size_m, .ht-icon_size_s {
+  width: 24px;
+  height: 24px;
+}
+
+._hy-input_size_s ._hy-input__icon_right {
+  padding-left: 8px;
+}
+
+._hy-input_theme_dark._hy-input__icon {
+  fill: hsla(90, 100%, 0%, .3);
+}
+
+._hy-input_theme_dark._hy-input__icon:hover {
+  fill: hsla(90, 100%, 0%, .6);
+}
+
 ._hy-input_theme_dark_1pdmso7_24, ._hy-input__wrapper_1pdmso7_5 {
   border-color: hsla(90, 100%, 0%, .3);
   background-color: #fff;

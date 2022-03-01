@@ -1,6 +1,6 @@
 <template>
-  <div id="app" class="page">
-    <page-header/>
+  <div id="app" class="page" @click="headerClick">
+    <page-header ref="pageHeader"/>
     <router-view/>
     <page-footer/>
   </div>
@@ -16,6 +16,11 @@ export default {
   components: {
     PageFooter,
     PageHeader
+  },
+  methods: {
+    headerClick(event) {
+      this.$refs.pageHeader.headerClick(event);
+    }
   }
 }
 </script>

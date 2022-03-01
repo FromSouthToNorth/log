@@ -3,8 +3,10 @@
     <div class="language-suggest-bar"></div>
     <header ref="header" class="menu-main header menu-main__mobile">
       <div :class="hamburger ? 'menu-main__container-mobile _active' : ''" class="hy-container menu-main__container">
-        <div :class="hamburger ? '_mobile-open' : ''" class="hy-row hy-row_size_0 hy-row_wide hy-row_wrap hy-row_align-items_center menu-main__items-wrapper">
-          <div v-show="!hamburger" :class="screenWidth >= 1000 ? ['hy-col-auto-fill', 'hy-col_align-self_stretch'] : 'hy-col'">
+        <div :class="hamburger ? '_mobile-open' : ''"
+             class="hy-row hy-row_size_0 hy-row_wide hy-row_wrap hy-row_align-items_center menu-main__items-wrapper">
+          <div v-show="!hamburger"
+               :class="screenWidth >= 1000 ? ['hy-col-auto-fill', 'hy-col_align-self_stretch'] : 'hy-col'">
             <a href="/" class="menu-main__logo-link menu-main__logo-link-mobile">
               <svg ref="logoSvg" class="logoSvg" xmlns="http://www.w3.org/2000/svg"
                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 600 600">
@@ -32,20 +34,25 @@
             v-for="(item, index) in router"
             v-if="screenWidth >= 1000 || menuMainItem"
             :class="hamburger ? 'menu-main__item-mobile' : ''"
-            class="hy-text-1 ht-text-1_theme_dark menu-main__item">{{ item.title }}</div>
-          <div v-if="!hamburger" class="hy-col-auto-fill hy-h4 hy-h4-theme_dark menu-main__action-link menu-main__logo-link-mobile">
+            class="hy-text-1 ht-text-1_theme_dark menu-main__item">{{ item.title }}
+          </div>
+          <div v-if="!hamburger"
+               class="hy-col-auto-fill hy-h4 hy-h4-theme_dark menu-main__action-link menu-main__logo-link-mobile">
             白映
           </div>
-          <div @click="hamburgerClick" v-if="screenWidth <= 1000 && !hamburger" class="hy-col-inline menu-main__action-icon menu-main__action-icon-mobile _hamburger">
-            <svg viewBox="0 0 24 24" class="hy-icon hy-icon_size_m"><path d="M4 5h16v2H4zm0 6h16v2H4zm0 6h16v2H4z"></path></svg>
+          <div @click="hamburgerClick" v-if="screenWidth <= 1000 && !hamburger"
+               class="hy-col-inline menu-main__action-icon menu-main__action-icon-mobile _hamburger">
+            <svg viewBox="0 0 24 24" class="hy-icon hy-icon_size_m">
+              <path d="M4 5h16v2H4zm0 6h16v2H4zm0 6h16v2H4z"></path>
+            </svg>
           </div>
         </div>
       </div>
       <div v-if="hamburger" class="hy-col-inline menu-main__action-icon menu-main__action-icon-mobile _close">
-        <svg-icon class-name="_mobile-close" @click="hamburgerClick" icon-class="close" />
+        <svg-icon class-name="_mobile-close" @click="hamburgerClick" icon-class="close"/>
       </div>
     </header>
-    <div class="menu-second" ref="menuSecond" :style="searchFixed ? fixed : ''">
+    <div class="menu-second" :style="searchFixed ? fixed : ''">
       <div class="hy-container">
         <div class="menu-second-desktop menu-second-mobile hy-row hy-row_size_0 hy-row_align_center">
           <div class="hy-col-auto-fill menu-second-mobile__trigger" v-if="screenWidth >= 1000">
@@ -57,29 +64,36 @@
             </span>
             </a>
           </div>
-          <div class="menu-search" v-show="isSearchInput">
-            <div class="quick-search">
-              <div class="search__input">
-                <label class="_hy-input_1pdmso7_1 _hy-input_size_s_1pdmso7_80">
-                  <div class="_hy-input__wrapper_1pdmso7_5">
-                    <div class="_hy-input-field_ipdmso7_53">
-                      <input v-model="keywords" v-focus="focusState" @oninvalid="searchInvalid" @blur="onBlur"
-                             placeholder="搜索关键字" type="text" class="_hy-input__inner_1pdmso7_92">
+          <div ref="menuSecond">
+            <div class="menu-search" v-show="isSearchInput">
+              <div class="quick-search">
+                <div class="search__input">
+                  <label class="_hy-input_1pdmso7_1 _hy-input_size_s_1pdmso7_80">
+                    <div class="_hy-input__wrapper_1pdmso7_5">
+                      <div class="_hy-input-field_ipdmso7_53">
+                        <input v-model="keywords" v-focus="focusState" @invalid="searchInvalid"
+                               placeholder="搜索关键字" type="text" class="_hy-input__inner_1pdmso7_92">
+                        <svg @click="clear" v-show="clearIcon" viewBox="0 0 24 24"
+                             class="hy-icon _hy-input_theme_dark hy-icon_size_s _hy-input__icon _hy-input__icon_right _hy-input__icon_action">
+                          <path
+                            d="M21 12a9 9 0 1 1-9-9 9 9 0 0 1 9 9zm-4.235-3.351l-1.414-1.414L12 10.585 8.635 7.222 7.221 8.635 10.586 12l-3.257 3.257 1.414 1.414L12 13.414l3.288 3.289 1.415-1.415L13.414 12z"></path>
+                        </svg>
+                      </div>
+                    </div>
+                  </label>
+                </div>
+                <div class="quick-search__results" v-if="searchResults">
+                  <div v-if="searchDataSource.length > 0" class="quick-search__results-header">
+                    <div class="quick-search__results-title">
+                      搜索结果
+                      <span class="quick-search__results-query">{{ keywords }}</span>»
                     </div>
                   </div>
-                </label>
-              </div>
-              <div class="quick-search__results" v-if="searchResults">
-                <div v-if="searchDataSource.length > 0" class="quick-search__results-header">
-                  <div class="quick-search__results-title">
-                    搜索结果
-                    <span class="quick-search__results-query">{{ keywords }}</span>»
-                  </div>
-                </div>
-                <div v-if="searchDataSource.length > 0">
-                  <ul class="search-results">
-                    <router-link tag="a" :to="'/article/' + data.articleId" href="" class="hy-link" :key="data.articleId" v-for="data in searchDataSource">
-                      <li class="hy-link-item">
+                  <div v-if="searchDataSource.length > 0">
+                    <ul class="search-results">
+                      <a @click="toRouterArticle(data.articleId)" class="hy-link"
+                                   :key="data.articleId" v-for="data in searchDataSource">
+                        <li class="hy-link-item">
                         <span class="_hy-list-item__content">
                           <div class="quick-search__item">
                             <h2 class="quick-search__title">{{ data.articleTitle }}</h2>
@@ -87,17 +101,19 @@
                             </div>
                           </div>
                         </span>
-                      </li>
-                    </router-link>
-                  </ul>
+                        </li>
+                      </a>
+                    </ul>
+                  </div>
+                  <h3 v-if="searchDataSource.length === 0" class="quick-search__no-results" data-test="no-results">
+                    我们很抱歉！我们找不到结果 «{{ keywords }}»</h3>
                 </div>
-                <h3 v-if="searchDataSource.length === 0" class="quick-search__no-results" data-test="no-results">我们很抱歉！我们找不到结果 «{{ keywords }}»</h3>
               </div>
             </div>
+            <a @click="searchInput" class="hy-col-inline menu-main__action-icon" v-show="!isSearchInput">
+              <svg-icon icon-class="search"/>
+            </a>
           </div>
-          <a @click="searchInput" class="hy-col-inline menu-main__action-icon" v-show="!isSearchInput">
-            <svg-icon icon-class="search"/>
-          </a>
         </div>
       </div>
     </div>
@@ -136,7 +152,8 @@ export default {
       ],
       keywords: undefined,
       searchResults: false,
-      searchDataSource: []
+      searchDataSource: [],
+      clearIcon: false
     }
   },
   directives: {
@@ -152,6 +169,7 @@ export default {
     keywords(val) {
       this.searchResults = true
       this.searchResults = !!val
+      this.clearIcon = !!val
       if (val) {
         this.searchArticle()
       }
@@ -176,6 +194,29 @@ export default {
     this.scrollingDestroy()
   },
   methods: {
+    toRouterArticle(id) {
+      let url = '/article/' + id
+      console.log(url);
+      this.$router.push(url)
+      this.clear()
+    },
+    headerClick(event) {
+      let isShowSearch = this.$refs.menuSecond !== event.target && this.$refs.menuSecond.contains(event.target)
+      if (!isShowSearch) {
+        this.clear()
+      }
+    },
+    /** 清理搜索输入框 */
+    clear() {
+      this.keywords = undefined
+      this.isSearchInput = false
+      this.searchResults = false
+      this.clearIcon = false
+    },
+    searchMouseleave() {
+      this.isSearchInput = true
+      this.searchResults = true
+    },
     /** 搜索文章 */
     searchArticle() {
       searchArticles(this.keywords).then(result => {
@@ -209,6 +250,7 @@ export default {
     },
     /* 输入框 */
     searchInput() {
+      console.log("输入框");
       this.isSearchInput = !this.isSearchInput
       this.focusClick()
     },
