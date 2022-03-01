@@ -12,7 +12,7 @@
         <div class="hy-footer__legal hy-offset-top-24 hy-offset-top-sm-12">
           <div class="hy-row hy-row_size_s hy-text-3 hy-text-3_theme_dark">
             <a href="/" class="hy-link_hardness_banner hy-link_theme_dark hy-col-inline">
-              <svg-icon icon-class="main" />
+              <svg-icon icon-class="logojb" />
               蒲公英和炊烟都在等你
             </a>
           </div>
@@ -80,8 +80,7 @@ export default {
       ],
       iconButton: [
         {link: 'https://github.com/FromSouthToNorth', iconClass: 'github-fill', title: 'github'},
-        {link: '', iconClass: 'wechat-fill', title: 'wechat'},
-        {link: '', iconClass: 'qq', title: 'qq'},
+        {link: 'https://leetcode-cn.com/u/HI1hlUOo7Q/', iconClass: 'leetcode', title: 'leetcode'},
       ]
     }
   }

@@ -216,12 +216,37 @@
 
     <select id="searchArticle" resultMap="SysArticleResult" parameterType="String">
         select
-            article_id,
-            article_title,
-            article_content
-        from sys_article
-        where article_title like concat('%', #{keywords}, '%')
-           or article_content like concat('%', #{keywords}, '%')
+               article_id,
+               article_title,
+               article_content
+        from sys_article sa
+        where sa.del_flag = 0
+            and sa.status = 1
+            and sa.article_title like concat('%', #{keywords}, '%')
+            or sa.article_content like concat('%', #{keywords}, '%')
+    </select>
+
+    <select id="selectArticleCreateYear" resultType="java.lang.String">
+        select
+               date_format(sa.create_time, '%Y') as year
+        from sys_article sa
+        where sa.status = 1
+          and del_flag = 0
+        group by year
+        order by year desc
+    </select>
+
+    <select id="selectArticleByYear" resultMap="SysArticleResult">
+        select
+            sa.article_id,
+            sa.article_title,
+            sa.remark,
+            sa.create_time
+        from sys_article sa
+        where sa.status = 1
+          and del_flag = 0
+          and date_format(sa.create_time, '%Y') = #{year}
+        order by sa.create_time desc
     </select>
 
 </mapper>

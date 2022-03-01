@@ -22,6 +22,7 @@ import vip.hyzt.system.service.ISysArticleTypeService;
 import vip.hyzt.system.service.impl.SysUploadService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 文章业务接口
@@ -177,4 +178,16 @@ public class SysArticleController extends BaseController {
         ajax.put(Result.DATA_TAG, articles);
         return ajax;
     }
+
+    /**
+     * 文章归档
+     */
+    @GetMapping("/home/article/archive")
+    public Result articleArchive() {
+        Result ajax = Result.success();
+        Map<String, List<SysArticle>> archiveMap = articleService.articleArchive();
+        ajax.put(Result.DATA_TAG, archiveMap);
+        return ajax;
+    }
+
 }

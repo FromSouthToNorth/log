@@ -79,4 +79,17 @@ public interface SysArticleMapper {
      * @return 搜索结果
      */
     List<SysArticle> searchArticle(String keywords);
+
+    /**
+     * 查询文章发表的年份
+     * @return 文章发表的年份列表
+     */
+    List<String> selectArticleCreateYear();
+
+    /**
+     * 根据发布年份查询文章
+     * @param year 年份
+     * @return 当前查询年份的发布文章
+     */
+    List<SysArticle> selectArticleByYear(String year);
 }

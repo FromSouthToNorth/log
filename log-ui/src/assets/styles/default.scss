@@ -376,6 +376,29 @@ img {
   border-bottom-color: currentColor;
 }
 
+.hy-link_external {
+  padding-right: 16px;
+  background-image: url("https://202007002.oss-cn-chengdu.aliyuncs.com/images/charset.svg?versionId=CAEQTRiBgIDXmL2R.hciIDI5YTJhMDA2ZWMyMDQwYzg5Mjg2ODc3YmU3MjA2YmYy");
+  background-repeat: no-repeat;
+}
+
+.hy-link_external, .hy-text-2 .hy-link_external {
+  background-position: 100% calc(100% - 1px);
+  background-size: 14px 14px;
+}
+
+.hy-text-2 .hy-link_external {
+  padding-right: 14px;
+}
+
+.hy-link_theme_dark.hy-link_hardness_primary, [class*=_theme_dark] .hy-link:not([class*=_hardness]) {
+  --hy-link-color: #4ca6ff;
+}
+
+.hy-link_external.hy-link_theme_dark.hy-link_hardness_primary, [class*=_theme_dark] .hy-link_external:not([class*=_hardness]) {
+  background-image: url("https://202007002.oss-cn-chengdu.aliyuncs.com/images/charset.svg?versionId=CAEQTRiBgIDXmL2R.hciIDI5YTJhMDA2ZWMyMDQwYzg5Mjg2ODc3YmU3MjA2YmYy");
+}
+
 .hy-footer__main {
   display: -webkit-box;
   display: -ms-flexbox;

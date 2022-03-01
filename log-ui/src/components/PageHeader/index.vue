@@ -59,7 +59,7 @@
             <a class="menu-second-title-box" href="/">
             <span class="menu-second-title-box__logo _fixed hy-logo _hy-text-20">
               <h3 class="_hy-text-20">
-                白映
+                {{ title }}
               </h3>
             </span>
             </a>
@@ -123,9 +123,15 @@
 <script>
 import {gsap, Linear, Power2, TweenMax} from 'gsap'
 import {searchArticles} from "@/api/article";
+import {mapState} from "vuex";
 
 export default {
   name: 'PageHeader',
+  computed: {
+    ...mapState({
+      title: state => state.settings.title
+    })
+  },
   data() {
     return {
       screenWidth: document.body.clientWidth,

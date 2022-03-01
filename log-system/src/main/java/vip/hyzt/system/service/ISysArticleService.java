@@ -3,6 +3,7 @@ package vip.hyzt.system.service;
 import vip.hyzt.system.domain.SysArticle;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 文章业务服务接口
@@ -77,4 +78,10 @@ public interface ISysArticleService {
      * @return 搜索结果
      */
     List<SysArticle> searchArticle(String keywords);
+
+    /**
+     * 查询文章归档
+     * @return 返回文章的归档
+     */
+    Map<String, List<SysArticle>> articleArchive();
 }
