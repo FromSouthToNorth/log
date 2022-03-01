@@ -1,15 +1,16 @@
 <template>
   <div class="page__content">
-    <div  class="news-content">
+    <div class="news-content">
       <div class="bg-beam hy-section_bg_dark hy-section">
         <div class="hy-container hy-offset-top-96">
           <div class="hy-h2 hy-h2_theme_dark hy-offset-top-96">所有文章</div>
-          <div class="hy-offset-top-96"  v-for="(value, key) in articleArchiveMap" :key="key">
+          <div class="hy-offset-top-96" v-for="(value, key) in articleArchiveMap" :key="key">
             <h2 class="hy-h2 hy-h2_theme_dark">
               {{ key }}
             </h2>
             <div class="hy-row hy-row_size_1">
-              <router-link :to="'/article/' + article.articleId" :key="article.articleId" v-for="article in value" class="_hy-card_ru6f9_1 _hy-card_theme_light_ru6f9_22 hy-offset-top-48 hy-col-4">
+              <router-link :to="'/article/' + article.articleId" :key="article.articleId" v-for="article in value"
+                           class="_hy-card_ru6f9_1 _hy-card_theme_light_ru6f9_22 hy-offset-top-48 hy-col-4 hy-col-md-6 hy-col-sm-12">
                 <div class="_hy-card__section_ru6f9_133">
                   <p class="hy-text-2_theme_dark hy-text-2">
                     {{ parseTime(article.createTime, '{y}年{m}月{d}日') }}
@@ -63,6 +64,7 @@ export default {
   z-index: 0;
   overflow: hidden;
 }
+
 .bg-beam:after {
   content: "";
   position: absolute;
