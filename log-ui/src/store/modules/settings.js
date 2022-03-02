@@ -1,5 +1,6 @@
 const state = {
   title: '',
+  preloaderHidden: false
 }
 
 const mutations = {
@@ -9,6 +10,10 @@ const mutations = {
 const actions = {
   setTitle({ commit }, title) {
     state.title = title
+  },
+
+  setPreloaderHidden({ commit }, preloaderHidden) {
+    state.preloaderHidden = preloaderHidden
   }
 }
 

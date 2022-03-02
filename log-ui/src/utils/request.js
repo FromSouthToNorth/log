@@ -2,6 +2,7 @@ import axios from "axios";
 import cache from "@/plugins/cache";
 import {getToken} from "@/utils/auth";
 import errorCode from "@/utils/errorCode";
+import store from "@/store";
 
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 const service = axios.create({
@@ -74,7 +75,7 @@ service.interceptors.response.use(res => {
       return Promise.reject('error')
     }
      else {
-      return res.data
+       return res.data
     }
   },
   error => {

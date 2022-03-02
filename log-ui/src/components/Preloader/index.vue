@@ -13,17 +13,17 @@ export default {
     }
   },
   mounted() {
-    this.preloader()
+    // this.preloader()
   },
   beforeDestroy() {
-    clearTimeout(this.timeout);
+    // clearTimeout(this.timeout);
   },
   methods: {
-    preloader() {
-     this.timeout = setTimeout(function () {
-        document.querySelector('#preloader').classList.add('loaded')
-      }, 60)
-    },
+    // preloader() {
+    //  this.timeout = setTimeout(function () {
+    //     document.querySelector('#preloader').classList.add('loaded')
+    //   }, 60)
+    // },
   }
 }
 </script>
@@ -43,6 +43,7 @@ export default {
   width: 100%;
   height: 100vh;
   background-color: #ffffff;
+  filter: blur(2px);
 }
 
 #loader {

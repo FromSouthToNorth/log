@@ -1,7 +1,9 @@
 <template>
   <div id="app" class="page" @click="headerClick">
     <page-header ref="pageHeader"/>
-    <router-view/>
+    <main>
+      <router-view/>
+    </main>
     <page-footer/>
   </div>
 </template>
@@ -25,5 +27,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+main {
+  min-height: calc(100vh - 444px);
+}
 </style>

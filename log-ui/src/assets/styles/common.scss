@@ -430,10 +430,6 @@ hr {
   --hy-col-count: 12;
 }
 
-.hy-text-2_hardness_hard {
-  color: #fff;
-}
-
 .hy-section.hy-section_bg_dark {
   background-color: #27282c;
   background-color: var(--hy-color-dark, #27282c);
@@ -911,6 +907,14 @@ hr {
 
 .hy-text-2_theme_dark {
   color: hsla(0, 0%, 100%, .6);
+}
+
+.hy-text-2_hardness_hard {
+  color: #fff;
+}
+
+.hy-text-2_hardness_pale {
+  color: rgba(39,40,44,.4);
 }
 
 .filter {

@@ -79,4 +79,19 @@ export default {
   background: url("https://202007002.oss-cn-chengdu.aliyuncs.com/images/archive.svg?versionId=CAEQTRiBgMDYye.Q.hciIGZhYzUzNGY3ZGI5MTQ2NTg4M2Y4MWFmYzY3OWU4OWRi") no-repeat 0 0;
   background-size: 100% auto;
 }
+
+@media screen and (max-width: 1276px) {
+  .bg-beam:after {
+    margin-left: 400px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .bg-beam:after {
+    margin-left: 28%;
+    top: -257px;
+    width: 400px;
+    height: 594px;
+  }
+}
 </style>
