@@ -12,8 +12,14 @@
 
 import PageHeader from "@/components/PageHeader";
 import PageFooter from "@/components/PageFooter";
+import { mapState } from "vuex";
 
 export default {
+  computed: {
+    ...mapState({
+      preloaderHidden: state => state.settings.preloaderHidden
+    })
+  },
   name: 'App',
   components: {
     PageFooter,
@@ -29,6 +35,6 @@ export default {
 
 <style scoped>
 main {
-  min-height: calc(100vh - 444px);
+  height: 100vh;
 }
 </style>
