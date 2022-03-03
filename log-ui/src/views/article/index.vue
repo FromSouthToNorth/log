@@ -113,12 +113,9 @@ export default {
           },
           after() {
             own.scrolling()
+            own.constructorImages()
             const article = document.getElementById('article');
-            article.addEventListener("click", (event) => {
-              if (event.target.tagName === "IMG") {
-                Vditor.previewImage(event.target);
-              }
-            })
+
             if (window.innerWidth <= 768) {
               return
             }
@@ -131,6 +128,7 @@ export default {
           }
         })
     },
+    /** 目录渲染 */
     initOutline() {
       const headingElements = []
       Array.from(document.getElementById('article').children).forEach((item) => {
@@ -162,7 +160,27 @@ export default {
           }
         }
       })
-    }
+    },
+    /** 查看图片 */
+    constructorImages() {
+      const images = this.$refs.article.getElementsByTagName('img');
+      for (let i = 0; i < images.length; i++) {
+        images[i].addEventListener('click', e => {
+          this.previewImages(e.target.currentSrc, i)
+        })
+        this.images.push({src: images[i].src})
+      }
+    },
+    /** 点击图片全屏展示 */
+    previewImages(image, index) {
+      this.$Pswp.open({
+        items: this.images,
+        options: {
+          index: index,
+          bgOpacity: 0.9
+        }
+      })
+    },
   }
 }
 </script>
