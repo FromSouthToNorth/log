@@ -1,6 +1,6 @@
 const state = {
   title: '',
-  preloaderHidden: false
+  preloaderHidden: true
 }
 
 const mutations = {

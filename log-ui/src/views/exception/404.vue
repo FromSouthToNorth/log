@@ -1,5 +1,5 @@
 <template>
-  <section class="hy-section hy-section_bg_gray-light">
+  <section class="hy-section">
     <div class="hy-container">
       <div class="hy-row hy-row_size_m hy-offset-top-48">
         <div class="hy-col-6 hy-col-md-10 hy-col-sm-12 hy-offset-top-48">
