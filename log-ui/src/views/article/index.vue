@@ -1,12 +1,14 @@
 <template>
   <section class="article-section">
+    <div id="outline" :style="hiddenSidebar ? {display: 'none'} : {display: 'block'}">
+    </div>
     <aside class="sidebar" v-if="article" :class="hiddenSidebar ? 'hidden' : ''">
       <div class="sidebar__holder" ref="sidebarHolder">
         <img v-if="article.articleCover" class="sidebar__logo" :src="article.articleCover" :alt="article.articleTitle">
-        <svg-icon v-else class-name="card__logo card__logo--small sidebar__logo" style="width: 40px; height: 40px;" :icon-class="'idea_icon'" />
+        <svg-icon v-else class-name="card__logo card__logo--small sidebar__logo" style="width: 40px; height: 40px;"
+                  :icon-class="'idea_icon'"/>
         <span class="sidebar__title">{{ article.articleTitle }}</span>
-        <div class="tag-list" id="toc">
-        </div>
+
       </div>
     </aside>
     <section class="content" v-if="article">
@@ -18,10 +20,12 @@
              alt="user_avatar">
         <div class="post-info__text">
           <a>{{ article.user.realName }}</a>
-          <time class="publish-date" :datetime="parseTime(article.createTime, '{y}-{m}-{d}')">{{ parseTime(article.createTime, '{y}年{m}月{d}日') }}</time>
+          <time class="publish-date" :datetime="parseTime(article.createTime, '{y}-{m}-{d}')">
+            {{ parseTime(article.createTime, '{y}年{m}月{d}日') }}
+          </time>
         </div>
       </div>
-      <article id="article" ref="article" v-if="article" />
+      <article id="article" ref="article" v-if="article"/>
     </section>
     <div class="section light-gray-bg" v-if="discoverMore.length > 0">
       <div class="container">
@@ -29,8 +33,9 @@
           <h2>发现更多</h2>
         </div>
         <div class="row">
-          <router-link tag="a" :to="'/article/' + item.articleId"  class="col" :key="index" v-for="(item, index) in discoverMore">
-            <Card :data="item" />
+          <router-link tag="a" :to="'/article/' + item.articleId" class="col" :key="index"
+                       v-for="(item, index) in discoverMore">
+            <Card :data="item"/>
           </router-link>
         </div>
       </div>
@@ -94,11 +99,11 @@ export default {
         this.discoverMore = result.discoverMore
         this.$nextTick(() => {
           this.markdownPreview(this.article.articleContent)
-          this.scrolling()
         })
       })
     },
     markdownPreview(markdown) {
+      const own = this
       Vditor.preview(document.getElementById('article'),
         markdown,
         {
@@ -106,7 +111,57 @@ export default {
             lineNumber: true,
             enable: true
           },
+          after() {
+            own.scrolling()
+            const article = document.getElementById('article');
+            article.addEventListener("click", (event) => {
+              if (event.target.tagName === "IMG") {
+                Vditor.previewImage(event.target);
+              }
+            })
+            if (window.innerWidth <= 768) {
+              return
+            }
+            const outlineElement = document.getElementById('outline')
+            Vditor.outlineRender(article, outlineElement)
+            if (outlineElement.innerText.trim() !== '') {
+              outlineElement.style.display = 'block'
+              own.initOutline()
+            }
+          }
         })
+    },
+    initOutline() {
+      const headingElements = []
+      Array.from(document.getElementById('article').children).forEach((item) => {
+        if (item.tagName.length === 2 && item.tagName !== 'HR' && item.tagName.indexOf('H') === 0) {
+          headingElements.push(item)
+        }
+      })
+
+      let toc = []
+      window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY
+        toc = []
+        headingElements.forEach((item) => {
+          toc.push({
+            id: item.id,
+            offsetTop: item.offsetTop,
+          })
+        })
+
+        const currentElement = document.querySelector('.vditor-outline__item--current')
+        for (let i = 0, iMax = toc.length; i < iMax; i++) {
+          if (scrollTop < toc[i].offsetTop - 30) {
+            if (currentElement) {
+              currentElement.classList.remove('vditor-outline__item--current')
+            }
+            let index = i > 0 ? i - 1 : 0
+            document.querySelector('span[data-target-id="' + toc[index].id + '"]').classList.add('vditor-outline__item--current')
+            break
+          }
+        }
+      })
     }
   }
 }
@@ -187,7 +242,7 @@ export default {
   font-family: JetBrainsMono;
 
 
-  pre>code {
+  pre > code {
     font-family: JetBrainsMono;
   }
 
@@ -203,6 +258,50 @@ export default {
 .sidebar {
   transition: opacity 0.15s ease-in-out, visibility 0.15s ease-in-out;
   display: none;
+}
+
+#outline {
+  display: none;
+  position: fixed;
+  width: 186px;
+  top: 196px;
+  bottom: 86px;
+  overflow: auto;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+#outline ul {
+  margin-left: 16px;
+  list-style: none;
+}
+
+#outline > ul {
+  margin-left: 0;
+}
+
+#outline li > span {
+  cursor: pointer;
+  border-left: 1px solid transparent;
+  display: block;
+  padding-left: 8px;
+}
+
+#outline li > span.vditor-outline__item--current {
+  border-left: 1px solid #4285f4;
+  color: #4285f4;
+  background-color: #f6f8fa;
+}
+
+#outline li > span:hover {
+  color: #4285f4;
+  background-color: #f6f8fa;
+}
+
+@media (max-width: 768px) {
+  #outline {
+    display: none !important;
+  }
 }
 
 @media (min-width: 641px) {

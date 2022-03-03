@@ -35,6 +35,6 @@ export default {
 
 <style scoped>
 main {
-  height: 100vh;
+  min-height: calc(100vh - (129px + 200px));
 }
 </style>
