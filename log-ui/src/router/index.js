@@ -11,20 +11,13 @@ export const constantRoutes = [
       title: '首页'
     }
   },
-  {
-    path: '/tag',
-    component: (resolve) => require(["@/views/tag"], resolve),
-    meta: {
-      title: '标签'
-    }
-  },
-  {
-    path: '/aboutMe',
-    component: (resolve) => require(["@/views/aboutMe"], resolve),
-    meta: {
-      title: '关于我'
-    }
-  },
+  // {
+  //   path: '/tag',
+  //   component: (resolve) => require(["@/views/tag"], resolve),
+  //   meta: {
+  //     title: '标签'
+  //   }
+  // },
   {
     path: '/archive',
     component: (resolve) => require(["@/views/archive"], resolve),
