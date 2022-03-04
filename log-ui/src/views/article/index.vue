@@ -1,14 +1,15 @@
 <template>
   <section class="article-section">
-    <div id="outline" :style="hiddenSidebar ? {display: 'none'} : {display: 'block'}">
-    </div>
+<!--    <div id="outline" :style="hiddenSidebar ? {display: 'none'} : {display: 'block'}">-->
+<!--    </div>-->
     <aside class="sidebar" v-if="article" :class="hiddenSidebar ? 'hidden' : ''">
       <div class="sidebar__holder" ref="sidebarHolder">
         <img v-if="article.articleCover" class="sidebar__logo" :src="article.articleCover" :alt="article.articleTitle">
         <svg-icon v-else class-name="card__logo card__logo--small sidebar__logo" style="width: 40px; height: 40px;"
                   :icon-class="'idea_icon'"/>
         <span class="sidebar__title">{{ article.articleTitle }}</span>
-
+        <div id="outline" >
+        </div>
       </div>
     </aside>
     <section class="content" v-if="article">
@@ -279,14 +280,15 @@ export default {
 }
 
 #outline {
-  display: none;
-  position: fixed;
-  width: 186px;
-  top: 196px;
-  bottom: 86px;
-  overflow: auto;
-  font-size: 14px;
-  line-height: 20px;
+  //display: none;
+  //position: fixed;
+  //width: 186px;
+  //top: 40vh;
+  //right: 20px;
+  //bottom: 86px;
+  //overflow: auto;
+  //font-size: 14px;
+  //line-height: 20px;
 }
 
 #outline ul {
