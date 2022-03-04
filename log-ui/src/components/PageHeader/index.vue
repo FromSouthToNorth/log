@@ -38,7 +38,7 @@
           </div>
           <div v-if="!hamburger"
                class="hy-col-auto-fill hy-h4 hy-h4-theme_dark menu-main__action-link menu-main__logo-link-mobile">
-            白映
+            {{ title }}
           </div>
           <div @click="hamburgerClick" v-if="screenWidth <= 1000 && !hamburger"
                class="hy-col-inline menu-main__action-icon menu-main__action-icon-mobile _hamburger">
@@ -151,8 +151,8 @@ export default {
       timer: false,
       menuMainItem: false,
       router: [
-        {title: "标签", path: "/tag"},
-        {title: "分类", path: "/type"},
+        // {title: "标签", path: "/tag"},
+        // {title: "分类", path: "/type"},
         {title: "归档", path: "/archive"},
         // {title: "关于我", path: "/aboutMe"}
       ],
