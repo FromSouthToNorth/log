@@ -146,7 +146,9 @@ export default {
         top: '0px',
         zIndex: '991',
         bottom: 'auto',
-        width: document.body.clientWidth + 'px'
+        width: document.body.clientWidth + 'px',
+        backdropFilter: 'saturate(180%) blur(20px)',
+        backgroundColor: 'rgba(255,255,255,0.72)'
       },
       timer: false,
       menuMainItem: false,
