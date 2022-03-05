@@ -154,7 +154,7 @@ export default {
         // {title: "标签", path: "/tag"},
         // {title: "分类", path: "/type"},
         {title: "归档", path: "/archive"},
-        // {title: "关于我", path: "/aboutMe"}
+        {title: "关于我", path: "/aboutMe"}
       ],
       keywords: undefined,
       searchResults: false,

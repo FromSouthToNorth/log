@@ -26,6 +26,13 @@ export const constantRoutes = [
     }
   },
   {
+    path: '/aboutMe',
+    component: (resolve) => require(["@/views/aboutMe"], resolve),
+    meta: {
+      title: '关于我'
+    }
+  },
+  {
     path: '/article/:articleId(\\w+)',
     component: (resolve) => require(["@/views/article"], resolve),
   },

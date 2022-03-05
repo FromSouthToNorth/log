@@ -154,6 +154,7 @@
   --hy-color-grey-20: #d1d1d2;
   --hy-color-grey-10: #e8e8e8;
   --hy-color-grey-5: #f4f4f4;
+  --space-color-bg: #000;
 }
 
 hr {
@@ -207,12 +208,6 @@ hr {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-}
-
-.hy-row_align-items_center {
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
 }
 
 .hy-row_size_0 {
@@ -389,6 +384,14 @@ hr {
   .hy-offset-top-md-24 {
     margin-top: 24px;
     margin-top: calc(1 * var(--hy-offset-top-unit, 24px));
+  }
+
+  .space-card_bg {
+    min-height: 56vw;
+  }
+
+  .hy-offset-top-md-12 {
+    margin-top: 12px;
   }
 }
 
