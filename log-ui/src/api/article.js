@@ -9,10 +9,11 @@ export function topArticle() {
 }
 
 /** 获取文章列表 */
-export function articleList() {
+export function articleList(query) {
   return request({
     url: '/home/article',
-    method: 'get'
+    method: 'get',
+    params: query
   })
 }
 

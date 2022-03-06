@@ -116,10 +116,6 @@ export default {
             own.scrolling()
             own.constructorImages()
             const article = document.getElementById('article');
-
-            if (window.innerWidth <= 768) {
-              return
-            }
             const outlineElement = document.getElementById('outline')
             Vditor.outlineRender(article, outlineElement)
             if (outlineElement.innerText.trim() !== '') {
@@ -280,15 +276,14 @@ export default {
 }
 
 #outline {
-  //display: none;
-  //position: fixed;
-  //width: 186px;
-  //top: 40vh;
-  //right: 20px;
-  //bottom: 86px;
-  //overflow: auto;
-  //font-size: 14px;
-  //line-height: 20px;
+  position: fixed;
+  width: 206px;
+  top: 38vh;
+  right: 80px;
+  bottom: 86px;
+  overflow: auto;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 #outline ul {
@@ -308,20 +303,16 @@ export default {
 }
 
 #outline li > span.vditor-outline__item--current {
-  border-left: 1px solid #4285f4;
-  color: #4285f4;
-  background-color: #f6f8fa;
+  border-left: 1px solid #0f7af6;
+  background-image: var(--hy-color-banner-bg, linear-gradient(111deg, #0f7af6, #b74086 41%, #fe3251 74%, #fc7a21));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 #outline li > span:hover {
-  color: #4285f4;
-  background-color: #f6f8fa;
-}
-
-@media (max-width: 768px) {
-  #outline {
-    display: none !important;
-  }
+  background-image: var(--hy-color-banner-bg, linear-gradient(111deg, #0f7af6, #b74086 41%, #fe3251 74%, #fc7a21));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 @media (min-width: 641px) {
@@ -397,6 +388,7 @@ export default {
   .sidebar__holder {
     position: fixed;
     top: 25vh;
+    right: 120px;
     max-width: 272px;
     display: flex;
     flex-direction: column;

@@ -2,7 +2,9 @@
   <div id="app" class="page" @click="headerClick">
     <page-header ref="pageHeader"/>
     <main>
-      <router-view/>
+      <keep-alive>
+        <router-view/>
+      </keep-alive>
     </main>
     <page-footer/>
   </div>

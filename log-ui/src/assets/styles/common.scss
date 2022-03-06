@@ -154,6 +154,7 @@
   --hy-color-grey-20: #d1d1d2;
   --hy-color-grey-10: #e8e8e8;
   --hy-color-grey-5: #f4f4f4;
+  --space-color-bg: #000;
 }
 
 hr {
@@ -207,12 +208,6 @@ hr {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-}
-
-.hy-row_align-items_center {
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
 }
 
 .hy-row_size_0 {
@@ -389,6 +384,14 @@ hr {
   .hy-offset-top-md-24 {
     margin-top: 24px;
     margin-top: calc(1 * var(--hy-offset-top-unit, 24px));
+  }
+
+  .space-card_bg {
+    min-height: 56vw;
+  }
+
+  .hy-offset-top-md-12 {
+    margin-top: 12px;
   }
 }
 
@@ -1418,9 +1421,38 @@ hr {
   }
 }
 
+
+.load-more {
+  text-align: center;
+  padding: 32px 0 0;
+
+  a {
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #27282c;
+    border: 1px solid rgba(39, 40, 44, .15);
+    border-radius: 2em;
+    padding: 8px 24px;
+
+    &:hover {
+      opacity: .8;
+      text-decoration: none;
+    }
+  }
+}
+
 .fire__counter svg {
   width: 18px;
   height: 13px;
   margin-right: 10px;
   vertical-align: middle;
+}
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6, .h {
+  font-weight: 700;
+  margin: 0 0 0.5em;
+  color: #27282C;
 }

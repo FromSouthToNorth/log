@@ -4,10 +4,15 @@
     <section class="section">
       <div class="hy-container">
         <SectionTitle title="文章" />
-        <div class="row card_container" v-if="articleCards">
-          <router-link class="col" tag="div" :key="index" :to="'/article/' + item.articleId" v-for="(item, index) in articleCards">
+        <div class="row card_container" v-if="articleDataSource">
+          <router-link class="col" tag="div" :key="index" :to="'/article/' + item.articleId" v-for="(item, index) in articleDataSource">
             <Card :data="item" />
           </router-link>
+        </div>
+        <div class="more load-more" v-if="total > queryParams.pageSize">
+          <a @click="this.getArticleList" class="loadMoreBtn">
+            {{load?'Loading...':'Load more'}}
+          </a>
         </div>
       </div>
     </section>
@@ -20,14 +25,21 @@ import SectionTitle from "@/components/SectionTitle";
 import Card from "@/components/Card";
 import Promo from "@/components/Promo/Promo";
 import { topArticle, articleList } from "@/api/article";
+import {scrollTo} from "@/utils/scroll-to";
 
 export default {
   name: "Home",
   components: {Promo, Card, SectionTitle, ArticleBox},
   data() {
     return {
-      articleCards: undefined,
+      articleDataSource: undefined,
       topArticle: null,
+      total: 0,
+      load: true,
+      queryParams: {
+        pageNum: 1,
+        pageSize: 0,
+      }
     }
   },
   created() {
@@ -43,8 +55,12 @@ export default {
     },
     /** 获取文章列表 */
     getArticleList() {
-      articleList().then(result => {
-        this.articleCards = result.data
+      this.load = true
+      this.queryParams.pageSize += 8
+      articleList(this.queryParams).then(result => {
+        this.total = result.total
+        this.articleDataSource = result.rows
+        this.load = false
       })
     }
   }
