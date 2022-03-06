@@ -148,10 +148,10 @@ public class SysArticleController extends BaseController {
      * 查询文章列表
      */
     @GetMapping("/home/article")
-    public Result list() {
-        Result ajax = Result.success();
-        ajax.put(Result.DATA_TAG, articleService.selectArticleAll());
-        return ajax;
+    public TableDataInfo list() {
+        startPage();
+        List<SysArticle> articles = articleService.selectArticleAll();
+        return getDataTable(articles);
     }
 
     /**

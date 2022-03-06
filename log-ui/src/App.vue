@@ -2,7 +2,9 @@
   <div id="app" class="page" @click="headerClick">
     <page-header ref="pageHeader"/>
     <main>
-      <router-view/>
+      <keep-alive>
+        <router-view/>
+      </keep-alive>
     </main>
     <page-footer/>
   </div>
@@ -35,6 +37,6 @@ export default {
 
 <style scoped>
 main {
-  min-height: calc(100vh - (129px + 215px));
+  min-height: calc(100vh - (129px + 200px));
 }
 </style>

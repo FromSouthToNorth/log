@@ -1421,6 +1421,29 @@ hr {
   }
 }
 
+
+.load-more {
+  text-align: center;
+  padding: 32px 0 0;
+
+  a {
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #27282c;
+    border: 1px solid rgba(39, 40, 44, .15);
+    border-radius: 2em;
+    padding: 8px 24px;
+
+    &:hover {
+      opacity: .8;
+      text-decoration: none;
+    }
+  }
+}
+
 .fire__counter svg {
   width: 18px;
   height: 13px;
