@@ -43,4 +43,4 @@ nbdist/
 !*/build/*.html
 !*/build/*.xml
 
-*/.DS_Store
+**/.DS_Store

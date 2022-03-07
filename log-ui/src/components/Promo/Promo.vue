@@ -2,9 +2,8 @@
   <section class="promo">
     <router-link class="container" tag="div" :to="'/article/' + topArticle.articleId">
       <div class="promo__row">
-        <a v-if="topArticle.articleCover" href="" class="promo__img"
+        <a v-if="topArticle.articleCover" class="promo__img"
            :style="{backgroundImage: `url(${topArticle.articleCover})`}"></a>
-        <!--        <svg-icon style="width: 100px; height: 100px" v-else :icon-class="'jet-brains'" />-->
         <svg v-else class="promo__img" id="illustration" xmlns="http://www.w3.org/2000/svg"
              preserveAspectRatio="xMidYMid meet"
              aria-labelledby="svgTitle svgDesc" role="img">

@@ -7,7 +7,7 @@
              class="hy-row hy-row_size_0 hy-row_wide hy-row_wrap hy-row_align-items_center menu-main__items-wrapper">
           <div v-show="!hamburger"
                :class="screenWidth >= 1000 ? ['hy-col-auto-fill', 'hy-col_align-self_stretch'] : 'hy-col'">
-            <a href="/" class="menu-main__logo-link menu-main__logo-link-mobile">
+            <router-link to="/" class="menu-main__logo-link menu-main__logo-link-mobile">
               <svg ref="logoSvg" class="logoSvg" xmlns="http://www.w3.org/2000/svg"
                    xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 600 600">
                 <defs>
@@ -25,7 +25,7 @@
             	c-6.8-11.7,3.8-15.1,3.8-15.1s19.2-0.2,19.4-11.7c0.2-11.5-17.1-33.2-17.9-40.6c-0.8-7.4,3.5-18.1,3.5-18.1s15.1-38.8-3.5-75.7
             	c-18.6-36.9-69.1-52-88.2-53.6c-40-3.3-86.6,12.4-103.7,65.3s-4.2,92.3-4.7,108.8c-1.6,56-45.6,91.3-45.6,91.3L250.1,477.1z"/>
               </svg>
-            </a>
+            </router-link>
           </div>
           <div class="hy-col-auto-fill hy-display-sm-none"></div>
           <div
@@ -56,13 +56,13 @@
       <div class="hy-container">
         <div class="menu-second-desktop menu-second-mobile hy-row hy-row_size_0 hy-row_align_center">
           <div class="hy-col-auto-fill menu-second-mobile__trigger" v-if="screenWidth >= 1000">
-            <a class="menu-second-title-box" href="/">
+            <router-link to="/" class="menu-second-title-box">
             <span class="menu-second-title-box__logo _fixed hy-logo _hy-text-20">
               <h3 class="_hy-text-20">
                 {{ title }}
               </h3>
             </span>
-            </a>
+            </router-link>
           </div>
           <div ref="menuSecond">
             <div class="menu-search" v-show="isSearchInput">
@@ -204,7 +204,6 @@ export default {
   methods: {
     toRouterArticle(id) {
       let url = '/article/' + id
-      console.log(url);
       this.$router.push(url)
       this.clear()
     },
