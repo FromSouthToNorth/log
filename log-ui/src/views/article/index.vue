@@ -119,7 +119,6 @@ export default {
             const outlineElement = document.getElementById('outline')
             Vditor.outlineRender(article, outlineElement)
             if (outlineElement.innerText.trim() !== '') {
-              outlineElement.style.display = 'block'
               own.initOutline()
             }
           }
@@ -277,6 +276,7 @@ export default {
 
 #outline {
   position: fixed;
+  display: flex;
   width: 206px;
   top: 38vh;
   right: 80px;
