@@ -241,10 +241,12 @@ export default {
     },
     /* 导航路由跳转 */
     toRouter(link) {
+      if (this.hamburger && this.menuMainItem) {
+        this.hamburgerClick()
+      }
       if (this.$route.path.indexOf(link)) {
         this.$router.push(link)
       }
-      this.hamburgerClick()
     },
     /* 汉堡按钮点击事件 */
     hamburgerClick() {
