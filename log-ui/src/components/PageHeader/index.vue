@@ -156,7 +156,7 @@ export default {
         // {title: "标签", path: "/tag"},
         // {title: "分类", path: "/type"},
         {title: "归档", path: "/archive"},
-        {title: "关于我", path: "/aboutMe"}
+        // {title: "关于我", path: "/aboutMe"}
       ],
       keywords: undefined,
       searchResults: false,
@@ -244,6 +244,7 @@ export default {
       if (this.$route.path.indexOf(link)) {
         this.$router.push(link)
       }
+      this.hamburgerClick()
     },
     /* 汉堡按钮点击事件 */
     hamburgerClick() {
