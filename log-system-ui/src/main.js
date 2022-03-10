@@ -36,6 +36,7 @@ import VueMeta from 'vue-meta'
 import DictData from '@/components/DictData'
 // Markdown 编辑组件
 import "vditor/dist/index.css"
+import 'highlight.js/scss/github.scss'
 
 // 全局方法挂载
 Vue.prototype.getDicts = getDicts

@@ -1,7 +1,5 @@
 <template>
   <section class="article-section">
-<!--    <div id="outline" :style="hiddenSidebar ? {display: 'none'} : {display: 'block'}">-->
-<!--    </div>-->
     <aside class="sidebar" v-if="article" :class="hiddenSidebar ? 'hidden' : ''">
       <div class="sidebar__holder" ref="sidebarHolder">
         <img v-if="article.articleCover" class="sidebar__logo" :src="article.articleCover" :alt="article.articleTitle">
@@ -45,7 +43,6 @@
 </template>
 
 <script>
-import "vditor/dist/index.css"
 import {getArticleIngo} from "@/api/article";
 import SectionTitle from "@/components/SectionTitle";
 import Card from "@/components/Card";
@@ -278,7 +275,7 @@ export default {
   position: fixed;
   display: flex;
   width: 206px;
-  top: 38vh;
+  top: 40vh;
   right: 80px;
   bottom: 86px;
   overflow: auto;
@@ -387,7 +384,7 @@ export default {
 
   .sidebar__holder {
     position: fixed;
-    top: 25vh;
+    top: 22vh;
     right: 120px;
     max-width: 272px;
     display: flex;

@@ -209,7 +209,6 @@ export default {
           preview: {
             hljs: {
               enable: true,
-              style: 'dracula',
               lineNumber: true
             }
           },

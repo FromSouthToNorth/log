@@ -156,7 +156,7 @@ export default {
         // {title: "标签", path: "/tag"},
         // {title: "分类", path: "/type"},
         {title: "归档", path: "/archive"},
-        {title: "关于我", path: "/aboutMe"}
+        // {title: "关于我", path: "/aboutMe"}
       ],
       keywords: undefined,
       searchResults: false,
@@ -241,6 +241,9 @@ export default {
     },
     /* 导航路由跳转 */
     toRouter(link) {
+      if (this.hamburger && this.menuMainItem) {
+        this.hamburgerClick()
+      }
       if (this.$route.path.indexOf(link)) {
         this.$router.push(link)
       }

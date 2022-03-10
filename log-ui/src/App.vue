@@ -14,7 +14,7 @@
 
 import PageHeader from "@/components/PageHeader";
 import PageFooter from "@/components/PageFooter";
-import { mapState } from "vuex";
+import {mapState} from "vuex";
 
 export default {
   computed: {
