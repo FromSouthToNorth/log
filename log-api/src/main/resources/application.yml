@@ -14,6 +14,11 @@ spring:
     basename: i18n/messages
   profiles:
     active: dev
+  # 上传文件
+  servlet:
+    multipart:
+      max-file-size: 40MB
+      max-request-size: 60MB
 
 # token配置
 token:
