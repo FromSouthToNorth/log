@@ -25,6 +25,7 @@
         </div>
       </div>
       <article id="article" ref="article" v-if="article"/>
+      <VueGitComment :options="options" />
     </section>
     <div class="section light-gray-bg" v-if="discoverMore.length > 0">
       <div class="container">
@@ -47,17 +48,26 @@ import {getArticleIngo} from "@/api/article";
 import SectionTitle from "@/components/SectionTitle";
 import Card from "@/components/Card";
 import Vditor from "vditor/dist/method.min"
+import VueGitComment from "vue-git-comment";
 
 export default {
   name: "index",
-  components: {SectionTitle, Card},
+  components: {SectionTitle, Card, VueGitComment},
   data() {
     return {
       article: null,
       discoverMore: [],
       clipboard: null,
       images: [],
-      hiddenSidebar: false
+      hiddenSidebar: false,
+      options: {
+        clientID: '',
+        clientSecret: '',
+        owner: '',
+        repo: '',
+        uuid: '',
+        language: 'zh-CN'
+      }
     }
   },
   watch: {
@@ -73,6 +83,7 @@ export default {
   },
   created() {
     const articleId = this.$route.params && this.$route.params.articleId
+    this.options.uuid = articleId
     this.getArticle(articleId)
   },
   methods: {
@@ -247,6 +258,10 @@ export default {
   max-width: 1534px;
   margin: 0 auto;
   padding: 0 15px;
+}
+
+.content #article {
+  margin-bottom: 26px;
 }
 
 .content #article.vditor-reset {

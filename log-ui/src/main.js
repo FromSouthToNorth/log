@@ -8,7 +8,7 @@ import '@/assets/styles/reset.scss';
 import '@/assets/styles/index.scss';
 import 'highlight.js/styles/idea.css'
 import './beforeEach';
-
+import 'vue-git-comment/dist/vue-git-comment.css'
 import '@/assets/icons';
 import { formatTime } from "@/utils";
 import { parseTime } from "@/utils/logutils";
