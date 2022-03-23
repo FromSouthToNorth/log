@@ -15,7 +15,7 @@ spring:
       master:
         url: jdbc:mysql://127.0.0.1:3306/log?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
         username: root
-        password: 123456
+        password: 12345678
       # 从库数据源
       slave:
         # 从数据源开关/默认关闭
