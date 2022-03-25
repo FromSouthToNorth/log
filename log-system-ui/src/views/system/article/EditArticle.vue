@@ -292,15 +292,15 @@ export default {
     },
     /** 上传文章封面 */
     beforeUpload(file) {
-      return new Promise(resolve => {
-        if (file.size / 1024 < 200) {
-          resolve(file);
-        }
-        imageConversion.compressAccurately(file, 200)
-          .then(res => {
-            resolve(res)
-          })
-      })
+      // return new Promise(resolve => {
+      //   if (file.size / 1024 < 200) {
+      //     resolve(file);
+      //   }
+      //   imageConversion.compressAccurately(file, 200)
+      //     .then(res => {
+      //       resolve(res)
+      //     })
+      // })
     },
     /** 上传文章封面返回结果 */
     onSuccess(result) {

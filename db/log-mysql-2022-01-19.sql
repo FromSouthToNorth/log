@@ -102,24 +102,24 @@ values ('2', '2', '1');
 drop table if exists `sys_permission_menu`;
 create table `sys_permission_menu`
 (
-    `menu_id`     varchar(64) character set utf8 collate utf8_general_ci       not null comment '主键',
-    `menu_name`   varchar(50) character set utf8 collate utf8_general_ci       not null comment '菜单名称',
-    `parent_id`   varchar(64) character set utf8 collate utf8_general_ci            default '0' comment '父菜单id',
-    `order_num`   int(4)                                                            default 0 comment '显示顺序',
-    `path`        varchar(200) character set utf8 collate utf8_general_ci      null default null comment '路由地址',
-    `component`   varchar(255) character set utf8 collate utf8_general_ci      null default null comment '组件地址',
-    `is_frame`    tinyint(1)                                                   null default null comment '是否为外链（0是 1否）',
-    `is_cache`    tinyint(1)                                                   null default null comment '是否缓存（0缓存 1不缓存）',
-    `menu_type`   varchar(2) character set utf8 collate utf8_general_ci        null default null comment '菜单类型（M目录 C菜单 F按钮）',
-    `visible`     char(1)                                                      null default '0' comment '菜单状态（0显示 1隐藏）',
-    `status`      char(1)                                                           default '0' comment '菜单状态（0正常 1停用）',
-    `perms`       varchar(100) character set utf8 collate utf8_general_ci      null default null comment '权限标识',
-    `icon`        varchar(100) character set utf8 collate utf8_general_ci      null default null comment '菜单图标',
-    `del_flag`    char(1)                                                           default '0' comment '删除标志（0代表存在 1代表删除）',
-    `create_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci not null comment '创建人',
-    `create_time` datetime(0)                                                  null default null comment '创建日期',
-    `update_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci      default null comment '更新人',
-    `update_time` datetime(0)                                                  null default null comment '更新日期',
+    `menu_id`     varchar(64) character set utf8mb4 collate utf8mb4_general_ci  not null comment '主键',
+    `menu_name`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci  not null comment '菜单名称',
+    `parent_id`   varchar(64) character set utf8mb4 collate utf8mb4_general_ci       default '0' comment '父菜单id',
+    `order_num`   int(4)                                                             default 0 comment '显示顺序',
+    `path`        varchar(200) character set utf8mb4 collate utf8mb4_general_ci null default null comment '路由地址',
+    `component`   varchar(255) character set utf8mb4 collate utf8mb4_general_ci null default null comment '组件地址',
+    `is_frame`    tinyint(1)                                                    null default null comment '是否为外链（0是 1否）',
+    `is_cache`    tinyint(1)                                                    null default null comment '是否缓存（0缓存 1不缓存）',
+    `menu_type`   varchar(2) character set utf8mb4 collate utf8mb4_general_ci   null default null comment '菜单类型（M目录 C菜单 F按钮）',
+    `visible`     char(1)                                                       null default '0' comment '菜单状态（0显示 1隐藏）',
+    `status`      char(1)                                                            default '0' comment '菜单状态（0正常 1停用）',
+    `perms`       varchar(100) character set utf8mb4 collate utf8mb4_general_ci null default null comment '权限标识',
+    `icon`        varchar(100) character set utf8mb4 collate utf8mb4_general_ci null default null comment '菜单图标',
+    `del_flag`    char(1)                                                            default '0' comment '删除标志（0代表存在 1代表删除）',
+    `create_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci  not null comment '创建人',
+    `create_time` datetime(0)                                                   null default null comment '创建日期',
+    `update_by`   varchar(50) character set utf8mb4 collate utf8mb4_general_ci       default null comment '更新人',
+    `update_time` datetime(0)                                                   null default null comment '更新日期',
     primary key (`menu_id`) using btree,
     index `index_prem_pid` (`parent_id`) using btree,
     index `index_prem_del_flag` (`del_flag`) using btree,
@@ -350,9 +350,9 @@ values ('1035', '在线用户单条强退', '109', '2', '', '', 1, 0, 'F', '0', 
 drop table if exists `sys_role_permission`;
 create table `sys_role_permission`
 (
-    `id`            varchar(64) character set utf8 collate utf8_general_ci not null comment '主键',
-    `role_id`       varchar(32) character set utf8 collate utf8_general_ci null default null comment '角色id',
-    `permission_id` varchar(32) character set utf8 collate utf8_general_ci null default null comment '权限id',
+    `id`            varchar(64) character set utf8mb4 collate utf8mb4_general_ci not null comment '主键',
+    `role_id`       varchar(32) character set utf8mb4 collate utf8mb4_general_ci null default null comment '角色id',
+    `permission_id` varchar(32) character set utf8mb4 collate utf8mb4_general_ci null default null comment '权限id',
     primary key (`id`) using btree,
     index `index_group_role_per_id` (`role_id`, `permission_id`) using btree,
     index `index_group_role_id` (`role_id`) using btree,
@@ -402,14 +402,14 @@ values ('16', '2', '1012');
 drop table if exists `sys_login_info`;
 create table sys_login_info
 (
-    info_id        varchar(64) character set utf8 collate utf8_general_ci not null comment '访问ID',
-    user_name      varchar(50) character set utf8 collate utf8_general_ci  default null comment '用户账号',
-    ipaddr         varchar(128) character set utf8 collate utf8_general_ci default null comment '登录IP地址',
-    login_location varchar(255) character set utf8 collate utf8_general_ci default null comment '登录地点',
-    browser        varchar(50) character set utf8 collate utf8_general_ci  default null comment '浏览器类型',
-    os             varchar(50) character set utf8 collate utf8_general_ci  default null comment '操作系统',
-    status         char(1)                                                 default '0' comment '登录状态（0成功 1失败）',
-    msg            varchar(255) character set utf8 collate utf8_general_ci default '' comment '提示消息',
+    info_id        varchar(64) character set utf8mb4 collate utf8mb4_general_ci not null comment '访问ID',
+    user_name      varchar(50) character set utf8mb4 collate utf8mb4_general_ci  default null comment '用户账号',
+    ipaddr         varchar(128) character set utf8mb4 collate utf8mb4_general_ci default null comment '登录IP地址',
+    login_location varchar(255) character set utf8mb4 collate utf8mb4_general_ci default null comment '登录地点',
+    browser        varchar(50) character set utf8mb4 collate utf8mb4_general_ci  default null comment '浏览器类型',
+    os             varchar(50) character set utf8mb4 collate utf8mb4_general_ci  default null comment '操作系统',
+    status         char(1)                                                       default '0' comment '登录状态（0成功 1失败）',
+    msg            varchar(255) character set utf8mb4 collate utf8mb4_general_ci default '' comment '提示消息',
     login_time     datetime comment '访问时间',
     primary key (info_id) using btree
 ) engine = InnoDB
@@ -421,20 +421,20 @@ create table sys_login_info
 drop table if exists `sys_oper_log`;
 create table `sys_oper_log`
 (
-    `oper_id`        varchar(64) character set utf8 collate utf8_general_ci   not null comment '主键',
-    `title`          varchar(50) character set utf8 collate utf8_general_ci   null default null comment '模块标题',
-    `business_type`  tinyint(1)                                               null default null comment '业务类型（0其它 1新增 2修改 3删除）',
-    `method`         varchar(100) character set utf8 collate utf8_general_ci  null default null comment '方法名称',
-    `request_method` varchar(10) character set utf8 collate utf8_general_ci   null default null comment '请求方式',
-    `operator_type`  tinyint(1)                                                    default '0' comment '操作类别（0其它 1后台用户 2手机端用户）',
-    `oper_name`      varchar(50) character set utf8 collate utf8_general_ci   null default null comment '操作人员',
-    `oper_url`       varchar(255) character set utf8 collate utf8_general_ci  null default null comment '请求URL',
-    `oper_ip`        varchar(128) character set utf8 collate utf8_general_ci  null default null comment '主机地址',
-    `oper_location`  varchar(255) character set utf8 collate utf8_general_ci  null default null comment '操作地点',
-    `oper_param`     varchar(2000) character set utf8 collate utf8_general_ci null default null comment '请求参数',
-    `json_result`    varchar(2000)                                                 default '' comment '返回参数',
-    `status`         tinyint(1)                                               null default null comment '操作状态（0正常 1异常）',
-    `error_msg`      varchar(2000) character set utf8 collate utf8_general_ci null default null comment '错误消息',
+    `oper_id`        varchar(64) character set utf8mb4 collate utf8mb4_general_ci   not null comment '主键',
+    `title`          varchar(50) character set utf8mb4 collate utf8mb4_general_ci   null default null comment '模块标题',
+    `business_type`  tinyint(1)                                                     null default null comment '业务类型（0其它 1新增 2修改 3删除）',
+    `method`         varchar(100) character set utf8mb4 collate utf8mb4_general_ci  null default null comment '方法名称',
+    `request_method` varchar(10) character set utf8mb4 collate utf8mb4_general_ci   null default null comment '请求方式',
+    `operator_type`  tinyint(1)                                                          default '0' comment '操作类别（0其它 1后台用户 2手机端用户）',
+    `oper_name`      varchar(50) character set utf8mb4 collate utf8mb4_general_ci   null default null comment '操作人员',
+    `oper_url`       varchar(255) character set utf8mb4 collate utf8mb4_general_ci  null default null comment '请求URL',
+    `oper_ip`        varchar(128) character set utf8mb4 collate utf8mb4_general_ci  null default null comment '主机地址',
+    `oper_location`  varchar(255) character set utf8mb4 collate utf8mb4_general_ci  null default null comment '操作地点',
+    `oper_param`     varchar(2000) character set utf8mb4 collate utf8mb4_general_ci null default null comment '请求参数',
+    `json_result`    varchar(2000)                                                       default '' comment '返回参数',
+    `status`         tinyint(1)                                                     null default null comment '操作状态（0正常 1异常）',
+    `error_msg`      varchar(2000) character set utf8mb4 collate utf8mb4_general_ci null default null comment '错误消息',
     `oper_time`      datetime comment '操作时间',
     primary key (`oper_id`) using btree
 ) engine = InnoDB
@@ -446,15 +446,15 @@ create table `sys_oper_log`
 drop table if exists `sys_dict_type`;
 create table `sys_dict_type`
 (
-    `dict_id`     varchar(64) character set utf8 collate utf8_general_ci not null comment '字典主键',
-    `dict_name`   varchar(100) character set utf8 collate utf8_general_ci comment '字典名称',
-    `dict_type`   varchar(100) character set utf8 collate utf8_general_ci comment '字典类型',
-    `status`      char(1)                                                     default '0' comment '状态（0正常 1停用）',
-    `create_by`   varchar(64) character set utf8 collate utf8_general_ci comment '创建者',
+    `dict_id`     varchar(64) character set utf8mb4 collate utf8mb4_general_ci not null comment '字典主键',
+    `dict_name`   varchar(100) character set utf8mb4 collate utf8mb4_general_ci comment '字典名称',
+    `dict_type`   varchar(100) character set utf8mb4 collate utf8mb4_general_ci comment '字典类型',
+    `status`      char(1)                                                           default '0' comment '状态（0正常 1停用）',
+    `create_by`   varchar(64) character set utf8mb4 collate utf8mb4_general_ci comment '创建者',
     `create_time` datetime(0) comment '创建时间',
-    `update_by`   varchar(64) character set utf8 collate utf8_general_ci comment '更新者',
+    `update_by`   varchar(64) character set utf8mb4 collate utf8mb4_general_ci comment '更新者',
     `update_time` datetime(0) comment '更新时间',
-    `remark`      varchar(500)                                           null default null comment '备注',
+    `remark`      varchar(500)                                                 null default null comment '备注',
     primary key (`dict_id`) using btree,
     unique index `uniq_dict_type` (`dict_type`) using btree
 ) engine = InnoDB
@@ -486,20 +486,20 @@ values ('9', '系统是否', 'sys_yes_no', '0', 'admin', sysdate(), '', null, '�
 drop table if exists `sys_dict_data`;
 create table `sys_dict_data`
 (
-    dict_code   varchar(64) character set utf8 collate utf8_general_ci  not null comment '字典编码',
-    dict_sort   int(4)                                                       default 0 comment '字典排序',
-    dict_label  varchar(100) character set utf8 collate utf8_general_ci null default null comment '字典标签',
-    dict_value  varchar(100) character set utf8 collate utf8_general_ci null default null comment '字典键值',
-    dict_type   varchar(100) character set utf8 collate utf8_general_ci null default null comment '字典类型',
-    css_class   varchar(100) character set utf8 collate utf8_general_ci null default null comment '样式属性（其他样式扩展）',
-    list_class  varchar(100) character set utf8 collate utf8_general_ci null default null comment '表格回显样式',
-    is_default  char(1)                                                 null default '0' comment '是否默认（0是 1否）',
-    status      char(1)                                                 null default '0' comment '状态（0正常 1停用）',
-    create_by   varchar(64) character set utf8 collate utf8_general_ci  null default null comment '创建者',
+    dict_code   varchar(64) character set utf8mb4 collate utf8mb4_general_ci  not null comment '字典编码',
+    dict_sort   int(4)                                                             default 0 comment '字典排序',
+    dict_label  varchar(100) character set utf8mb4 collate utf8mb4_general_ci null default null comment '字典标签',
+    dict_value  varchar(100) character set utf8mb4 collate utf8mb4_general_ci null default null comment '字典键值',
+    dict_type   varchar(100) character set utf8mb4 collate utf8mb4_general_ci null default null comment '字典类型',
+    css_class   varchar(100) character set utf8mb4 collate utf8mb4_general_ci null default null comment '样式属性（其他样式扩展）',
+    list_class  varchar(100) character set utf8mb4 collate utf8mb4_general_ci null default null comment '表格回显样式',
+    is_default  char(1)                                                       null default '0' comment '是否默认（0是 1否）',
+    status      char(1)                                                       null default '0' comment '状态（0正常 1停用）',
+    create_by   varchar(64) character set utf8mb4 collate utf8mb4_general_ci  null default null comment '创建者',
     create_time datetime comment '创建时间',
-    update_by   varchar(64) character set utf8 collate utf8_general_ci  null default null comment '更新者',
+    update_by   varchar(64) character set utf8mb4 collate utf8mb4_general_ci  null default null comment '更新者',
     update_time datetime comment '更新时间',
-    remark      varchar(500) character set utf8 collate utf8_general_ci null default null comment '备注',
+    remark      varchar(500) character set utf8mb4 collate utf8mb4_general_ci null default null comment '备注',
     primary key (dict_code) using btree
 ) engine = InnoDB
   character set = utf8
@@ -558,16 +558,16 @@ values ('23', 2, '否', 'N', 'sys_yes_no', '', 'danger', 'N', '0', 'admin', sysd
 drop table if exists sys_config;
 create table sys_config
 (
-    config_id    varchar(32) character set utf8 collate utf8_general_ci not null comment '参数主键',
-    config_name  varchar(100) character set utf8 collate utf8_general_ci default '' comment '参数名称',
-    config_key   varchar(100) character set utf8 collate utf8_general_ci default '' comment '参数键名',
-    config_value varchar(500) character set utf8 collate utf8_general_ci default '' comment '参数键值',
-    config_type  char(1)                                                 default 'N' comment '系统内置（Y是 N否）',
-    create_by    varchar(64) character set utf8 collate utf8_general_ci  default '' comment '创建者',
+    config_id    varchar(32) character set utf8mb4 collate utf8mb4_general_ci not null comment '参数主键',
+    config_name  varchar(100) character set utf8mb4 collate utf8mb4_general_ci default '' comment '参数名称',
+    config_key   varchar(100) character set utf8mb4 collate utf8mb4_general_ci default '' comment '参数键名',
+    config_value varchar(500) character set utf8mb4 collate utf8mb4_general_ci default '' comment '参数键值',
+    config_type  char(1)                                                       default 'N' comment '系统内置（Y是 N否）',
+    create_by    varchar(64) character set utf8mb4 collate utf8mb4_general_ci  default '' comment '创建者',
     create_time  datetime comment '创建时间',
-    update_by    varchar(64) character set utf8 collate utf8_general_ci  default '' comment '更新者',
+    update_by    varchar(64) character set utf8mb4 collate utf8mb4_general_ci  default '' comment '更新者',
     update_time  datetime comment '更新时间',
-    remark       varchar(500) character set utf8 collate utf8_general_ci default null comment '备注',
+    remark       varchar(500) character set utf8mb4 collate utf8mb4_general_ci default null comment '备注',
     primary key (config_id)
 ) engine = innodb
   auto_increment = 100 comment = '参数配置表';
