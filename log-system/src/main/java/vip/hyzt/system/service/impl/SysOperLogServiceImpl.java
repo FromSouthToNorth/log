@@ -24,6 +24,7 @@ public class SysOperLogServiceImpl implements ISysOperLogService {
      */
     @Override
     public void insertOperLog(SysOperLog operLog) {
+        System.out.println("operLog --> " + operLog);
         operLogMapper.insertOperLog(operLog);
     }
 
