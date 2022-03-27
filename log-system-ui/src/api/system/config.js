@@ -67,3 +67,11 @@ export function exportConfig(query) {
     params: query
   })
 }
+
+// 查询是否开始网页黑白模式
+export function blackAndWhite() {
+  return request({
+    url: '/home/config/blackAndWhite',
+    method: 'get'
+  })
+}

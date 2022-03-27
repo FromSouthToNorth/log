@@ -66,11 +66,24 @@ public class SysConfigServiceImpl implements ISysConfigService {
     public String checkConfigKeyUnique(SysConfig config) {
         String configId = ObjectUtils.isEmpty(config.getConfigId()) ? "-1" : config.getConfigId();
         SysConfig info = configMapper.checkConfigKeyUnique(config.getConfigKey());
-        if (!ObjectUtils.isEmpty(info) && info.getConfigId().equals(configId))
+        if (!ObjectUtils.isEmpty(info) && !info.getConfigId().equals(configId))
         {
             return UserConstants.NOT_UNIQUE;
         }
         return UserConstants.UNIQUE;
+    }
+
+    /**
+     * 查询是否开启网页黑白模式
+     * @return 是否开启
+     */
+    @Override
+    public boolean blackAndWhiteConfig() {
+        String blackAndWhite = selectConfigByKey("sys.index.blackAndWhite");
+        if (ObjectUtils.isEmpty(blackAndWhite)) {
+            return false;
+        }
+        return "0".equals(blackAndWhite);
     }
 
     /**
@@ -114,7 +127,7 @@ public class SysConfigServiceImpl implements ISysConfigService {
         for (String configId : configIds)
         {
             SysConfig config = selectConfigById(configId);
-            if (UserConstants.YES == config.getConfigType())
+            if (UserConstants.YES.equals(config.getConfigType()))
             {
                 throw new ServiceException(String.format("内置参数【%1$s】不能删除 ", config.getConfigKey()));
             }
