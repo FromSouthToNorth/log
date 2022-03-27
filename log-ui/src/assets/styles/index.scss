@@ -10,6 +10,15 @@
   src: url("../font/JetBrainsMono-Italic-VariableFont_wght.ttf");
 }
 
+#app.BlackAndWhite {
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  -webkit-filter: grayscale(1);
+}
+
 .page {
   position: relative;
   max-width: 100%;

@@ -14,7 +14,7 @@ import vip.hyzt.system.service.ISysOperLogService;
 import java.util.List;
 
 /**
- * 在线用户监控
+ * 操作日志
  * @author hy
  * @since 2021/11/02
  */

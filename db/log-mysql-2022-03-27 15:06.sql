@@ -456,7 +456,7 @@ create table `sys_dict_type`
     `update_time` datetime(0) comment '更新时间',
     `remark`      varchar(500)                                                 null default null comment '备注',
     primary key (`dict_id`) using btree,
-    unique index `uniq_dict_type` (`dict_type`) using btree
+    unique index `uniq_dict_type` (`dict_type`) using btreeFs
 ) engine = InnoDB
   character set = utf8
   collate = utf8_general_ci comment = '字典类型表'
@@ -587,6 +587,9 @@ values ('4', '账号自助-验证码开关', 'sys.account.captchaOnOff', '0', 'Y
 insert into sys_config
 values ('5', '账号自助-是否开启用户注册功能', 'sys.account.registerUser', 'false', 'Y', 'admin', sysdate(), '', null,
         '是否开启注册用户功能（true开启，false关闭）');
+insert into sys_config
+values ('6', '主体网页-黑白模式', 'sys.index.blackAndWhite', '1', 'Y', 'admin', sysdate(), '', null,
+        '是否开启主体网页-黑白模式（0开启，1关闭）');
 
 drop table if exists `sys_article`;
 create table `sys_article`

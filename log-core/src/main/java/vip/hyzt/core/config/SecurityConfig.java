@@ -71,19 +71,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers("/login", "/register", "/captchaImage", "/home/**").anonymous()
+                .antMatchers("/login", "/register", "/captchaImage").anonymous()
                 .antMatchers(HttpMethod.GET,
                         "/",
                         "/*.html",
                         "/**/*/css",
                         "/**/*.js",
-                        "/profile/**").permitAll()
+                        "/profile/**",
+                        "/home/**").permitAll()
                 .antMatchers("/swagger-ui.html").anonymous()
                 .antMatchers("/swagger-resources/**").anonymous()
                 .antMatchers("/webjars/**").anonymous()
                 .antMatchers("/*/api-docs").anonymous()
                 .antMatchers("/druid/**").anonymous()
-                .antMatchers("/home/**").anonymous()
                 .anyRequest().authenticated()
                 .and()
                 .headers().frameOptions().disable();

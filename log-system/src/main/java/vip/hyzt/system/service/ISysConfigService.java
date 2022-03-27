@@ -81,4 +81,10 @@ public interface ISysConfigService {
      */
     String checkConfigKeyUnique(SysConfig config);
 
+    /**
+     * 查询是否开启网页黑白模式
+     * @return 是否开启
+     */
+    boolean blackAndWhiteConfig();
+
 }
