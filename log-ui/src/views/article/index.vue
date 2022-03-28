@@ -413,6 +413,10 @@ export default {
   }
 }
 
+.vssue-header-powered-by {
+  display: none;
+}
+
 @media (min-width: 1201px) {
   .article-section .content {
     max-width: 750px;
