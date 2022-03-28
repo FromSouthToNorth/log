@@ -8,6 +8,8 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "core-js": "3.19.1",
+    "@vssue/api-github-v4": "^1.4.7",
     "axios": "0.24.0",
     "clipboard": "^2.0.8",
     "github-markdown-css": "5.1.0",
@@ -19,8 +21,8 @@
     "three.js": "^0.77.1",
     "tocbot": "^4.18.0",
     "vditor": "^3.8.11",
+    "vssue": "^1.4.8",
     "vue": "2.6.12",
-    "vue-git-comment": "^0.0.16",
     "vue-pswipe": "0.15.3",
     "vue-router": "3.4.9",
     "vuex": "3.6.0"

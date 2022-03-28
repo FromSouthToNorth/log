@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :class="isBlackAndWhite ? 'BlackAndWhite' : ''">
+  <div id="app">
     <router-view />
   </div>
 </template>
@@ -15,21 +15,6 @@ export default {
       titleTemplate: title => {
         return title ? `${title} - ${process.env.VUE_APP_TITLE}` : process.env.VUE_APP_TITLE
       }
-    }
-  },
-  data() {
-    return {
-      isBlackAndWhite: undefined
-    }
-  },
-  created() {
-    this.getBlackAndWhite()
-  },
-  methods: {
-    getBlackAndWhite() {
-      blackAndWhite().then(result => {
-        this.isBlackAndWhite = result.data
-      })
     }
   }
 }

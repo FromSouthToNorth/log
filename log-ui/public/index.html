@@ -7,6 +7,18 @@
     <link rel="icon" href="<%= BASE_URL %>idea.svg">
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
+  <style>
+    .BlackAndWhite {
+      -webkit-filter: grayscale(100%);
+      -moz-filter: grayscale(100%);
+      -ms-filter: grayscale(100%);
+      -o-filter: grayscale(100%);
+      filter: grayscale(100%);
+      -webkit-filter: grey;
+      filter: gray;
+      filter: progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+    }
+  </style>
   <body class="body-adaptive" style="overflow: visible">
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
