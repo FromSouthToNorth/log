@@ -182,11 +182,14 @@ export default {
 <style lang="scss">
 .article-section {
 
+  .content, #article.vditor-reset, pre > code {
+    font-family: JetBrainsMono;
+  }
+
   .content {
     font-size: 20px;
     line-height: 1.6;
     font-weight: 300;
-    font-family: JetBrainsMono;
     padding: 64px 15px;
     min-height: 600px;
   }
@@ -255,12 +258,6 @@ export default {
 }
 
 .content #article.vditor-reset {
-  font-family: JetBrainsMono;
-
-
-  pre > code {
-    font-family: JetBrainsMono;
-  }
 
   .katex {
     font-size: 16px;
