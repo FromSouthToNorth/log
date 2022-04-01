@@ -1,7 +1,6 @@
 package vip.hyzt.common.utils.ip;
 
-import vip.hyzt.common.utils.html.EscapeUtil;
-
+import vip.hyzt.common.utils.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -14,6 +13,12 @@ import java.net.UnknownHostException;
  */
 public abstract class IpUtils {
 
+    /**
+     * 获取客户端IP
+     *
+     * @param request 请求对象
+     * @return IP地址
+     */
     public static String getIpAddr(HttpServletRequest request) {
         if (request == null) {
             return "unknown";
@@ -35,16 +40,28 @@ public abstract class IpUtils {
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
-        return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : EscapeUtil.clean(ip);
+        return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : getMultistageReverseProxyIp(ip);
     }
 
+    /**
+     * 检查是否为内部IP地址
+     *
+     * @param ip IP地址
+     * @return 结果
+     */
     public static boolean internalIp(String ip) {
         byte[] addr = textToNumericFormatV4(ip);
         return internalIp(addr) || "127.0.0.1".equals(ip);
     }
 
+    /**
+     * 检查是否为内部IP地址
+     *
+     * @param addr byte地址
+     * @return 结果
+     */
     private static boolean internalIp(byte[] addr) {
-        if (addr == null || addr.length < 2) {
+        if (StringUtils.isNull(addr) || addr.length < 2) {
             return true;
         }
         final byte b0 = addr[0];
@@ -167,6 +184,37 @@ public abstract class IpUtils {
             //
         }
         return "unknown";
+    }
+
+
+    /**
+     * 从多级反向代理中获得第一个非unknown IP地址
+     *
+     * @param ip 获得的IP地址
+     * @return 第一个非unknown IP地址
+     */
+    public static String getMultistageReverseProxyIp(String ip) {
+        // 多级反向代理检测
+        if (ip != null && ip.indexOf(",") > 0) {
+            final String[] ips = ip.trim().split(",");
+            for (String subIp : ips) {
+                if (!isUnknown(subIp)) {
+                    ip = subIp;
+                    break;
+                }
+            }
+        }
+        return ip;
+    }
+
+    /**
+     * 检测给定字符串是否为未知，多用于检测HTTP请求相关
+     *
+     * @param checkString 被检测的字符串
+     * @return 是否未知
+     */
+    public static boolean isUnknown(String checkString) {
+        return StringUtils.isBlank(checkString) || "unkown".equalsIgnoreCase(checkString);
     }
 
 }

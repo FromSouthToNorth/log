@@ -37,7 +37,8 @@ service.interceptors.request.use(config => {
               url += subPart + encodeURIComponent(value[key]) + '&';
             }
           }
-        } else {
+        }
+        else {
           url += part + encodeURIComponent(value) + "&";
         }
       }
@@ -76,18 +77,21 @@ service.interceptors.response.use(res => {
         });
       }
       return Promise.reject('无效的会话，或者会话已过期，请重新登录。')
-    } else if (code === 500) {
+    }
+    else if (code === 500) {
       Message({
         message: msg,
         type: 'error'
       })
       return Promise.reject(new Error(msg))
-    } else if (code !== 200) {
+    }
+    else if (code !== 200) {
       Notification.error({
         title: msg
       })
       return Promise.reject('error')
-    } else {
+    }
+    else {
       return res.data
     }
   },
