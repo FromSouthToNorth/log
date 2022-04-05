@@ -157,6 +157,7 @@ export default {
     },
     /** 查看图片 */
     constructorImages() {
+      this.images = []
       const images = this.$refs.article.getElementsByTagName('img');
       for (let i = 0; i < images.length; i++) {
         images[i].addEventListener('click', e => {
