@@ -209,7 +209,8 @@ export default {
           preview: {
             hljs: {
               enable: true,
-              lineNumber: true
+              lineNumber: true,
+              style: 'xcode'
             }
           },
           cache: {
