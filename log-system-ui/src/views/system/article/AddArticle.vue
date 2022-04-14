@@ -211,7 +211,7 @@ export default {
           preview: {
             hljs: {
               enable: true,
-              style: 'dracula',
+              style: 'xcode',
               lineNumber: true
             }
           },

@@ -108,7 +108,8 @@ export default {
         {
           hljs: {
             lineNumber: true,
-            enable: true
+            enable: true,
+            style: 'xcode'
           },
           after() {
             own.scrolling()

@@ -6,7 +6,6 @@ import Photoswipe from "vue-pswipe";
 import "vditor/dist/index.css"
 import '@/assets/styles/reset.scss';
 import '@/assets/styles/index.scss';
-import 'highlight.js/styles/idea.css'
 import './beforeEach';
 import '@/assets/icons';
 import { formatTime } from "@/utils";
