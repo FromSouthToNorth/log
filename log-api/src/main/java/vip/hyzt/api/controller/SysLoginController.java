@@ -53,7 +53,7 @@ public class SysLoginController {
      * 获取用户信息
      * @return 登录的用户信息及用户角色权限。
      */
-    @GetMapping("getInfo")
+    @GetMapping("getUserInfo")
     public Result getUserInfo() {
         SysUser userInfo = SecurityService.getLoginUser().getUserInfo();
         Set<String> roles = permissionService.getRolePermission(userInfo);
