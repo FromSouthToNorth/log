@@ -95,7 +95,7 @@ img, svg {
   font-size: 13px;
   line-height: 1.54;
   font-weight: 300;
-  font-family: "JetBrains Mono";
+  font-family: "JetBrains Mono",serif;
   margin: 0 0 9px;
   color: #27282c;
 }
