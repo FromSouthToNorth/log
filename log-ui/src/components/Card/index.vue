@@ -10,12 +10,12 @@
       <p style="float: none; position: static;" v-text="data.remark">
       </p>
     </div>
-    <div class="card__footer">
-      <div class="author">
-        <img class="avatar" :src="data.user.avatar" alt="">
-        <span v-text="data.user.realName"></span>
-      </div>
-    </div>
+<!--    <div class="card__footer">-->
+<!--      <div class="author">-->
+<!--        <img class="avatar" :src="data.user.avatar" alt="">-->
+<!--        <span v-text="data.user.realName"></span>-->
+<!--      </div>-->
+<!--    </div>-->
   </a>
 </template>
 
